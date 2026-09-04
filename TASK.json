@@ -1,0 +1,101 @@
+{
+  "project": "Cedro del Libano — sito web ristorante",
+  "context": {
+    "location": "Savona, zona Darsena, Italia",
+    "landmark": "Il Conad della Darsena è il punto di riferimento a piedi indicato ai clienti per trovare l'ingresso — deve comparire nei testi/contatti del sito",
+    "working_folder": "cedro-del-libano/ (sostituisce definitivamente export-ftp/, che va considerata superata)",
+    "previous_state": "Sito HTML semantico, senza framework, già con buona base di accessibilità e testi non generici. Problema principale riscontrato: performance (immagini troppo pesanti, ~11.2MB totali prima dell'ottimizzazione), alcuni contenuti mancanti, alt text errati, link PDF menù rotto (404)",
+    "already_done_previously": [
+      "Immagini rigenerate in più misure con srcset/<picture>, ritaglio verticale per mobile e orizzontale per desktop",
+      "Peso prima visita desktop ridotto a ~388KB (da ~11MB), mobile a ~200KB",
+      "Preload dell'immagine di apertura con fetchpriority=high",
+      "width/height su tutte le immagini per evitare layout shift, lazy loading sul resto",
+      "Immagine di apertura sostituita: tavola di mezze con piatti distribuiti ai bordi (non il kafta singolo)",
+      "Cartellino 'Aperto ora / si chiude alle 00:00' calcolato in tempo reale dagli orari già presenti nell'HTML",
+      "Correzione temperatura colore via CSS sulla foto della sala (era scattata con luce fredda), senza modificare il file originale",
+      ".htaccess con gzip/brotli e cache di un anno sulle immagini",
+      "Accessibilità: skip link, frecce tastiera fra tab del menù, Esc chiude nav mobile, aria-labelledby sui pannelli, fallback per contrasto forzato Windows, hover contatti corretto",
+      "Testi aggiornati con riferimento al Conad, a Jamil (figlio del proprietario, in sala) e al tè alla menta offerto",
+      "Alt text corretti (es. storia.jpg ora descrive correttamente la sala col murale, non 'la brace del ristorante')",
+      "Pulsante PDF menù nascosto finché il file non esiste realmente",
+      "SEO: og:image dedicata 1200x630, twitter:card, hasMap e image[] nello schema strutturato"
+    ]
+  },
+  "confirmed_decisions": {
+    "hero_image": {
+      "decision": "MANTENERE la tavola di mezze come immagine di apertura (non tornare al kafta singolo)",
+      "reason": "L'utente preferisce questa scelta perché mostra al cliente i piatti più importanti del ristorante fin dal primo impatto"
+    },
+    "legal_footer": {
+      "ragione_sociale": "Cedro del Libano di Shah Israr Hussain",
+      "partita_iva": "01944060092",
+      "action": "Inserire questi dati nel footer del sito, nello slot già predisposto e commentato nel codice, come richiesto dalla normativa italiana per siti d'impresa"
+    },
+    "social_instagram": {
+      "handle_principale": "cedro.del.libano.savona",
+      "note": "Questo è il profilo più attivo e va usato come link Instagram principale nel sito. Esiste anche un secondo profilo/social su cui pubblicano saltuariamente: verificare se vale la pena linkarlo anche quello (secondario) o lasciare solo il principale",
+      "action": "Aggiornare tutti i link Instagram nel sito (footer, sezione contatti, eventuali social icon) puntando a cedro.del.libano.savona"
+    },
+    "address": {
+      "valore_confermato": "Via del Molo 14r",
+      "action": "Sostituire ovunque nel sito (contatti, footer, schema.org/JSON-LD, Google Maps embed se presente) l'indirizzo con questa dicitura esatta, risolvendo il dubbio 14 vs 14r segnalato in precedenza"
+    }
+  },
+  "photos_handling": {
+    "instruction": "L'utente ha fornito TUTTE le foto disponibili in due archivi zip: menu.zip e images.zip. Decomprimerli entrambi e trattare il loro contenuto come il set completo di foto da valutare, insieme alle 17 foto già presenti in uploads/. L'utente ha esplicitamente delegato la scelta: NON chiedere conferma preventiva su dove/come usare ogni singola foto — decidere autonomamente in base al contenuto, alla qualità e al contesto del sito",
+    "zip_contents": {
+      "menu.zip": "22 foto in formato .webp, dentro una cartella 'Cedro_di_libano/', tutte con nomi generici non descrittivi (es. 'unnamed (11).webp', 'unnamed (12).webp', ecc.). Vanno ISPEZIONATE UNA PER UNA visivamente per capire il soggetto (piatto, ambiente, dettaglio) prima di rinominarle e usarle",
+      "images.zip": "11 foto in formato .webp, dentro una cartella con nome in cirillico, già con nomi parzialmente descrittivi in italiano: carne.webp, cibo.webp, frtitto.webp (probabile refuso di 'fritto'), kebab.webp, piatti.webp, piatti_vari.webp, ristorante.webp, sala.webp, shahlyk.webp, vino_bianco.webp, vino_rosso.webp. Questi nomi vanno comunque verificati/puliti e resi coerenti con la convenzione del progetto"
+    },
+    "workflow": [
+      "1. Estrarre entrambi gli zip, ignorando le cartelle contenitore con nomi non significativi (es. la cartella con nome cirillico) — lavorare solo sui singoli file immagine",
+      "2. Analizzare ogni foto (soggetto, inquadratura, qualità, luce, eventuali doppioni tra i due zip o con le foto già in uploads/) e decidere in autonomia dove ha più senso usarla nel sito (hero, galleria, sezione storia, sezione menù, ecc.), basandosi sulle buone pratiche già applicate in questo progetto (es. la scelta della tavola di mezze come hero perché mostra i piatti più importanti)",
+      "3. Scartare autonomamente le foto di qualità insufficiente (sfocate, mal illuminate, doppioni, watermark visibili) o non pertinenti, motivando brevemente la scelta nel riepilogo del task",
+      "4. Rinominare TUTTE le foto usate (comprese quelle già parzialmente nominate in images.zip) con un nome file chiaro, descrittivo e coerente con la convenzione già in uso nel progetto (minuscolo, trattini, nome-descrittivo.webp o .jpg secondo necessità — es. hero.jpg, storia.jpg, tavola-mezze.webp, sala-murale.webp)",
+      "5. Organizzare i file risultanti in una struttura di cartelle chiara e ordinata dentro il progetto (es. una sottocartella images/ o uploads/organizzate/ con sottocategorie tipo piatti/, ambiente/, vini/ se utile alla manutenzione futura) — il risultato finale deve essere un set di immagini ben organizzato, non uno zip scompattato alla rinfusa",
+      "6. Includere nella valutazione anche le 17 foto sorgente già presenti in uploads/, insieme alle nuove dai due zip",
+      "7. Nel riepilogo del task fotografico, elencare brevemente quali foto sono state usate, dove, con quale nome finale, e quali sono state scartate e perché — così l'utente ha visibilità sulle scelte fatte senza dover approvare ognuna in anticipo"
+    ]
+  },
+  "next_steps_to_implement": {
+    "instruction": "Implementare TUTTI i seguenti punti già proposti in precedenza, valutando l'ordine di priorità più sensato, PIÙ qualsiasi miglioramento aggiuntivo che Claude Code ritiene utile per qualità, performance, design o SEO del sito — motivando ogni aggiunta",
+    "execution_pace": "Procedere UN task alla volta, non tutti insieme nella stessa risposta. Dopo aver completato un task, fermarsi, riassumere brevemente cosa è stato fatto e attendere conferma o via libera dell'utente prima di passare al successivo. Questo riduce il consumo di contesto/token per sessione e rende più facile per l'utente controllare e correggere ogni singola modifica",
+    "confirmed_next_steps": [
+      {
+        "task": "Galleria fotografica",
+        "detail": "Creare una sezione 'Le nostre foto' tra Storia e Contatti, usando le 17 foto disponibili in uploads/ (più eventuali nuove foto fornite dall'utente, seguendo il workflow in photos_handling). Ottimizzare anch'esse con srcset/lazy loading coerentemente col resto del sito"
+      },
+      {
+        "task": "Font in locale",
+        "detail": "Ospitare Marcellus e Work Sans direttamente sul server invece di caricarli da Google Fonts, per: (a) eliminare due connessioni esterne che rallentano l'apertura, (b) risolvere il problema GDPR del trasferimento IP dei visitatori a Google"
+      },
+      {
+        "task": "Conversione WebP/AVIF",
+        "detail": "Convertire tutte le immagini attualmente in JPEG in formato WebP/AVIF con fallback, per un ulteriore ~30% di riduzione peso. In precedenza non è stato possibile per mancanza del codificatore sulla macchina — verificare disponibilità di strumenti/librerie nell'ambiente attuale prima di procedere"
+      },
+      {
+        "task": "Versione inglese del sito",
+        "detail": "Realizzare una versione in inglese, utile perché la zona Darsena è frequentata da turisti da crociera e il personale del ristorante comunica meglio in inglese che in italiano"
+      }
+    ]
+  },
+  "execution_requirements": {
+    "review_backend": "Controllare l'intero backend/codice del sito per bug, errori, link rotti, problemi di performance residui o incoerenze, non solo le parti toccate in questa sessione",
+    "review_design": "Controllare il design in ogni pagina/sezione del sito per coerenza visiva, leggibilità, responsive su mobile e desktop, e qualità estetica complessiva",
+    "tools_and_skills": "Usare tutti gli skill, plugin, MCP o strumenti disponibili nell'ambiente che siano realmente utili per questo lavoro (es. skill per ottimizzazione immagini, SEO, accessibilità, generazione siti) — MA solo se apportano un beneficio concreto al progetto, non per abitudine o completezza. Verificare la disponibilità reale di ogni strumento prima di usarlo",
+    "quality_bar": "Il sito deve rimanere fedele allo stile già stabilito: HTML semantico, nessun framework pesante non necessario, testi non generici, buona accessibilità, performance elevate su mobile (la zona è ad alto traffico turistico/pedonale con connessioni mobile spesso lente)"
+  },
+  "open_questions_for_user": {
+    "instruction": "Prima di considerare il lavoro concluso, verificare con l'utente se rimangono dubbi aperti, in particolare:",
+    "items": [
+      "Il secondo profilo social (meno attivo, oltre a cedro.del.libano.savona): linkarlo comunque nel sito o ignorarlo?",
+      "Priorità tra i 4 next steps confermati: procedere tutti insieme o in un ordine specifico preferito dall'utente?"
+    ]
+  },
+  "session_continuity": {
+    "instruction": "Se la sessione di lavoro diventa lunga o rischia di essere ripresa in un secondo momento, salvare questo intero prompt come file nel progetto (es. PROMPT.md o TASK.json, nella root del progetto accanto a Cedro del Libano.dc.html). Da quel momento, se l'utente scrive semplicemente 'leggi TASK.json e seguilo' (o equivalente), rileggere quel file come mandato completo e aggiornato del lavoro da fare, senza richiedere che l'utente lo reincolli. Questo garantisce una traccia scritta del mandato originale anche riprendendo il lavoro in sessioni successive"
+  },
+  "pre_publish_checklist": {
+    "instruction": "Prima di considerare il sito pronto per la pubblicazione, ripassare esplicitamente e uno per uno i punti in open_questions_for_user con l'utente, chiedendo conferma su ciascuno. Non dare per chiuso il progetto se anche solo uno dei due dubbi (secondo social da linkare o meno, priorità tra i next steps) non è stato esplicitamente confermato dall'utente"
+  }
+}
