@@ -1,0 +1,173 @@
+CEDRO DEL LIBANO — file per il caricamento sul server
+=====================================================
+
+CARICA TUTTO IL CONTENUTO DI QUESTA CARTELLA nella radice del sito
+(di solito public_html/ oppure www/ sul tuo spazio FTP).
+Compresi il file .htaccess e la cartella font/ : il file .htaccess comincia
+con un punto e alcuni programmi FTP lo nascondono — attiva "mostra file
+nascosti" se non lo vedi.
+
+Le uniche cose da NON caricare sono TASK.json, la cartella build/ e
+questo LEGGIMI: servono solo a chi mette mano al sito, non al server.
+
+
+COSA C'È DENTRO
+---------------
+index.html            la pagina in italiano
+index-en.html         la stessa pagina in inglese
+style.css             tutto l'aspetto grafico
+script.js             linguette del menù, navigazione, orario di oggi, galleria
+menu.js               i dati del menù (piatti, prezzi, vini) E la traduzione
+font/                 i caratteri Marcellus e Work Sans
+img/                  tutte le foto, in più misure e più formati
+.htaccess             compressione, cache e indirizzo /en per la pagina inglese
+build/                strumento per rigenerare i dati per Google (NON va sul server)
+logo-cedro-marchio.svg  il marchio (il cedro in oro)
+favicon.svg             l'icona nella linguetta del browser
+apple-touch-icon.png    l'icona per iPhone e iPad
+og-cedro-del-libano.jpg l'anteprima quando il link viene condiviso su
+                        WhatsApp, Facebook o Instagram
+mappa-darsena.png     la mappa della Darsena
+robots.txt            istruzioni per i motori di ricerca
+sitemap.xml           elenco delle pagine per Google
+
+
+LA VERSIONE INGLESE
+-------------------
+L'inglese si raggiunge dal pulsante "EN" in alto a destra, oppure
+all'indirizzo  cedrodellibano-savona.com/en
+
+IMPORTANTE: i prezzi e i piatti stanno in UN SOLO FILE (menu.js), usato da
+tutte e due le lingue. Se correggi un prezzo, si aggiorna da solo anche in
+inglese: non devi toccare due file. In menu.js, sotto ai dati, c'è un elenco
+"TRAD" con le traduzioni delle sole frasi. Se aggiungi un piatto nuovo e non
+scrivi la sua traduzione lì dentro, nella pagina inglese comparirà in
+italiano — non si rompe niente, si vede solo che manca.
+
+I testi delle pagine (racconto, contatti, didascalie) stanno invece dentro
+index.html e index-en.html: quelli vanno cambiati in tutte e due.
+
+
+COME CAMBIARE PREZZI E PIATTI
+-----------------------------
+Apri  menu.js  con un editor di testo (Blocco note va bene).
+Ogni piatto è una riga come questa:
+
+  { n: 'Falafel', d: 'polpette di ceci...', t: [], prices: [p('8,00 €')] }
+
+  n = nome del piatto
+  d = descrizione
+  t = etichette: t('sesamo'), t('aglio'), t('vegano'), t('vegetariano')
+      oppure  []  se non serve nessuna etichetta
+  prices = prezzo, es. p('9,50 €')
+           due formati: prices: [p('6,00 €','33cl'), p('12,00 €','75cl')]
+
+Salva il file e ricaricalo via FTP. Non serve toccare nient'altro.
+
+
+COME CAMBIARE L'ORARIO
+----------------------
+Gli orari si cambiano nel riquadro "Orario" di index.html (e di
+index-en.html). Il cartellino "Aperto ora / Ora chiuso" in cima alla pagina
+si aggiorna da solo leggendo quelle righe.
+Ricordati di aggiornare anche gli orari dentro il blocco
+<script type="application/ld+json"> in cima alle due pagine: quelli servono
+a Google per mostrare l'orario nei risultati di ricerca.
+
+
+LE FOTO
+-------
+Ogni foto è presente in tre formati (AVIF, WebP e JPEG) e in più misure. Il
+telefono scarica quella piccola nel formato più leggero che sa leggere, il
+computer quella grande. È il motivo per cui il sito si apre in un attimo
+anche con la rete del cellulare.
+
+  img/hero-*        apertura della pagina — la tavola di mezze
+                    (hero-mob-* e il ritaglio verticale per i telefoni)
+  img/piatto-*      kafta kebab su pita — fascia nella sezione Menù
+  img/storia-*      la sala con il murale — sezione "La nostra storia"
+  img/vino-1..6-*   le sei schede dei vini
+  img/g-*           le sei foto della galleria, gia ritagliate in 4:3
+
+Per cambiare una foto NON basta sostituire un file: vanno rifatte tutte le
+misure e tutti i formati di quella foto. Manda la foto nuova e te la
+prepariamo. Le foto originali, ordinate e con i nomi giusti, stanno nella
+cartella  _archivio-foto/  qui dentro.
+
+ATTENZIONE: la cartella  _archivio-foto/  NON va caricata sul server.
+Sono ~300 MB di file originali che sul sito non servono: sul server ci vanno
+solo le versioni ottimizzate, che sono gia in  img/ . Quando carichi via FTP,
+salta quella cartella. C'e anche una regola nel .htaccess come rete di
+sicurezza, ma la cosa piu semplice e non caricarla proprio.
+
+
+IL MENÙ IN PDF (facoltativo)
+----------------------------
+Se vuoi il pulsante "Scarica il menù in PDF": carica il file  menu.pdf
+nella radice, accanto a index.html. Poi apri index.html e index-en.html,
+cerca la riga che contiene  id="link-pdf"  e cancella la parola  hidden
+alla fine della riga.
+Finché il file non c'è, il pulsante resta nascosto e nessuno finisce su una
+pagina di errore.
+
+
+LA RICERCA NEL MENÙ
+-------------------
+Sopra i piatti alla carta c'è un campo di ricerca: scrivendo "melanzane"
+restano solo i piatti che la contengono, nel nome, nella descrizione o
+nelle etichette. Funziona senza accenti e senza apostrofi: "wara enab"
+trova "Wara' enab".
+
+Compare solo sulla linguetta "À la carte": sui menù fissi e sui vini le
+voci sono poche e si vedono tutte insieme, quindi lì la ricerca sparisce
+invece di restare lì senza fare niente.
+
+Non c'è niente da configurare: la ricerca lavora sui piatti già presenti
+nella pagina. Se aggiungi un piatto in menu.js, diventa cercabile da solo.
+
+
+I DATI DEL MENÙ PER GOOGLE
+--------------------------
+Dentro le due pagine c'è un blocco che dichiara a Google tutti i piatti
+con i loro prezzi, in italiano e in inglese. Serve a comparire nei
+risultati di ricerca e a farsi trovare dagli assistenti vocali.
+
+IMPORTANTE: quel blocco NON si aggiorna da solo. Ogni volta che cambi un
+prezzo o aggiungi un piatto in menu.js, dopo aver salvato lancia:
+
+    node build/genera-schema.js
+
+e ricarica index.html e index-en.html sul server. Serve Node.js sul
+computer (gratuito, nodejs.org). Se non lo lanci non si rompe niente: il
+sito continua a funzionare, ma Google resta con i prezzi vecchi.
+
+
+DA CONTROLLARE PRIMA DI PUBBLICARE
+----------------------------------
+- Verifica l'indirizzo: il sito scrive "Via del Molo 14r".
+- Il numero di telefono e WhatsApp è +39 353 440 8579.
+- L'Instagram collegato è @cedro.del.libano.savona. Il secondo profilo
+  (@cedrodellibano_) non compare fra i contatti — è dichiarato solo nei dati
+  per Google, in modo che i due profili risultino la stessa attività.
+- Dati legali nel piè di pagina: GIÀ INSERITI —
+  "Cedro del Libano di Shah Israr Hussain · P. IVA 01944060092".
+
+- PREZZI DA FAR CONFERMARE AL PROPRIETARIO. Queste voci sono state prese
+  dalle locandine del ristorante e non erano sul sito prima d'ora:
+    · Birra Almaza — la locandina dice 6 €, il sito dice 4,00 €: quale vale?
+    · Dolci libanesi 6 € al pezzo · degustazione dolci 10 € a persona
+    · Dolci vegani 6 € al pezzo
+    · Menù bimbi 12 € a persona
+    · Biryani di pollo 12 €, solo a pranzo
+    · Vino Sunset Rosé Ksara 2023 — 22 € bottiglia / 6 € calice
+    · Vino Ksara Blanc de Blancs 2022 — 22 € bottiglia / 6 € calice
+    · Vino Cave Kouroum Petit Noir 2016 — 25 € bottiglia / 7 € calice
+
+- sitemap.xml, robots.txt e .htaccess puntano a
+  https://cedrodellibano-savona.com/
+  Se il dominio definitivo è diverso, cambia l'indirizzo in quei file e nei
+  tag <link rel="canonical">, <link rel="alternate"> e <meta property="og:...">
+  delle due pagine.
+- Nel file .htaccess c'è un blocco per forzare https e togliere il www:
+  attivalo (togli i cancelletti # a inizio riga) SOLO dopo che il
+  certificato HTTPS è attivo, altrimenti il sito diventa irraggiungibile.
