@@ -110,6 +110,7 @@
   }
 
 
+<<<<<<< HEAD
   /* La firma di Ahmad: il tratto vettoriale si disegna una volta sola
      quando entra nello schermo, come farebbe una penna vera. Di base e'
      gia' tutto disegnato nell'HTML — solo se possiamo animarla lo
@@ -174,10 +175,24 @@
       });
     }, { rootMargin: '-45% 0px -50% 0px' });
 
+=======
+  /* Voce di navigazione attiva */
+  var sezioni = ['hero', 'menu', 'dove', 'storia', 'foto', 'contatti'];
+  if ('IntersectionObserver' in window) {
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        Array.prototype.forEach.call(document.querySelectorAll('.nav a'), function (a) {
+          a.classList.toggle('nav__attiva', a.getAttribute('href') === '#' + e.target.id);
+        });
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+>>>>>>> 56df2a74599a61cfcbdb5f6504e4ce58527d08b5
     sezioni.forEach(function (id) {
       var el = document.getElementById(id);
       if (el) spy.observe(el);
     });
+<<<<<<< HEAD
 
     Array.prototype.forEach.call(document.querySelectorAll('.nav a[href^="#"], .nav-mobile a[href^="#"]'), function (a) {
       a.addEventListener('click', function () {
@@ -333,6 +348,8 @@
       }, { threshold: .4 });
       Array.prototype.forEach.call(pezziPiede, function (p) { piede.observe(p); });
     }
+=======
+>>>>>>> 56df2a74599a61cfcbdb5f6504e4ce58527d08b5
   }
 
   /* Orario: giorno di oggi + stato "aperto ora / chiuso" nell'apertura
