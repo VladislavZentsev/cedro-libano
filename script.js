@@ -136,46 +136,68 @@
      la brace: se domani serve un'altra fascia video da qualche altra
      parte, basta ripetere la stessa struttura e funziona da sola.
 
-     Due cose, indipendenti fra loro:
+     Due cose, legate fra loro:
 
-     1) Il filmato parte solo quando entra nello schermo e si ferma
-        quando esce — niente fuoco che consuma processore e batteria
-        mentre si legge il menu piu' sotto.
-
-     2) La fascia cresce man mano che entra, fino alla misura piena
+     1) La fascia cresce man mano che entra, fino alla misura piena
         dove si vede tutto il filmato senza tagli. La crescita segue
         lo scorrimento, ma non torna mai indietro: si tiene il valore
         piu' alto raggiunto, quindi risalendo resta grande. Arrivata
         in fondo si smette di ascoltare lo scorrimento — a quel punto
-        non c'e' piu' niente da calcolare. */
+        non c'e' piu' niente da calcolare.
+
+     2) Il filmato NON parte mentre la fascia e' ancora piccola: fino
+        ad allora si vede solo il primo fotogramma (il poster). Parte
+        quando la crescita e' finita, cosi' il video si guarda alla
+        sua misura piena dall'inizio e non a meta' strada. Poi si
+        ferma quando esce dallo schermo e riparte rientrando — niente
+        fuoco che consuma processore e batteria mentre si legge il
+        menu piu' sotto. */
   var menoMovimentoFasce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var fasceVideo = document.querySelectorAll('[data-fascia-video]');
 
   if (fasceVideo.length && !menoMovimentoFasce) {
 
-    /* 1) avvio e pausa del filmato */
+    var daSeguire = [];
+    var tutte = [];
+
+    Array.prototype.forEach.call(fasceVideo, function (f) {
+      f.style.setProperty('--apertura', '0');
+      var voce = {
+        elemento: f,
+        film: f.querySelector('video'),
+        massimo: 0,
+        cresciuta: false,
+        dentro: false
+      };
+      tutte.push(voce);
+      daSeguire.push(voce);
+    });
+
+    /* Decide se il filmato deve andare: serve che sia finita la
+       crescita E che la fascia sia sullo schermo. */
+    function regola(voce) {
+      if (!voce.film) return;
+      if (voce.cresciuta && voce.dentro) { voce.film.play().catch(function () {}); }
+      else { voce.film.pause(); }
+    }
+
     if ('IntersectionObserver' in window) {
       var occhio = new IntersectionObserver(function (voci) {
         voci.forEach(function (v) {
-          var film = v.target.querySelector('video');
-          if (!film) return;
-          if (v.isIntersecting) { film.play().catch(function () {}); }
-          else { film.pause(); }
+          var voce = tutte.filter(function (x) { return x.elemento === v.target; })[0];
+          if (!voce) return;
+          voce.dentro = v.isIntersecting;
+          regola(voce);
         });
       }, { threshold: .3 });
-      Array.prototype.forEach.call(fasceVideo, function (f) {
-        var film = f.querySelector('video');
-        if (film) film.setAttribute('preload', 'metadata');
-        occhio.observe(f);
-      });
+      tutte.forEach(function (voce) { occhio.observe(voce.elemento); });
+    } else {
+      /* Senza IntersectionObserver non si puo' sapere quando la fascia
+         entra ed esce: si da' per buono che sia sullo schermo, cosi' il
+         filmato parte comunque a crescita finita. Meglio un video che
+         gira anche fuori campo che un video che non parte mai. */
+      tutte.forEach(function (voce) { voce.dentro = true; });
     }
-
-    /* 2) la crescita che non torna indietro */
-    var daSeguire = [];
-    Array.prototype.forEach.call(fasceVideo, function (f) {
-      f.style.setProperty('--apertura', '0');
-      daSeguire.push({ elemento: f, massimo: 0 });
-    });
 
     var giaInCoda = false;
 
@@ -193,6 +215,14 @@
         if (quanto < 0) quanto = 0;
         if (quanto > 1) quanto = 1;
 
+        /* Il filmato si prepara appena la fascia comincia a entrare,
+           cosi' e' pronto quando servira'. Senza questo, al momento di
+           partire dovrebbe ancora cominciare a scaricare. */
+        if (quanto > 0 && f.film && f.film.getAttribute('preload') === 'none') {
+          f.film.setAttribute('preload', 'metadata');
+          f.film.load();
+        }
+
         /* il passo indietro non conta: si tiene il massimo raggiunto */
         if (quanto > f.massimo) {
           f.massimo = quanto;
@@ -201,6 +231,8 @@
 
         if (f.massimo >= 1) {
           f.elemento.style.setProperty('--apertura', '1');
+          f.cresciuta = true;
+          regola(f);
           daSeguire.splice(i, 1);
         }
       }
