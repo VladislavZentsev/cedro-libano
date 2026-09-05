@@ -1047,12 +1047,18 @@ img { max-width: 100%; height: auto; }
 }
 .fascia-video__telaio {
   position: relative;
-  /* 4:3 e' il formato vero del filmato: Veo lo consegnava dentro una
-     tela 16:9 con due bande nere ai lati, tolte in fase di montaggio.
-     La misura piena riempie quasi tutta l'altezza dello schermo — piu'
-     grande di cosi' si dovrebbe tagliare qualcosa, e non vogliamo. */
-  width: min(100%, calc(90svh * 4 / 3));
+  /* Il filmato e' 4:3 (Veo lo consegnava dentro una tela 16:9 con due
+     bande nere ai lati, tolte in fase di montaggio).
+
+     A misura piena prende tutta la larghezza della pagina. Su schermo
+     largo un 4:3 a tutta larghezza sarebbe piu' alto dello schermo, e
+     resterebbe fuori: per questo l'altezza si ferma allo schermo e il
+     filmato viene ritagliato sopra e sotto, restando centrato. Si perde
+     un po' di fumo in alto e di braci in basso — gli spiedini, che sono
+     il soggetto, stanno in mezzo e non vengono mai toccati. */
+  width: 100%;
   aspect-ratio: 4 / 3;
+  max-height: 100svh;
   overflow: hidden;
   background: #1B1613;
   transform: scale(calc(.62 + .38 * var(--apertura)));
