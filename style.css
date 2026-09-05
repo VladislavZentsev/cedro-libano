@@ -1047,17 +1047,16 @@ img { max-width: 100%; height: auto; }
 }
 .fascia-video__telaio {
   position: relative;
-  /* Il filmato e' 4:3 (Veo lo consegnava dentro una tela 16:9 con due
-     bande nere ai lati, tolte in fase di montaggio).
+  /* Il filmato e' 16:9 pieno, generato da una foto gia' allargata a 16:9
+     apposta. E' il motivo per cui questa fascia funziona: a tutta
+     larghezza il riquadro ha la stessa forma del filmato, quindi non si
+     taglia niente e su uno schermo panoramico riempie lo schermo intero.
 
-     A misura piena prende tutta la larghezza della pagina. Su schermo
-     largo un 4:3 a tutta larghezza sarebbe piu' alto dello schermo, e
-     resterebbe fuori: per questo l'altezza si ferma allo schermo e il
-     filmato viene ritagliato sopra e sotto, restando centrato. Si perde
-     un po' di fumo in alto e di braci in basso — gli spiedini, che sono
-     il soggetto, stanno in mezzo e non vengono mai toccati. */
+     Il limite di altezza serve solo agli schermi molto alti e stretti
+     (telefono in verticale), dove un 16:9 a tutta larghezza resta basso
+     e va benissimo cosi'. */
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 9;
   max-height: 100svh;
   overflow: hidden;
   background: #1B1613;
