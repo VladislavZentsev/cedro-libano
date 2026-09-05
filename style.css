@@ -1030,19 +1030,32 @@ img { max-width: 100%; height: auto; }
    Il rapporto e' 16:9 come il filmato: cosi' alla fine si vede per
    intero. L'altezza e' limitata perche' su schermi molto larghi un 16:9
    a tutta larghezza sarebbe piu' alto dello schermo. */
+/* La sezione che presenta il video: il testo respira normale, ma sotto
+   lascia poco spazio, cosi' il filmato arriva subito dopo le parole. */
+.sezione--brace { padding-bottom: clamp(24px, 3vw, 44px); }
+.fascia-video__testa { max-width: 720px; }
+
 .fascia-video {
   --apertura: 1;              /* 0 = piccolo, 1 = misura piena. Lo muove lo script. */
   display: flex;
   justify-content: center;
-  padding: clamp(20px, 4vw, 52px) 0;
+  padding: clamp(14px, 2.5vw, 30px) 0 clamp(40px, 7vw, 96px);
+  /* Esce dal bordo laterale della sezione (22px per parte): sul telefono
+     e' la larghezza a fare da limite, e quei 44px erano proprio quelli
+     che mancavano per riempire lo schermo. */
+  margin-inline: -22px;
 }
 .fascia-video__telaio {
   position: relative;
-  width: min(100%, calc(78svh * 16 / 9));
-  aspect-ratio: 16 / 9;
+  /* 4:3 e' il formato vero del filmato: Veo lo consegnava dentro una
+     tela 16:9 con due bande nere ai lati, tolte in fase di montaggio.
+     La misura piena riempie quasi tutta l'altezza dello schermo — piu'
+     grande di cosi' si dovrebbe tagliare qualcosa, e non vogliamo. */
+  width: min(100%, calc(90svh * 4 / 3));
+  aspect-ratio: 4 / 3;
   overflow: hidden;
   background: #1B1613;
-  transform: scale(calc(.6 + .4 * var(--apertura)));
+  transform: scale(calc(.62 + .38 * var(--apertura)));
   /* Un filo di transizione ammorbidisce gli scatti dello scorrimento
      senza far restare indietro l'immagine rispetto al dito. */
   transition: transform .16s linear;
@@ -1063,6 +1076,15 @@ img { max-width: 100%; height: auto; }
     linear-gradient(rgba(16,13,11,.42), transparent 18%, transparent 80%, rgba(16,13,11,.42)),
     linear-gradient(90deg, rgba(16,13,11,.34), transparent 12%, transparent 88%, rgba(16,13,11,.34));
 }
+/* Gli stessi angoli dorati dei pannelli del menu': il filmato risulta
+   incorniciato come gli altri riquadri del sito invece che incollato
+   sulla pagina. Stanno dentro al telaio (che taglia quello che esce),
+   quindi partono da zero e non da -1px come altrove. */
+.fascia-video__telaio .angolo { z-index: 2; }
+.fascia-video__telaio .angolo--tl { top: 0; left: 0; }
+.fascia-video__telaio .angolo--tr { top: 0; right: 0; }
+.fascia-video__telaio .angolo--bl { bottom: 0; left: 0; }
+.fascia-video__telaio .angolo--br { bottom: 0; right: 0; }
 /* Chi ha chiesto meno movimento non vede ne' la crescita ne' la fiamma:
    la fascia e' subito alla misura piena e resta sulla prima immagine
    (il poster prende il posto del filmato, e lo script non lo avvia). */
