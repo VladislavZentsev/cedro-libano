@@ -278,6 +278,68 @@
     Array.prototype.forEach.call(document.querySelectorAll('.nav a'), function (a) {
       a.classList.toggle('nav__attiva', a.getAttribute('href') === riferimento);
     });
+    muoviRiflettore();
+  }
+
+
+  /* Riflettore: una barra di luce che scivola sopra la voce attiva e le
+     proietta sotto un cono caldo. Non e' la sottolineatura di prima: la
+     riga non sta sotto la parola ma sopra, e quello che si vede sotto e'
+     luce che sfuma, non un tratto. Si costruisce da JavaScript perche'
+     senza JavaScript non avrebbe nulla da seguire. */
+  var riflettore = null;
+  var vociLuce = [];
+
+  (function preparaRiflettore() {
+    var nav = document.querySelector('.nav');
+    if (!nav) return;
+
+    vociLuce = Array.prototype.filter.call(nav.querySelectorAll('a'), function (a) {
+      return !a.classList.contains('bottone');
+    });
+    if (!vociLuce.length) return;
+
+    riflettore = document.createElement('span');
+    riflettore.className = 'nav__riflettore';
+    riflettore.setAttribute('aria-hidden', 'true');
+
+    var fascio = document.createElement('span');
+    fascio.className = 'nav__fascio';
+    riflettore.appendChild(fascio);
+    nav.appendChild(riflettore);
+
+    vociLuce.forEach(function (a) {
+      a.addEventListener('mouseenter', function () { puntaSu(a); });
+      a.addEventListener('focus', function () { puntaSu(a); });
+    });
+    nav.addEventListener('mouseleave', function () { muoviRiflettore(); });
+    nav.addEventListener('focusout', function () { muoviRiflettore(); });
+
+    window.addEventListener('resize', function () { muoviRiflettore(); }, { passive: true });
+
+    /* Al primo giro senza transizione, altrimenti la barra parte da
+       sinistra e attraversa il menu davanti agli occhi. */
+    riflettore.style.transition = 'none';
+    muoviRiflettore();
+    void riflettore.offsetWidth;
+    riflettore.style.transition = '';
+  }());
+
+  function puntaSu(voce) {
+    if (!riflettore || !voce) return;
+    riflettore.style.width = voce.offsetWidth + 'px';
+    riflettore.style.transform = 'translateX(' + voce.offsetLeft + 'px)';
+    riflettore.style.opacity = '1';
+  }
+
+  function muoviRiflettore() {
+    if (!riflettore) return;
+    var attiva = null;
+    vociLuce.forEach(function (a) {
+      if (a.classList.contains('nav__attiva')) attiva = a;
+    });
+    if (attiva) puntaSu(attiva);
+    else riflettore.style.opacity = '0';
   }
 
   if ('IntersectionObserver' in window) {

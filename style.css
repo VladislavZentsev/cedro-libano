@@ -1761,6 +1761,54 @@ img { max-width: 100%; height: auto; }
   .nav a:not(.bottone) { transition: none; }
 }
 
+/* --- Il riflettore sulla voce del menu -------------------
+   Non e' la vecchia sottolineatura: e' una lampada. Una barretta di
+   luce calda scorre sopra la voce e ci lascia cadere sotto un cono,
+   come un faretto da teatro puntato sulla parola. Sul resto del sito
+   la luce e' gia' il filo conduttore (il cedro che si accende, le
+   braci, gli occhielli), quindi qui il menu parla la stessa lingua
+   invece di aggiungere un segno grafico estraneo.
+
+   Col mouse il faretto accompagna la voce sotto il cursore e poi
+   torna su quella attiva: si capisce dove si sta per andare prima
+   ancora di cliccare.
+
+   Lo costruisce il JavaScript: senza, non c'e' proprio, e la voce
+   attiva resta riconoscibile dal colore e dall'alone come prima. */
+.nav { position: relative; }
+.nav__riflettore {
+  position: absolute;
+  top: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--oro-chiaro);
+  box-shadow: 0 0 12px 2px rgba(210, 168, 58, .5);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(0);
+  transition: transform .42s cubic-bezier(.22, 1, .36, 1),
+              width .42s cubic-bezier(.22, 1, .36, 1),
+              opacity .3s ease;
+}
+/* Il cono di luce: piu' largo della barretta e rastremato verso il
+   basso, cosi' sembra uscire da una sorgente puntiforme. Sfuma prima
+   di arrivare in fondo, per non tagliare netto sul bordo dell'header. */
+.nav__fascio {
+  position: absolute;
+  left: -32%;
+  top: 2px;
+  width: 164%;
+  height: 44px;
+  clip-path: polygon(7% 100%, 27% 0, 73% 0, 93% 100%);
+  background: linear-gradient(rgba(210, 168, 58, .32), rgba(210, 168, 58, 0) 78%);
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav__riflettore { transition: opacity .3s ease; }
+}
+
 /* --- 4. La foto d'apertura che si posa ------------------
    Legata allo scorrimento, non a un cronometro: la foto parte un po'
    ingrandita e rientra piano mentre scendi, come se si assestasse.

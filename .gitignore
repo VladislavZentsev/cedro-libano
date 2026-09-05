@@ -10,3 +10,4 @@ package-lock.json
 _prova-*.html
 _analisi-*.html
 _test-*.html
+.claude/
