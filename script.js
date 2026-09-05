@@ -155,6 +155,12 @@
   var menoMovimentoFasce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var fasceVideo = document.querySelectorAll('[data-fascia-video]');
 
+  /* A che punto della pausa la crescita e' finita. 0.7 = la fascia
+     raggiunge la misura piena al 70% della corsa, e il restante 30% e'
+     tempo in cui si vede grande, ferma e in movimento prima che la
+     pagina riparta. */
+  var FINE_CRESCITA = 0.7;
+
   if (fasceVideo.length && !menoMovimentoFasce) {
 
     var daSeguire = [];
@@ -209,16 +215,26 @@
         var f = daSeguire[i];
         var r = f.elemento.getBoundingClientRect();
 
-        /* 0 quando il bordo alto tocca il fondo dello schermo,
-           1 quando la fascia e' arrivata al centro dello schermo. */
-        var quanto = (schermo - r.top) / (schermo / 2 + r.height / 2);
+        /* La fascia e' alta piu' di uno schermo e il filmato dentro resta
+           agganciato in mezzo: la "corsa" e' quell'altezza in piu', ed e'
+           il tratto in cui per chi guarda la pagina sembra ferma.
+
+           0 = la fascia ha appena raggiunto il bordo alto dello schermo
+           1 = la corsa e' finita e si riparte.
+
+           La crescita pero' si completa prima della fine (FINE_CRESCITA),
+           cosi' resta un tratto in cui il filmato si vede grande e fermo
+           prima che la pagina prosegua: e' li' che parte, gia' a misura
+           piena, come deve. */
+        var corsa = r.height - schermo;
+        var quanto = corsa > 0 ? (-r.top) / (corsa * FINE_CRESCITA) : 1;
         if (quanto < 0) quanto = 0;
         if (quanto > 1) quanto = 1;
 
         /* Il filmato si prepara appena la fascia comincia a entrare,
            cosi' e' pronto quando servira'. Senza questo, al momento di
            partire dovrebbe ancora cominciare a scaricare. */
-        if (quanto > 0 && f.film && f.film.getAttribute('preload') === 'none') {
+        if (r.top < schermo && f.film && f.film.getAttribute('preload') === 'none') {
           f.film.setAttribute('preload', 'metadata');
           f.film.load();
         }

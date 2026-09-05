@@ -1035,15 +1035,37 @@ img { max-width: 100%; height: auto; }
 .sezione--brace { padding-bottom: clamp(24px, 3vw, 44px); }
 .fascia-video__testa { max-width: 720px; }
 
+/* La fascia si "aggancia": arrivando al video la pagina sembra fermarsi,
+   il filmato resta fermo in mezzo allo schermo e cresce, e solo quando
+   ha finito si riparte verso la sezione dopo.
+
+   Come funziona davvero: NON si blocca lo scorrimento (rubare la rotella
+   al browser rompe tastiera, telefono e accessibilita'). Si fa il
+   contrario — la fascia e' alta piu' di uno schermo e il filmato dentro
+   e' "sticky": la pagina continua a scorrere come sempre, ma il video
+   resta inchiodato al centro finche' non e' finita l'altezza in piu'.
+   L'effetto per chi guarda e' quello di una pausa; per il browser e'
+   uno scorrimento normalissimo.
+
+   --corsa e' quanto dura la pausa. La crescita finisce prima della fine
+   (vedi lo script), cosi' resta un tratto in cui il filmato si vede
+   grande e fermo prima di proseguire. */
 .fascia-video {
   --apertura: 1;              /* 0 = piccolo, 1 = misura piena. Lo muove lo script. */
-  display: flex;
-  justify-content: center;
-  padding: clamp(14px, 2.5vw, 30px) 0 clamp(40px, 7vw, 96px);
+  --corsa: 90svh;
+  height: calc(100svh + var(--corsa));
   /* Esce dal bordo laterale della sezione (22px per parte): sul telefono
      e' la larghezza a fare da limite, e quei 44px erano proprio quelli
      che mancavano per riempire lo schermo. */
   margin-inline: -22px;
+}
+.fascia-video__aggancio {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .fascia-video__telaio {
   position: relative;
@@ -1081,19 +1103,14 @@ img { max-width: 100%; height: auto; }
     linear-gradient(rgba(16,13,11,.42), transparent 18%, transparent 80%, rgba(16,13,11,.42)),
     linear-gradient(90deg, rgba(16,13,11,.34), transparent 12%, transparent 88%, rgba(16,13,11,.34));
 }
-/* Gli stessi angoli dorati dei pannelli del menu': il filmato risulta
-   incorniciato come gli altri riquadri del sito invece che incollato
-   sulla pagina. Stanno dentro al telaio (che taglia quello che esce),
-   quindi partono da zero e non da -1px come altrove. */
-.fascia-video__telaio .angolo { z-index: 2; }
-.fascia-video__telaio .angolo--tl { top: 0; left: 0; }
-.fascia-video__telaio .angolo--tr { top: 0; right: 0; }
-.fascia-video__telaio .angolo--bl { bottom: 0; left: 0; }
-.fascia-video__telaio .angolo--br { bottom: 0; right: 0; }
-/* Chi ha chiesto meno movimento non vede ne' la crescita ne' la fiamma:
-   la fascia e' subito alla misura piena e resta sulla prima immagine
-   (il poster prende il posto del filmato, e lo script non lo avvia). */
+/* Chi ha chiesto meno movimento non vede ne' la crescita ne' la fiamma,
+   e soprattutto non si becca la pausa: niente altezza in piu' da
+   scorrere, niente aggancio, la fascia e' subito alla misura piena e
+   resta sulla prima immagine (il poster prende il posto del filmato, e
+   lo script non lo avvia). */
 @media (prefers-reduced-motion: reduce) {
+  .fascia-video { height: auto; padding: clamp(14px, 2.5vw, 30px) 0 clamp(40px, 7vw, 96px); }
+  .fascia-video__aggancio { position: static; height: auto; }
   .fascia-video__telaio { transform: none; transition: none; }
   .fascia-video__filmato { display: none; }
   .fascia-video__telaio { background: #1B1613 url('img/g-brace-video-poster.jpg') center / cover; }
