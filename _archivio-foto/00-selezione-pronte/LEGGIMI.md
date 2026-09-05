@@ -59,6 +59,32 @@ ramo tagliato dal bordo. **Online dal 4 settembre 2026.**
 
 La scartata è in `../01-foto-sito/alternative/piatto__kafta-pita-nuova-B.png`.
 
+## La fascia video della brace — foto allargata a 16:9
+
+Il video generato la prima volta (da `g-brace__spiedini-brace.png`, 4:3) aveva
+le bande nere ai lati: il generatore video non allarga davvero la scena, si
+limita a incollare la foto stretta dentro una tela più larga. Soluzione in
+due passaggi — prima allargare la **foto**, poi animare quella già larga.
+
+Otto tentativi di allargamento (ChatGPT, "Extend"/generico, Firefly con Flux
+e con Gemini Flash), tutti a partire dalla stessa foto vera. Scelta
+`g-brace__spiedini-brace-16-9.png` (una delle tre di ChatGPT): controllando i
+bordi sinistro e destro ingranditi, è l'unica dove la brace resta accesa e
+uniforme fino al margine, senza cali di luce né cambi di texture. Le altre
+due di ChatGPT erano quasi identiche ma con la carne troppo vicina al bordo
+sinistro (una, rischioso per l'effetto di apertura del video) o un angolo
+leggermente spento (l'altra). Le due "Extend" avevano una fiammella isolata
+senza motivo in alto a destra; le due Firefly cambiavano visibilmente
+texture delle braci verso il bordo destro.
+
+Questa foto allargata è il **primo fotogramma** da caricare per generare il
+video (vedi il prompt strutturato che hai già). Le sette scartate sono in
+`../01-foto-sito/alternative/g-brace__spiedini-brace-16-9-B-*`.
+
+I quattro tentativi di video già generati con Kling/Flow dalla vecchia foto
+4:3 (`googleflow_1-4.mp4`) sono stati rimossi: partivano da un fotogramma
+ormai superato, rigenerare da capo con la foto 16:9 costa meno che sistemarli.
+
 ## Gli originali veri
 
 In `../01-foto-sito/originali-veri/` ci sono gli scatti autentici del locale,
