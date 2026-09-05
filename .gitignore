@@ -1,0 +1,12 @@
+# Strumenti di sviluppo temporanei (sharp, ffmpeg-static...): si installano
+# quando servono e si rimuovono subito dopo, non vanno mai committati.
+node_modules/
+package.json
+package-lock.json
+
+# File di prova/analisi che uso per verificare un effetto prima di
+# pubblicarlo: iniziano sempre con l'underscore e si cancellano da soli
+# a fine verifica, ma per sicurezza restano fuori dal repository.
+_prova-*.html
+_analisi-*.html
+_test-*.html
