@@ -51,10 +51,13 @@
   src: url('font/marcellus-400-latin.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
+<<<<<<< HEAD
 /* La firma di Ahmad non usa piu un font a runtime: il nome e un
    tratto vettoriale vero (vedi la sezione ".firma" piu sotto), tracciato
    una volta sola dal font Mrs Saint Delafield e poi disegnato via SVG.
    Zero peso in piu sul sito: nessun font da scaricare per una sola parola. */
+=======
+>>>>>>> 56df2a74599a61cfcbdb5f6504e4ce58527d08b5
 
 /* Cedro del Libano — Savona
    Marcellus + Work Sans / base bruna calda, oro caldo, bordeaux come accento */
@@ -87,6 +90,7 @@
 
 * { box-sizing: border-box; }
 
+<<<<<<< HEAD
 /* La protezione contro lo scorrimento laterale sta qui e NON sul body.
    Motivo: per regola CSS, se un asse e' "hidden" l'altro passa da
    "visible" ad "auto", e il body diventa un contenitore che scorre —
@@ -98,6 +102,9 @@ html {
   scroll-behavior: smooth;
   overflow-x: hidden;
 }
+=======
+html { scroll-behavior: smooth; }
+>>>>>>> 56df2a74599a61cfcbdb5f6504e4ce58527d08b5
 
 body {
   margin: 0;
@@ -106,6 +113,7 @@ body {
   font-family: var(--sans);
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
+<<<<<<< HEAD
 }
 
 /* =========================================================
@@ -194,6 +202,29 @@ body::after {
 @media (max-width: 600px) {
   body::after { display: none; }
 }
+=======
+  overflow-x: hidden;
+}
+
+/* I due aloni di colore che stanno dietro a tutto. Prima erano lo sfondo
+   del body con background-attachment: fixed, che costringeva il browser a
+   ridipingere l'intero schermo ad ogni fotogramma dello scorrimento.
+   Ora sono un livello per conto loro: il browser lo sposta invece di
+   ridisegnarlo. Visivamente identico, incomparabilmente più leggero. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    radial-gradient(1100px 620px at 82% -8%, rgba(123,30,38,.20), transparent 62%),
+    radial-gradient(900px 700px at 6% 34%, rgba(96,66,32,.26), transparent 60%);
+  /* dice al browser di tenerlo su un piano separato, così scorrere
+     non comporta ridisegnarlo: è l'unico punto del sito dove serve */
+  will-change: transform;
+}
+>>>>>>> 56df2a74599a61cfcbdb5f6504e4ce58527d08b5
 
 img { max-width: 100%; }
 
@@ -320,8 +351,12 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; }
   border-bottom: 1px solid transparent;
 }
 .nav a:not(.bottone):hover { color: var(--crema); }
+<<<<<<< HEAD
 /* La voce attiva e' definita in fondo al file, nella sezione
    "La voce attiva: solo colore e un filo di luce". */
+=======
+.nav a.nav__attiva { color: var(--oro-chiaro); border-bottom-color: var(--oro); }
+>>>>>>> 56df2a74599a61cfcbdb5f6504e4ce58527d08b5
 .nav .bottone { margin-left: 14px; }
 
 .hamburger {
@@ -772,6 +807,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; }
   background: #1B1613;
 }
 .storia__foto img { width: 100%; height: 100%; min-height: 420px; object-fit: cover; display: block; }
+<<<<<<< HEAD
 /* La firma: un tratto vero, non un font che finge la scrittura a mano.
    Il nome e' un percorso vettoriale tracciato una volta sola (fuori dal
    sito) dal font corsivo Mrs Saint Delafield, poi disegnato come farebbe
@@ -809,6 +845,9 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; }
   to   { clip-path: inset(0 0 0 0); }
 }
 .firma__ruolo { font-family: var(--sans); font-weight: 400; font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--grigio-scuro); }
+=======
+.firma { margin: 0; font-family: var(--serif); font-size: 19px; color: var(--oro-chiaro); letter-spacing: .02em; }
+>>>>>>> 56df2a74599a61cfcbdb5f6504e4ce58527d08b5
 
 /* ---------- recensioni ---------- */
 
@@ -1009,45 +1048,24 @@ img { max-width: 100%; height: auto; }
 }
 .fascia img { width: 100%; object-fit: cover; display: block; filter: saturate(.96); }
 
-/* =========================================================
-   Fascia video — componente riusabile
-
-   Serve per qualunque video "a tutta pagina" del sito, non solo per la
-   brace: basta ripetere la stessa struttura con l'attributo
-   data-fascia-video e lo script fa il resto.
-
-   Come si comporta: mentre la fascia entra nello schermo il filmato
-   cresce, fino ad arrivare alla sua misura piena — dove si vede tutto,
-   niente tagliato ai bordi. Da quel momento resta grande per sempre:
-   tornando indietro non si rimpicciolisce.
-
-   Perche' cresce con una scala e non cambiando le misure vere: lo spazio
-   che occupera' da grande e' gia' riservato fin dall'inizio, quindi
-   mentre cresce non spinge giu' il resto della pagina e lo scorrimento
-   non fa scatti. Chi arriva dopo (la sezione seguente) sta gia' al suo
-   posto definitivo.
-
-   Il rapporto e' 16:9 come il filmato: cosi' alla fine si vede per
-   intero. L'altezza e' limitata perche' su schermi molto larghi un 16:9
-   a tutta larghezza sarebbe piu' alto dello schermo. */
-.fascia-video {
-  --apertura: 1;              /* 0 = piccolo, 1 = misura piena. Lo muove lo script. */
-  display: flex;
-  justify-content: center;
-  padding: clamp(20px, 4vw, 52px) 0;
-}
-.fascia-video__telaio {
+<<<<<<< HEAD
+/* Video della brace: una fascia larga tutta la pagina, fra la storia e le
+   foto — non un riquadro piccolo in mezzo alla galleria. Nasce come foto
+   (l'attributo poster) e diventa video da sola appena arrivano i due file
+   in img/: nessun codice da toccare una seconda volta, ed è per questo
+   che si può caricare sul sito già oggi, prima che il video esista. */
+.brace-video {
+  /* nessun trucco di larghezza: e un div in cima al body, senza
+     padding intorno, quindi e gia largo quanto la pagina da solo.
+     width: 100vw qui avrebbe contato anche la barra di scorrimento
+     e prodotto otto pixel di troppo — verificato, e tolto apposta. */
   position: relative;
-  width: min(100%, calc(78svh * 16 / 9));
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 21 / 9;
   overflow: hidden;
   background: #1B1613;
-  transform: scale(calc(.6 + .4 * var(--apertura)));
-  /* Un filo di transizione ammorbidisce gli scatti dello scorrimento
-     senza far restare indietro l'immagine rispetto al dito. */
-  transition: transform .16s linear;
 }
-.fascia-video__filmato {
+@media (max-width: 1023px) { .brace-video { aspect-ratio: 16 / 9; } }
+.brace-video__filmato {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
   object-fit: cover;
@@ -1055,23 +1073,24 @@ img { max-width: 100%; height: auto; }
 }
 /* lo stesso velo caldo dell'apertura, per fondere i bordi nel resto
    della pagina invece di lasciare un rettangolo netto */
-.fascia-video__telaio::after {
+.brace-video::before {
   content: '';
   position: absolute; inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(rgba(16,13,11,.42), transparent 18%, transparent 80%, rgba(16,13,11,.42)),
-    linear-gradient(90deg, rgba(16,13,11,.34), transparent 12%, transparent 88%, rgba(16,13,11,.34));
+    linear-gradient(rgba(16,13,11,.5), transparent 20%, transparent 78%, rgba(16,13,11,.5)),
+    linear-gradient(90deg, rgba(16,13,11,.4), transparent 14%, transparent 86%, rgba(16,13,11,.4));
 }
-/* Chi ha chiesto meno movimento non vede ne' la crescita ne' la fiamma:
-   la fascia e' subito alla misura piena e resta sulla prima immagine
-   (il poster prende il posto del filmato, e lo script non lo avvia). */
+/* Chi ha chiesto meno movimento non deve vedere fiamma e fumo muoversi
+   da soli: il video resta sulla prima immagine (il poster prende il suo
+   posto) e lo script piu sotto non lo avvia. */
 @media (prefers-reduced-motion: reduce) {
-  .fascia-video__telaio { transform: none; transition: none; }
-  .fascia-video__filmato { display: none; }
-  .fascia-video__telaio { background: #1B1613 url('img/g-brace-video-poster.jpg') center / cover; }
+  .brace-video__filmato { display: none; }
+  .brace-video { background: #1B1613 url('img/g-brace-video-poster.jpg') center / cover; }
 }
 
+=======
+>>>>>>> 56df2a74599a61cfcbdb5f6504e4ce58527d08b5
 /* Stato di apertura in tempo reale */
 .stato {
   margin: 0;
@@ -1282,8 +1301,29 @@ img { max-width: 100%; height: auto; }
 
 @media print { .galleria, .lente { display: none !important; } }
 
+<<<<<<< HEAD
 /* Il selettore di lingua ora e la pillola IT | EN: sta in fondo al file,
    nella sezione "Fase 1 — i dettagli animati". */
+=======
+/* Selettore di lingua nell'intestazione */
+.lingua {
+  font-size: 12px;
+  letter-spacing: .16em;
+  padding: 9px 12px;
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--grigio-scuro);
+  border: 1px solid rgba(210,168,58,.28);
+  margin-left: 10px;
+  transition: color .25s ease, border-color .25s ease;
+}
+.lingua:hover { color: var(--crema); border-color: var(--oro); }
+@media (max-width: 1023px) { .lingua { margin-left: 0; margin-right: 8px; } }
+@media print { .lingua { display: none; } }
+>>>>>>> 56df2a74599a61cfcbdb5f6504e4ce58527d08b5
 
 /* Il link della mappa è un bersaglio a sé, non un link dentro una frase:
    gli diamo un'area toccabile da dito, non da mouse. */
@@ -1633,6 +1673,7 @@ img { max-width: 100%; height: auto; }
   .cdl-scintilla { opacity: .5; }
   .hero .occhiello, .hero h1, .hero__claim { background-position: 0 0, 0 0; }
 }
+<<<<<<< HEAD
 
 
 /* =========================================================
@@ -1740,10 +1781,40 @@ img { max-width: 100%; height: auto; }
   to   { transform: scale(1); }
 }
 
-/* La fascia video sta piu' sopra, nella sua sezione. Qui c'era la
-   versione precedente, legata direttamente allo scorrimento: e' stata
-   tolta perche' quel tipo di animazione torna indietro quando si
-   risale, mentre la fascia deve restare grande una volta aperta. */
+/* --- La fascia della brace: la finestra che si apre -----
+   Mentre la striscia entra nello schermo si aprono due cose insieme:
+   il ritaglio, che parte da un rettangolo piccolo al centro e si
+   allarga fino ai bordi, e l'immagine dentro, che parte ingrandita e
+   si posa. Le due cose finiscono in momenti leggermente diversi: e'
+   quello sfasamento a farla sembrare una ripresa e non un effetto.
+   Il ritaglio sta sul contenitore, quindi vale identico per il poster
+   di adesso e per il video quando ci sara'.
+   Tutto e' legato a "quanto la striscia e' entrata nello schermo", non
+   ad altezze finte aggiunte sotto: la pagina non si allunga di un
+   pixel. Dove il browser non sa fare queste animazioni, o dove e'
+   stato chiesto meno movimento, la striscia si vede intera e ferma. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .brace-video {
+      animation: cdlFinestra linear both;
+      animation-timeline: view();
+      animation-range: entry 15% entry 100%;
+    }
+    .brace-video__filmato {
+      animation: cdlPosa linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 45%;
+    }
+  }
+}
+@keyframes cdlFinestra {
+  from { clip-path: inset(19% 22% 19% 22%); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+@keyframes cdlPosa {
+  from { transform: scale(1.16); }
+  to   { transform: scale(1); }
+}
 
 /* --- 5. Il cambio lingua: pillola IT | EN ---------------
    Prima c'era solo "EN": chi arrivava sulla pagina inglese non capiva
@@ -1822,3 +1893,5 @@ img { max-width: 100%; height: auto; }
   from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+=======
+>>>>>>> 56df2a74599a61cfcbdb5f6504e4ce58527d08b5

@@ -18,11 +18,7 @@ index-en.html         la stessa pagina in inglese
 style.css             tutto l'aspetto grafico
 script.js             linguette del menù, navigazione, orario di oggi, galleria
 menu.js               i dati del menù (piatti, prezzi, vini) E la traduzione
-<<<<<<< HEAD
 font/                 i caratteri Marcellus, Work Sans e Mrs Saint Delafield
-=======
-font/                 i caratteri Marcellus e Work Sans
->>>>>>> 56df2a74599a61cfcbdb5f6504e4ce58527d08b5
 img/                  tutte le foto, in più misure e più formati
 .htaccess             compressione, cache e indirizzo /en per la pagina inglese
 build/                strumento per rigenerare i dati per Google (NON va sul server)
@@ -115,7 +111,6 @@ Finché il file non c'è, il pulsante resta nascosto e nessuno finisce su una
 pagina di errore.
 
 
-<<<<<<< HEAD
 LE ANIMAZIONI
 -------------
 Sono piccoli dettagli, tutti facoltativi: se il JavaScript non parte, o se
@@ -129,7 +124,9 @@ un'animazione per essere visibile.
 - le voci in alto scombinano le lettere al passaggio del mouse
   (solo col mouse: sul telefono non succede)
 - sotto le voci in alto un filo d'oro scorre fino alla voce attiva
-- la foto d'apertura si allarga piano mentre scorri
+- la foto d'apertura parte un po' ingrandita e si posa mentre scorri
+- la fascia del video della brace cresce mentre la raggiungi, fino a
+  vedersi per intero: una volta cresciuta resta così, anche risalendo
 - il cambio lingua e la pillola IT | EN in alto a destra
 - il footer sale di pochi pixel quando lo raggiungi
 
@@ -137,8 +134,6 @@ Per toglierne una basta cercarla in script.js: ognuna ha il suo commento
 in italiano che dice cosa fa e perche.
 
 
-=======
->>>>>>> 56df2a74599a61cfcbdb5f6504e4ce58527d08b5
 LA RICERCA NEL MENÙ
 -------------------
 Sopra i piatti alla carta c'è un campo di ricerca: scrivendo "melanzane"

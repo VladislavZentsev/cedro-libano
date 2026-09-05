@@ -110,6 +110,7 @@
   }
 
 
+<<<<<<< HEAD
   /* La firma di Ahmad: il tratto vettoriale si disegna una volta sola
      quando entra nello schermo, come farebbe una penna vera. Di base e'
      gia' tutto disegnato nell'HTML — solo se possiamo animarla lo
@@ -131,95 +132,20 @@
   }
 
 
-  /* --- Le fasce video -----------------------------------
-     Vale per qualunque elemento con data-fascia-video, non solo per
-     la brace: se domani serve un'altra fascia video da qualche altra
-     parte, basta ripetere la stessa struttura e funziona da sola.
-
-     Due cose, indipendenti fra loro:
-
-     1) Il filmato parte solo quando entra nello schermo e si ferma
-        quando esce — niente fuoco che consuma processore e batteria
-        mentre si legge il menu piu' sotto.
-
-     2) La fascia cresce man mano che entra, fino alla misura piena
-        dove si vede tutto il filmato senza tagli. La crescita segue
-        lo scorrimento, ma non torna mai indietro: si tiene il valore
-        piu' alto raggiunto, quindi risalendo resta grande. Arrivata
-        in fondo si smette di ascoltare lo scorrimento — a quel punto
-        non c'e' piu' niente da calcolare. */
-  var menoMovimentoFasce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var fasceVideo = document.querySelectorAll('[data-fascia-video]');
-
-  if (fasceVideo.length && !menoMovimentoFasce) {
-
-    /* 1) avvio e pausa del filmato */
-    if ('IntersectionObserver' in window) {
-      var occhio = new IntersectionObserver(function (voci) {
-        voci.forEach(function (v) {
-          var film = v.target.querySelector('video');
-          if (!film) return;
-          if (v.isIntersecting) { film.play().catch(function () {}); }
-          else { film.pause(); }
-        });
-      }, { threshold: .3 });
-      Array.prototype.forEach.call(fasceVideo, function (f) {
-        var film = f.querySelector('video');
-        if (film) film.setAttribute('preload', 'metadata');
-        occhio.observe(f);
+  /* Video della brace: parte solo quando entra nello schermo, si ferma
+     quando esce — niente fiamma che brucia CPU e batteria mentre si
+     legge il menù più sotto. Chi ha chiesto meno movimento non lo vede
+     mai: resta sulla foto (il poster), come vuole il CSS qui sopra. */
+  var videoBrace = document.querySelector('.brace-video__filmato');
+  if (videoBrace && 'IntersectionObserver' in window &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    videoBrace.setAttribute('preload', 'metadata');
+    new IntersectionObserver(function (voci) {
+      voci.forEach(function (v) {
+        if (v.isIntersecting) { videoBrace.play().catch(function () {}); }
+        else { videoBrace.pause(); }
       });
-    }
-
-    /* 2) la crescita che non torna indietro */
-    var daSeguire = [];
-    Array.prototype.forEach.call(fasceVideo, function (f) {
-      f.style.setProperty('--apertura', '0');
-      daSeguire.push({ elemento: f, massimo: 0 });
-    });
-
-    var giaInCoda = false;
-
-    function calcola() {
-      giaInCoda = false;
-      var schermo = window.innerHeight;
-
-      for (var i = daSeguire.length - 1; i >= 0; i--) {
-        var f = daSeguire[i];
-        var r = f.elemento.getBoundingClientRect();
-
-        /* 0 quando il bordo alto tocca il fondo dello schermo,
-           1 quando la fascia e' arrivata al centro dello schermo. */
-        var quanto = (schermo - r.top) / (schermo / 2 + r.height / 2);
-        if (quanto < 0) quanto = 0;
-        if (quanto > 1) quanto = 1;
-
-        /* il passo indietro non conta: si tiene il massimo raggiunto */
-        if (quanto > f.massimo) {
-          f.massimo = quanto;
-          f.elemento.style.setProperty('--apertura', quanto.toFixed(3));
-        }
-
-        if (f.massimo >= 1) {
-          f.elemento.style.setProperty('--apertura', '1');
-          daSeguire.splice(i, 1);
-        }
-      }
-
-      if (!daSeguire.length) {
-        window.removeEventListener('scroll', inCoda);
-        window.removeEventListener('resize', inCoda);
-      }
-    }
-
-    function inCoda() {
-      if (giaInCoda) return;
-      giaInCoda = true;
-      requestAnimationFrame(calcola);
-    }
-
-    window.addEventListener('scroll', inCoda, { passive: true });
-    window.addEventListener('resize', inCoda, { passive: true });
-    calcola();
+    }, { threshold: .3 }).observe(videoBrace);
   }
 
 
@@ -249,10 +175,24 @@
       });
     }, { rootMargin: '-45% 0px -50% 0px' });
 
+=======
+  /* Voce di navigazione attiva */
+  var sezioni = ['hero', 'menu', 'dove', 'storia', 'foto', 'contatti'];
+  if ('IntersectionObserver' in window) {
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        Array.prototype.forEach.call(document.querySelectorAll('.nav a'), function (a) {
+          a.classList.toggle('nav__attiva', a.getAttribute('href') === '#' + e.target.id);
+        });
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+>>>>>>> 56df2a74599a61cfcbdb5f6504e4ce58527d08b5
     sezioni.forEach(function (id) {
       var el = document.getElementById(id);
       if (el) spy.observe(el);
     });
+<<<<<<< HEAD
 
     Array.prototype.forEach.call(document.querySelectorAll('.nav a[href^="#"], .nav-mobile a[href^="#"]'), function (a) {
       a.addEventListener('click', function () {
@@ -408,6 +348,8 @@
       }, { threshold: .4 });
       Array.prototype.forEach.call(pezziPiede, function (p) { piede.observe(p); });
     }
+=======
+>>>>>>> 56df2a74599a61cfcbdb5f6504e4ce58527d08b5
   }
 
   /* Orario: giorno di oggi + stato "aperto ora / chiuso" nell'apertura
