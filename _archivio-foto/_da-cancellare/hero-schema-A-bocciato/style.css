@@ -1,0 +1,1403 @@
+/* ===== Caratteri ospitati sul nostro server =====
+   Niente richieste a Google: una connessione esterna in meno
+   quando la pagina si apre, e nessun indirizzo IP dei visitatori
+   inviato a terzi (GDPR). I file stanno nella cartella font/.
+   Work Sans e` un carattere variabile: un solo file copre i pesi 300-400. */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('font/work-sans-400i-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Work Sans';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('font/work-sans-400i-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Work Sans';
+  font-style: normal;
+  font-weight: 300 400;
+  font-display: swap;
+  src: url('font/work-sans-300-400-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Work Sans';
+  font-style: normal;
+  font-weight: 300 400;
+  font-display: swap;
+  src: url('font/work-sans-300-400-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Marcellus';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('font/marcellus-400-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Marcellus';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('font/marcellus-400-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Cedro del Libano — Savona
+   Marcellus + Work Sans / base bruna calda, oro caldo, bordeaux come accento */
+
+:root {
+  --fondo: #141210;
+  --fondo-scuro: #100E0C;
+  --carta: rgba(35,28,23,.9);
+  --crema: #F2E8D5;
+  --crema-tenue: #DDD0BA;
+  --grigio: #C9BCA6;
+  --grigio-scuro: #B9AA92;
+  --oro: #D2A83A;
+  --oro-chiaro: #E8C879;
+  --oro-pallido: #F6E4B4;
+  --oro-scuro: #B98F26;
+  --bordeaux: #7B1E26;
+  --filo: rgba(210,168,58,.2);
+  --filo-tenue: rgba(210,168,58,.14);
+  /* L intestazione resta in cima e occupa spazio vero: l apertura deve
+     sottrarla per stare in uno schermo esatto. */
+  --alt-intestazione: 71px;
+  --serif: 'Marcellus', Georgia, serif;
+  --sans: 'Work Sans', system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--crema);
+  font-family: var(--sans);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* I due aloni di colore che stanno dietro a tutto. Prima erano lo sfondo
+   del body con background-attachment: fixed, che costringeva il browser a
+   ridipingere l'intero schermo ad ogni fotogramma dello scorrimento.
+   Ora sono un livello per conto loro: il browser lo sposta invece di
+   ridisegnarlo. Visivamente identico, incomparabilmente più leggero. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    radial-gradient(1100px 620px at 82% -8%, rgba(123,30,38,.20), transparent 62%),
+    radial-gradient(900px 700px at 6% 34%, rgba(96,66,32,.26), transparent 60%);
+  /* dice al browser di tenerlo su un piano separato, così scorrere
+     non comporta ridisegnarlo: è l'unico punto del sito dove serve */
+  will-change: transform;
+}
+
+img { max-width: 100%; }
+
+a { color: var(--oro-chiaro); text-decoration: none; transition: color .25s ease; }
+a:hover { color: var(--crema); }
+
+:focus-visible { outline: 2px solid var(--oro-chiaro); outline-offset: 3px; }
+::selection { background: var(--bordeaux); color: var(--crema); }
+
+h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; }
+
+.contenitore { max-width: 1200px; margin: 0 auto; }
+
+/* ---------- elementi ricorrenti ---------- */
+
+.occhiello {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: .4em;
+  text-transform: uppercase;
+  color: var(--oro);
+}
+
+.titolo-oro {
+  font-size: clamp(30px, 4.8vw, 54px);
+  line-height: 1.06;
+  letter-spacing: .02em;
+  background: linear-gradient(178deg, var(--oro-pallido), var(--oro) 60%, #9A7620);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.titolo-chiaro { font-size: clamp(28px, 4.2vw, 46px); line-height: 1.1; color: var(--crema); }
+
+.testo {
+  margin: 0;
+  font-weight: 300;
+  font-size: 17px;
+  line-height: 1.8;
+  color: var(--crema-tenue);
+  text-wrap: pretty;
+}
+
+.bottoni { display: flex; flex-wrap: wrap; gap: 12px; }
+
+.bottone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  white-space: nowrap;
+  font-size: 13px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  padding: 15px 26px;
+  min-height: 46px;
+  transition: transform .3s ease, box-shadow .3s ease, background .3s ease, border-color .3s ease;
+}
+.bottone--grande { font-size: 14px; padding: 19px 34px; }
+.bottone--oro {
+  color: #141210;
+  background: linear-gradient(120deg, var(--oro-chiaro), var(--oro) 56%, var(--oro-scuro));
+  box-shadow: 0 8px 24px rgba(210,168,58,.18);
+}
+.bottone--oro:hover { color: #141210; transform: translateY(-2px); box-shadow: 0 16px 40px rgba(210,168,58,.32); }
+.bottone--filo { color: var(--crema); border: 1px solid rgba(210,168,58,.5); }
+.bottone--filo:hover { color: var(--crema); background: rgba(210,168,58,.12); border-color: var(--oro); }
+.bottone--bordeaux {
+  align-self: flex-start;
+  color: var(--crema);
+  background: rgba(123,30,38,.62);
+  font-size: 12.5px;
+  letter-spacing: .14em;
+}
+.bottone--bordeaux:hover { color: var(--crema); background: rgba(123,30,38,.55); }
+
+/* ---------- header ---------- */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  background: linear-gradient(rgba(18,15,13,.97), rgba(18,15,13,.9));
+  border-bottom: 1px solid rgba(210,168,58,.16);
+}
+.header__barra {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 12px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.marchio { display: flex; align-items: center; gap: 13px; }
+.marchio img { height: 34px; width: auto; display: block; flex-shrink: 0; }
+.marchio__testo { display: flex; flex-direction: column; gap: 4px; }
+.marchio__nome {
+  font-family: var(--serif);
+  font-size: 16px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--crema);
+}
+.marchio__sotto {
+  font-size: 8.5px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--grigio-scuro);
+}
+.nav { display: flex; align-items: center; gap: 6px; }
+.nav a:not(.bottone) {
+  font-size: 13px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding: 9px 14px;
+  color: var(--grigio-scuro);
+  border-bottom: 1px solid transparent;
+}
+.nav a:not(.bottone):hover { color: var(--crema); }
+.nav a.nav__attiva { color: var(--oro-chiaro); border-bottom-color: var(--oro); }
+.nav .bottone { margin-left: 14px; }
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+  min-width: 46px;
+  min-height: 46px;
+  padding: 12px;
+  background: transparent;
+  border: 1px solid rgba(210,168,58,.3);
+  cursor: pointer;
+}
+.hamburger span { display: block; width: 20px; height: 1.5px; background: var(--oro-chiaro); }
+
+.nav-mobile[hidden] { display: none; }
+.nav-mobile {
+  border-top: 1px solid rgba(210,168,58,.16);
+  padding: 10px 22px 22px;
+  display: flex;
+  flex-direction: column;
+  background: rgba(16,14,12,.98);
+}
+.nav-mobile a {
+  font-family: var(--serif);
+  font-size: 20px;
+  padding: 16px 4px;
+  border-bottom: 1px solid var(--filo-tenue);
+  color: var(--crema);
+}
+
+/* ---------- hero ---------- */
+
+.hero {
+  position: relative;
+  height: calc(100svh - var(--alt-intestazione));
+  min-height: 520px;
+  display: grid;
+  align-items: end;
+  overflow: hidden;
+}
+.hero__foto { position: absolute; inset: 0; z-index: 0; background: #1B1613; }
+.hero__foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* Niente piu velo scuro steso su tutta la foto: una fascia sfocata che
+   parte dal fondo e si dissolve verso l alto. Il testo resta leggibile,
+   la foto smette di essere spenta (regola IMG-06). */
+.hero__sfuma {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  backdrop-filter: blur(22px) saturate(.92);
+  -webkit-backdrop-filter: blur(22px) saturate(.92);
+  mask-image: linear-gradient(to top, #000 0%, #000 36%, transparent 74%);
+  -webkit-mask-image: linear-gradient(to top, #000 0%, #000 36%, transparent 74%);
+}
+/* Un velo caldo, leggero, solo sulla stessa fascia: serve a legare la
+   foto al fondo bruno della pagina, non a scurirla per leggibilita. */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(to top,
+    var(--fondo) 0%,
+    rgba(20,18,16,.88) 20%,
+    rgba(20,18,16,.55) 46%,
+    rgba(20,18,16,.18) 62%,
+    transparent 78%);
+}
+.hero__contenuto {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  /* Testo appoggiato in basso a sinistra: il centro dell inquadratura
+     resta libero e la foto si vede (schema A delle regole). */
+  padding: 0 clamp(22px, 4vw, 52px) clamp(46px, 9vh, 92px);
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(15px, 2.2vh, 24px);
+}
+.hero__contenuto > * { max-width: min(100%, 620px); }
+.hero h1 {
+  font-size: clamp(42px, 7.4vw, 96px);
+  line-height: .88;
+  /* Marcellus e un carattere di capitali incise: un filo di spaziatura
+     e corretto, ma sotto quella di prima. */
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  margin-bottom: -2px;
+}
+.hero__claim {
+  margin: 0;
+  font-size: clamp(17px, 2vw, 22px);
+  font-weight: 300;
+  line-height: 1.42;
+  color: var(--crema);
+  max-width: 30ch;
+  text-wrap: pretty;
+}
+.hero__azioni { display: flex; flex-direction: column; align-items: flex-start; gap: 11px; }
+/* Le regole chiedono poche parole accanto al bottone che tolgano
+   l esitazione. Questa e vera: e l orario reale del locale. */
+.hero__rassicura {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: .01em;
+  color: var(--grigio);
+}
+.hero__deliveroo { margin: 0; font-size: 14px; font-weight: 300; color: var(--grigio); }
+.hero__deliveroo a { border-bottom: 1px solid rgba(210,168,58,.5); padding-bottom: 2px; }
+.hero__scorri {
+  position: absolute;
+  right: clamp(22px, 4vw, 52px);
+  bottom: 26px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--grigio-scuro);
+  font-size: 10px;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+}
+.hero__filo { display: block; width: 1px; height: 42px; background: linear-gradient(var(--oro), transparent); }
+
+/* ---------- sezioni ---------- */
+
+.sezione { padding: clamp(72px, 9vw, 132px) 22px; border-top: 1px solid var(--filo-tenue); }
+.sezione--velata { background: linear-gradient(rgba(24,19,16,.72), rgba(20,18,16,0)); }
+.sezione--recensioni { background: radial-gradient(900px 420px at 50% 0%, rgba(123,30,38,.16), transparent 68%); }
+
+.intestazione {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 44px;
+}
+.intestazione .titolo-oro { font-size: clamp(32px, 5.6vw, 64px); line-height: 1.04; }
+.intestazione__testo {
+  margin: 0;
+  max-width: 62ch;
+  font-weight: 300;
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--grigio);
+  text-wrap: pretty;
+}
+
+.due-colonne {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  gap: clamp(28px, 4vw, 56px);
+  align-items: start;
+}
+.due-colonne--centrate { align-items: center; }
+.colonna { display: flex; flex-direction: column; gap: 20px; }
+
+/* ---------- menù: tabs e pannello ---------- */
+
+.tabs { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 40px; }
+.tab {
+  cursor: pointer;
+  font-family: var(--serif);
+  font-size: 15px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  padding: 15px 28px;
+  min-height: 46px;
+  background: transparent;
+  border: 1px solid rgba(210,168,58,.28);
+  color: var(--grigio-scuro);
+  white-space: nowrap;
+  transition: all .3s ease;
+}
+.tab:hover { border-color: var(--oro); color: var(--crema); }
+.tab--attiva { background: rgba(210,168,58,.14); border-color: var(--oro); color: var(--crema); }
+
+.pannello {
+  position: relative;
+  border: 1px solid var(--filo);
+  background: linear-gradient(rgba(27,22,19,.72), rgba(19,16,14,.9));
+  padding: clamp(20px, 3.4vw, 46px);
+}
+.angolo { position: absolute; width: 26px; height: 26px; }
+.angolo--tl { top: -1px; left: -1px; border-top: 2px solid var(--oro); border-left: 2px solid var(--oro); }
+.angolo--tr { top: -1px; right: -1px; border-top: 2px solid var(--oro); border-right: 2px solid var(--oro); }
+.angolo--bl { bottom: -1px; left: -1px; border-bottom: 2px solid var(--oro); border-left: 2px solid var(--oro); }
+.angolo--br { bottom: -1px; right: -1px; border-bottom: 2px solid var(--oro); border-right: 2px solid var(--oro); }
+
+.pannello__intro {
+  margin: 0 0 26px;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--grigio);
+  max-width: 70ch;
+}
+
+.pannello__piede {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 24px;
+}
+.pannello__piede p {
+  margin: 0;
+  font-size: 13.5px;
+  font-style: italic;
+  color: var(--grigio-scuro);
+  max-width: 60ch;
+}
+
+/* ---------- accordion à la carte ---------- */
+
+.gruppo { border-bottom: 1px solid var(--filo-tenue); padding-bottom: 10px; }
+.gruppo + .gruppo { margin-top: 14px; }
+.gruppo__testa {
+  cursor: pointer;
+  width: 100%;
+  background: transparent;
+  border: 0;
+  padding: 16px 0;
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  text-align: left;
+  color: var(--oro-chiaro);
+}
+.gruppo__titolo { font-family: var(--serif); font-size: clamp(21px, 2.6vw, 29px); letter-spacing: .03em; }
+.gruppo__filo { flex: 1; height: 1px; background: linear-gradient(90deg, rgba(210,168,58,.4), transparent); }
+.gruppo__conta { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--grigio-scuro); }
+.gruppo__freccia { font-size: 15px; color: var(--oro); transition: transform .3s ease; }
+.gruppo__testa--chiusa .gruppo__freccia { transform: rotate(-90deg); }
+
+.piatto {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: clamp(14px, 2.4vw, 32px);
+  align-items: center;
+  padding: 16px 12px;
+  margin: 0 -12px;
+  border-top: 1px dashed rgba(210,168,58,.13);
+  transition: background .3s ease, transform .3s ease;
+}
+.piatto:hover { background: rgba(210,168,58,.06); transform: translateX(4px); }
+.piatto__testo { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+.piatto__nome {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(17px, 1.9vw, 21px);
+  color: var(--crema);
+}
+.piatto__desc {
+  margin: 0;
+  font-weight: 300;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--grigio-scuro);
+  text-wrap: pretty;
+}
+
+.tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 2px; }
+.tag {
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  padding: 5px 9px;
+  border: 1px solid;
+}
+.tag--sesamo { color: #E2A79A; border-color: rgba(226,167,154,.45); background: rgba(226,167,154,.08); }
+.tag--aglio  { color: var(--oro-chiaro); border-color: rgba(232,200,121,.4); background: rgba(232,200,121,.08); }
+.tag--veg    { color: #D9CE8A; border-color: rgba(217,206,138,.4); background: rgba(217,206,138,.08); }
+.tag--vegan  { color: #B8D08A; border-color: rgba(184,208,138,.4); background: rgba(184,208,138,.08); }
+
+.prezzi { display: flex; gap: 10px; align-items: center; flex-shrink: 0; }
+.pastiglia {
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  border: 1px solid rgba(210,168,58,.55);
+  background: radial-gradient(circle at 34% 28%, rgba(232,200,121,.2), rgba(20,18,16,.9) 70%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  flex-shrink: 0;
+}
+.pastiglia--grande { width: 80px; height: 80px; }
+.pastiglia__lab {
+  font-size: 9px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--grigio-scuro);
+}
+.pastiglia__val {
+  font-family: var(--serif);
+  font-size: 16px;
+  color: var(--oro-chiaro);
+  white-space: nowrap;
+}
+.pastiglia--grande .pastiglia__val { font-size: 21px; }
+
+/* ---------- menù fissi ---------- */
+
+.griglia-carte {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 20px;
+}
+.carta {
+  border: 1px solid rgba(210,168,58,.22);
+  background: linear-gradient(160deg, var(--carta), rgba(19,16,14,.92));
+  padding: 26px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+}
+.carta:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 22px 48px rgba(0,0,0,.5);
+  border-color: rgba(210,168,58,.45);
+}
+.carta__testa { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.carta__testa h3 { font-size: 23px; color: var(--crema); letter-spacing: .02em; }
+.carta__kicker {
+  margin: 6px 0 0;
+  font-size: 11px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--grigio-scuro);
+}
+.carta__corpo { display: flex; flex-direction: column; gap: 12px; }
+.riga-k { display: flex; flex-direction: column; gap: 4px; }
+.riga-k__k { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--oro); }
+.riga-k__v { font-weight: 300; font-size: 14.5px; line-height: 1.6; color: var(--crema-tenue); text-wrap: pretty; }
+.riga-p {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  border-top: 1px dashed var(--filo-tenue);
+  padding-top: 9px;
+  font-size: 15px;
+  color: var(--crema);
+}
+.riga-p__filo { flex: 1; height: 1px; background: rgba(210,168,58,.18); }
+.riga-p__prezzo { font-family: var(--serif); font-size: 16px; color: var(--oro-chiaro); white-space: nowrap; }
+.carta__nota {
+  margin: auto 0 0;
+  padding-top: 6px;
+  font-size: 13px;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--grigio-scuro);
+}
+.carta__nota--attenzione { color: #E2A79A; }
+
+/* ---------- vini ---------- */
+
+.griglia-vini {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: 22px;
+}
+.vino {
+  border: 1px solid rgba(210,168,58,.22);
+  background: linear-gradient(160deg, var(--carta), rgba(19,16,14,.92));
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: transform .35s ease, box-shadow .35s ease;
+}
+.vino:hover { transform: translateY(-5px); box-shadow: 0 22px 48px rgba(0,0,0,.5); }
+.vino__foto { aspect-ratio: 4 / 3; height: auto; min-height: 0; flex-shrink: 0; border-bottom: 1px solid rgba(210,168,58,.18); background: #1B1613; }
+.vino__foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.vino__corpo { flex: 1; padding: 24px; display: flex; flex-direction: column; gap: 14px; }
+.vino__cantina { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--grigio-scuro); }
+.vino h3 { font-size: 24px; color: var(--crema); line-height: 1.2; }
+.vino__blend { font-size: 13.5px; line-height: 1.5; color: var(--grigio-scuro); }
+.vino__prezzi { display: flex; gap: 10px; }
+.vino__prezzo {
+  flex: 1;
+  border: 1px solid rgba(210,168,58,.4);
+  padding: 11px 8px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.vino__prezzo .pastiglia__val { font-size: 18px; }
+.vino__note { margin: 0; font-weight: 300; font-size: 14.5px; line-height: 1.7; color: var(--grigio); text-wrap: pretty; }
+.vino__abb { margin: 0; font-size: 13px; line-height: 1.6; color: var(--grigio-scuro); }
+.vino__abb span { color: var(--oro); letter-spacing: .12em; font-size: 11px; text-transform: uppercase; }
+.vino__legal { margin: auto 0 0; font-size: 11.5px; color: var(--grigio-scuro); }
+.vini__disclaimer { grid-column: 1 / -1; margin: 0; font-size: 13px; font-style: italic; color: var(--grigio-scuro); }
+
+/* ---------- valori ---------- */
+
+.valori {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1px;
+  margin-top: clamp(48px, 7vw, 88px);
+  background: rgba(210,168,58,.16);
+}
+.valore {
+  background: var(--fondo);
+  padding: 34px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+}
+.valore p {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 16px;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--oro-chiaro);
+}
+
+/* ---------- dove siamo ---------- */
+
+.indirizzo { display: flex; flex-direction: column; gap: 6px; }
+.indirizzo__via { margin: 0; font-family: var(--serif); font-size: 21px; color: var(--crema); }
+.indirizzo__citta { margin: 0; font-size: 15px; color: var(--grigio-scuro); }
+
+.orario { border: 1px solid var(--filo); padding: 22px 24px; background: rgba(27,22,19,.6); }
+.orario__titolo {
+  margin: 0 0 14px;
+  font-size: 11px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--oro);
+}
+.orario__lista { display: flex; flex-direction: column; }
+.orario__riga {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 7px 0;
+  border-bottom: 1px solid rgba(210,168,58,.08);
+  font-size: 14.5px;
+  color: var(--crema-tenue);
+  font-variant-numeric: tabular-nums;
+}
+.orario__filo { flex: 1; height: 1px; background: rgba(210,168,58,.12); }
+.orario__oggi { color: var(--oro-chiaro); }
+.orario__nota {
+  margin: 14px 0 0;
+  font-size: 13.5px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--grigio-scuro);
+}
+
+.mappa { margin: 0; border: 1px solid rgba(210,168,58,.22); aspect-ratio: 4 / 3; overflow: hidden; }
+.mappa img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.mappa__link { font-size: 13px; }
+.mappa__credito { margin: 0; font-size: 11.5px; color: var(--grigio-scuro); }
+
+/* ---------- storia ---------- */
+
+.storia__foto {
+  margin: 0;
+  min-height: 420px;
+  border: 1px solid rgba(210,168,58,.22);
+  background: #1B1613;
+}
+.storia__foto img { width: 100%; height: 100%; min-height: 420px; object-fit: cover; display: block; }
+.firma { margin: 0; font-family: var(--serif); font-size: 19px; color: var(--oro-chiaro); letter-spacing: .02em; }
+
+/* ---------- recensioni ---------- */
+
+.griglia-recensioni {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 20px;
+}
+.recensione {
+  border: 1px solid var(--filo);
+  background: linear-gradient(160deg, rgba(35,28,23,.86), rgba(19,16,14,.92));
+  padding: 30px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.recensione h3 { font-size: 21px; color: var(--oro-chiaro); line-height: 1.25; }
+.recensione p { margin: 0; font-weight: 300; font-size: 15px; line-height: 1.75; color: var(--grigio); text-wrap: pretty; }
+.disclaimer {
+  margin: 34px auto 0;
+  font-size: 12.5px;
+  font-style: italic;
+  color: var(--grigio-scuro);
+  text-align: center;
+  max-width: 62ch;
+}
+
+/* ---------- contatti ---------- */
+
+.contatti { display: flex; flex-direction: column; }
+.contatto {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 18px;
+  border-bottom: 1px solid var(--filo-tenue);
+  color: var(--crema);
+  transition: background .3s ease;
+}
+.contatto:hover { background: rgba(210,168,58,.07); color: var(--crema); }
+.contatto__testo { display: flex; flex-direction: column; gap: 4px; }
+.contatto__k { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--grigio-scuro); }
+.contatto__v { font-size: 16.5px; }
+/* Frecce: vettori, non glifi da tastiera (regola §8). Si spostano
+   all passaggio del mouse, cosi il movimento porta una direzione. */
+.contatto__freccia, .link__freccia {
+  color: var(--oro);
+  flex-shrink: 0;
+  transition: transform 520ms cubic-bezier(.22, 1, .36, 1);
+}
+.contatto:hover .contatto__freccia,
+.mappa__link:hover .link__freccia { transform: translateX(5px); }
+.servizi { margin: 18px 0 0; font-size: 13.5px; font-weight: 300; line-height: 1.7; color: var(--grigio-scuro); }
+
+/* ---------- footer ---------- */
+
+.footer { border-top: 1px solid rgba(210,168,58,.16); padding: 44px 22px; background: var(--fondo-scuro); }
+.footer__riga { display: flex; flex-wrap: wrap; gap: 22px; align-items: center; justify-content: space-between; }
+.footer__marchio { display: flex; align-items: center; gap: 14px; }
+.footer__marchio img { height: 30px; width: auto; display: block; flex-shrink: 0; opacity: .55; }
+.footer__marchio span {
+  font-family: var(--serif);
+  font-size: 13px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--grigio-scuro);
+}
+.footer__dati { font-size: 12.5px; color: var(--grigio-scuro); }
+
+/* ---------- barra fissa mobile ---------- */
+
+.barra-mobile[hidden] { display: none; }
+.barra-mobile {
+  display: none;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 70;
+  gap: 10px;
+  padding: 12px 14px;
+  background: linear-gradient(rgba(16,14,12,.94), rgba(16,14,12,.99));
+  border-top: 1px solid rgba(210,168,58,.28);
+}
+.barra-mobile .bottone { flex: 1; min-height: 52px; padding: 17px 12px; font-size: 13.5px; letter-spacing: .14em; }
+.barra-mobile__tel {
+  width: 56px;
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(210,168,58,.5);
+}
+
+/* ---------- animazione ---------- */
+
+@keyframes cdlRise {
+  from { opacity: 0; transform: translateY(28px); filter: blur(14px); }
+  to   { opacity: 1; transform: none;            filter: blur(0); }
+}
+
+/* Ingresso a scaletta: gli elementi dell apertura entrano uno dopo l altro,
+   non tutti insieme. Con la sfocatura che si dissolve (regole MOT-01/02). */
+.hero__contenuto > * {
+  animation: cdlRise 900ms cubic-bezier(.22, 1, .36, 1) both;
+}
+.hero__contenuto > *:nth-child(1) { animation-delay: 300ms; }
+.hero__contenuto > *:nth-child(2) { animation-delay: 420ms; }
+.hero__contenuto > *:nth-child(3) { animation-delay: 520ms; }
+.hero__contenuto > *:nth-child(4) { animation-delay: 620ms; }
+.hero__contenuto > *:nth-child(5) { animation-delay: 700ms; }
+.hero__contenuto > *:nth-child(6) { animation-delay: 780ms; }
+.hero__contenuto > *:nth-child(7) { animation-delay: 860ms; }
+.hero__contenuto > *:nth-child(8) { animation-delay: 920ms; }
+
+/* ---------- mobile ---------- */
+
+@media (max-width: 1023px) {
+  /* Sotto i 1024px c e la barra fissa in basso: il contenuto dell apertura
+     deve fermarsi sopra, altrimenti i bottoni ci finiscono sotto. */
+  .hero__contenuto { padding-bottom: calc(78px + clamp(20px, 4vh, 40px)); }
+  .hero__scorri { display: none; }
+  .nav { display: none; }
+  .hamburger { display: flex; }
+  .barra-mobile { display: flex; }
+  body { padding-bottom: 78px; }
+  .marchio img { height: 30px; }
+  .marchio__nome { font-size: 14px; letter-spacing: .16em; }
+  .marchio__sotto { display: none; }
+  /* Sugli schermi stretti il nome arrivava a toccare il pulsante EN:
+     ora non viene piu compresso, e sotto i 420px rimpicciolisce. */
+  .marchio { flex-shrink: 0; }
+  .piatto { grid-template-columns: 1fr; gap: 14px; }
+  .prezzi { justify-content: flex-start; }
+  .storia__foto, .storia__foto img { min-height: 300px; }
+  .gruppo__conta { display: none; }
+  .pannello__piede { flex-direction: column; align-items: flex-start; }
+}
+
+@media (max-width: 480px) {
+  .tab { flex: 1; padding: 14px 12px; font-size: 13px; }
+  .footer__riga { flex-direction: column; align-items: flex-start; }
+}
+
+/* ---------- stampa ---------- */
+
+@media print {
+  .header, .barra-mobile, .hero__scorri, .tabs, .bottoni, .bottone { display: none !important; }
+  body { background: #fff; color: #000; }
+  .titolo-oro, .titolo-chiaro { color: #000 !important; -webkit-text-fill-color: #000; }
+  .pannello, .carta, .vino, .recensione { border-color: #999; background: #fff; }
+  .piatto__nome, .contatto__v, .testo, .piatto__desc { color: #000; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* =========================================================
+   Aggiunte e correzioni — revisione frontend
+   ========================================================= */
+
+/* Salta al contenuto: primo elemento raggiungibile con Tab */
+.salta {
+  position: absolute;
+  left: 12px;
+  z-index: 100;
+  padding: 12px 18px;
+  background: var(--oro);
+  color: #141210;
+  font-size: 13px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  /* Lasciato volutamente ad animare top invece che transform.
+     Sarebbe piu' corretto usare una traslazione, ma questa animazione
+     parte una volta sola quando chi naviga da tastiera preme Tab: non
+     tocca lo scorrimento e non guadagna nulla di percepibile. Toccare
+     una scorciatoia di accessibilita' senza poterla provare qui non
+     vale il rischio. */
+  top: -60px;
+  transition: top .2s ease;
+}
+.salta:focus { top: 12px; color: #141210; }
+
+/* Immagini: niente salti di layout mentre caricano */
+img { max-width: 100%; height: auto; }
+.hero__foto img,
+.mappa img,
+.storia__foto img,
+.vino__foto img,
+.fascia img { height: 100%; }
+
+/* Fascia fotografica dentro la sezione del menù */
+.fascia {
+  margin: 0 0 40px;
+  border: 1px solid rgba(210,168,58,.22);
+  aspect-ratio: 21 / 9;
+  overflow: hidden;
+  background: #1B1613;
+}
+.fascia img { width: 100%; object-fit: cover; display: block; filter: saturate(.96); }
+
+/* Stato di apertura in tempo reale */
+.stato {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 16px;
+  border: 1px solid rgba(210,168,58,.35);
+  background: rgba(16,14,12,.55);
+  font-size: 12.5px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--grigio-scuro);
+  font-variant-numeric: tabular-nums;
+}
+.stato[hidden] { display: none; }
+.stato__pallino {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #8C7434;
+  flex-shrink: 0;
+}
+.stato--aperto { color: var(--crema); border-color: rgba(184,208,138,.45); }
+.stato--aperto .stato__pallino { background: #B8D08A; box-shadow: 0 0 10px rgba(184,208,138,.65); }
+
+/* La foto della sala è scattata con luce fredda: la riportiamo nella
+   temperatura calda del resto della pagina, senza ritoccare il file. */
+.storia__foto { position: relative; overflow: hidden; }
+.storia__foto img { filter: saturate(.92) contrast(1.03) brightness(.97); }
+.storia__foto::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(200deg, rgba(123,30,38,.16), rgba(96,66,32,.22) 62%, rgba(16,13,11,.34));
+  mix-blend-mode: multiply;
+}
+
+/* Il :hover che sposta il testo faceva ballare la riga: ora si muove il fondo */
+.contatto { position: relative; transition: background .3s ease; }
+.contatto:hover { padding-left: 18px; }
+.contatto::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--oro);
+  /* la barretta c'è già larga 3px, ma è schiacciata a zero: si apre
+     scalando, non allargandosi, così non fa ricalcolare l'impaginazione */
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .25s ease;
+}
+.contatto:hover::before, .contatto:focus-visible::before { transform: scaleX(1); }
+
+/* Il fondo fisso costa parecchio in scorrimento sui telefoni */
+@media (max-width: 1023px) {
+  .fascia { aspect-ratio: 16 / 9; margin-bottom: 30px; }
+}
+
+/* Su schermi molto stretti le linguette andavano in overflow */
+@media (max-width: 480px) {
+  .tabs { display: grid; grid-template-columns: 1fr 1fr; }
+  .tab { white-space: normal; }
+  .tab:first-child { grid-column: 1 / -1; }
+}
+
+/* Modalità a contrasto forzato: il testo in gradiente sparirebbe */
+@media (forced-colors: active) {
+  .titolo-oro {
+    background: none;
+    color: CanvasText;
+    -webkit-text-fill-color: CanvasText;
+  }
+  .bottone { border: 1px solid ButtonText; }
+  .hero__sfuma { display: none; }
+}
+
+/* Stampa: rendiamo utile la pagina stampata invece di nasconderla a metà */
+@media print {
+  .hero__foto, .hero__sfuma, .fascia, .valori, .mappa, .storia__foto, .salta, .stato { display: none !important; }
+  .sezione { padding: 12px 0; border: 0; }
+  .pannello { border: 0; padding: 0; }
+  .piatto { break-inside: avoid; }
+  .carta, .vino, .recensione { break-inside: avoid; }
+}
+
+/* La nuova foto di apertura è più chiara della precedente: il velo va
+   rinforzato al centro, dove cade il titolo, altrimenti il contrasto
+   del testo scende sotto la soglia di leggibilità. */
+.hero h1 { text-shadow: 0 2px 24px rgba(10,8,7,.55); }
+.hero__claim, .hero__rassicura, .hero__deliveroo { text-shadow: 0 1px 12px rgba(10,8,7,.75); }
+
+/* Sopra la foto il testo ha bisogno di un appoggio: l ombra e la
+   tecnica che le regole permettono al posto del velo scuro. */
+.hero h1 { text-shadow: 0 2px 30px rgba(10,8,7,.8), 0 1px 4px rgba(10,8,7,.5); }
+.hero__claim, .hero__rassicura, .hero__deliveroo { text-shadow: 0 1px 14px rgba(10,8,7,.8); }
+
+/* Sul telefono i due pulsanti dell'apertura stavano uno sotto l'altro e
+   spingevano fuori schermo il resto: li mettiamo affiancati. */
+@media (max-width: 600px) {
+  .hero .bottoni { flex-wrap: nowrap; width: 100%; }
+  .hero .bottoni .bottone { flex: 1; padding: 17px 10px; font-size: 12.5px; letter-spacing: .1em; }
+  .stato { font-size: 11.5px; letter-spacing: .08em; padding: 7px 12px; }
+  /* In basso serve spazio per la barra fissa dei comandi (78px). */
+  .hero__contenuto { gap: 16px; padding: 0 20px calc(78px + 34px); }
+}
+
+/* Dati legali nel piè di pagina (ragione sociale e partita IVA:
+   obbligatori per il sito di un'impresa italiana) */
+.footer__dati { display: flex; flex-direction: column; gap: 6px; text-align: right; }
+.footer__dati a { color: var(--grigio-scuro); }
+.footer__dati a:hover { color: var(--oro-chiaro); }
+.footer__legale { font-size: 11.5px; color: #8E8272; letter-spacing: .02em; }
+@media (max-width: 640px) { .footer__dati { text-align: left; } }
+
+/* =========================================================
+   Galleria "Le nostre foto"
+   ========================================================= */
+
+.galleria {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 14px;
+  align-items: start;
+}
+.galleria__voce { margin: 0; }
+.galleria figure { margin: 0; display: flex; flex-direction: column; gap: 9px; }
+
+/* Il riquadro è un pulsante vero: si raggiunge con Tab e si apre con Invio */
+.galleria__apri {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 1px solid rgba(210,168,58,.22);
+  background: #1B1613;
+  cursor: zoom-in;
+  overflow: hidden;
+  position: relative;
+  aspect-ratio: 4 / 3;
+  transition: border-color .3s ease, transform .35s ease, box-shadow .35s ease;
+}
+.galleria__apri img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.galleria__apri:hover { border-color: rgba(210,168,58,.55); transform: translateY(-4px); box-shadow: 0 20px 44px rgba(0,0,0,.5); }
+.galleria__apri:hover img { transform: scale(1.03); }
+.galleria__apri img { transition: transform .5s cubic-bezier(.2,.7,.2,1); }
+
+/* La foto della sera ha luci viola molto sature: la riportiamo
+   nella tavolozza calda del sito, come già fatto per la storia. */
+.galleria__voce--sera .galleria__apri img { filter: saturate(.72) contrast(1.05) sepia(.12); }
+
+.galleria figcaption {
+  font-size: 12px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--grigio-scuro);
+  padding-left: 2px;
+}
+.galleria__nota { margin: 30px 0 0; font-size: 14px; font-weight: 300; color: var(--grigio-scuro); text-align: center; }
+
+/* ---------- lente d'ingrandimento (elemento <dialog> nativo) ---------- */
+
+.lente {
+  border: 0;
+  padding: 0;
+  max-width: min(96vw, 1100px);
+  max-height: 94vh;
+  background: transparent;
+  overflow: visible;
+}
+.lente::backdrop { background: rgba(10,8,7,.92); backdrop-filter: blur(4px); }
+.lente__img {
+  display: block;
+  max-width: 100%;
+  max-height: 88vh;
+  width: auto;
+  height: auto;
+  margin: 0 auto;
+  border: 1px solid rgba(210,168,58,.35);
+  background: #1B1613;
+}
+.lente__chiudi {
+  position: absolute;
+  top: -46px;
+  right: 0;
+  width: 42px;
+  height: 42px;
+  font-size: 26px;
+  line-height: 1;
+  color: var(--crema);
+  background: transparent;
+  border: 1px solid rgba(210,168,58,.4);
+  cursor: pointer;
+}
+.lente__chiudi:hover { background: rgba(210,168,58,.14); }
+@media (max-width: 640px) {
+  .lente__chiudi { top: auto; bottom: -54px; right: 50%; transform: translateX(50%); }
+}
+
+@media print { .galleria, .lente { display: none !important; } }
+
+/* Selettore di lingua nell'intestazione */
+.lingua {
+  font-size: 12px;
+  letter-spacing: .16em;
+  padding: 9px 12px;
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--grigio-scuro);
+  border: 1px solid rgba(210,168,58,.28);
+  margin-left: 10px;
+  transition: color .25s ease, border-color .25s ease;
+}
+.lingua:hover { color: var(--crema); border-color: var(--oro); }
+@media (max-width: 1023px) { .lingua { margin-left: 0; margin-right: 8px; } }
+@media print { .lingua { display: none; } }
+
+/* Il link della mappa è un bersaglio a sé, non un link dentro una frase:
+   gli diamo un'area toccabile da dito, non da mouse. */
+.mappa__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 4px 2px;
+}
+
+/* =========================================================
+   Revisione impaginazione — proporzioni e adattamento agli schermi
+   ========================================================= */
+
+/* --- Storia: la foto verticale diventava piu' alta della colonna di testo
+   e squilibrava la sezione. Ora ha una proporzione dichiarata e un tetto
+   massimo, e resta appaiata al testo su qualsiasi schermo. --- */
+.storia__foto {
+  min-height: 0;
+  width: 100%;
+  /* A una colonna (telefono e tablet) la foto tiene le sue proporzioni.
+     A due colonne prende l'altezza del testo che le sta accanto, senza
+     mai superarlo: prima era piu' alta di 180px e sbilanciava la sezione. */
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+@media (min-width: 1024px) {
+  .storia__foto { aspect-ratio: auto; height: clamp(380px, 40vw, 560px); }
+}
+.storia__foto img {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  object-fit: cover;
+  object-position: center center;
+}
+
+/* --- Galleria: tutti i riquadri con la stessa proporzione.
+   Prima il riquadro verticale allungava la sua riga e lasciava buchi neri
+   accanto agli altri. Numero di colonne deciso a mano, non da auto-fit,
+   cosi' le sei foto formano sempre righe piene: 1 sul telefono,
+   2 sul tablet, 3 sul computer. --- */
+.galleria { grid-template-columns: 1fr; gap: 16px; }
+@media (min-width: 560px) { .galleria { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 960px)  { .galleria { grid-template-columns: repeat(3, 1fr); } }
+
+.galleria__apri { aspect-ratio: 4 / 3; }
+
+/* il ritaglio 4:3 e' gia' nel file: al browser non resta niente da tagliare */
+
+/* --- La fascia sopra il menu' era alta mezzo schermo su desktop --- */
+.fascia { aspect-ratio: 2.6 / 1; }
+@media (max-width: 1023px) { .fascia { aspect-ratio: 16 / 9; } }
+@media (max-width: 600px)  { .fascia { aspect-ratio: 3 / 2; } }
+
+/* --- Il browser salta il calcolo di impaginazione delle sezioni ancora
+   fuori schermo: lo scorrimento resta fluido anche su telefoni lenti.
+   L'altezza dichiarata evita che la barra di scorrimento salti. --- */
+/* NOTA su content-visibility (rimosso di proposito)
+   Qui c'era content-visibility: auto su tre sezioni, per non farle
+   impaginare finche' erano fuori schermo. Va tolto, e la ragione e'
+   misurata: quella proprieta' richiede di dichiarare in anticipo
+   quanto sara' alta la sezione, e su un sito che si adatta a tutte le
+   larghezze quel numero non esiste. Con i valori giusti per il computer
+   la pagina si dichiarava 2134px piu' corta del vero su un telefono da
+   360px; con quelli giusti per il telefono sarebbe sbagliata sul
+   computer. Ogni volta che una sezione entrava nello schermo la
+   lunghezza della pagina cambiava e la barra di scorrimento saltava:
+   esattamente il difetto che stavamo cercando di togliere.
+
+   Il guadagno che dava era comunque minimo: questa pagina ha 708
+   elementi in tutto, mentre content-visibility serve per elenchi da
+   centinaia o migliaia di voci. Costava piu' di quanto rendesse. */
+
+
+/* La barra di navigazione, con "Foto" e il selettore di lingua in più,
+   ha bisogno di circa 1130px per stare in riga: sotto i 1150px passiamo
+   al menù a scomparsa. Prima, fra 1024 e 1140px, sbordava dallo schermo
+   e faceva comparire la barra di scorrimento orizzontale. */
+@media (max-width: 1149px) {
+  .nav { display: none; }
+  .hamburger { display: flex; }
+  .barra-mobile { display: flex; }
+  body { padding-bottom: 78px; }
+  .lingua { margin-left: 0; margin-right: 8px; }
+}
+
+/* =========================================================
+   Ricerca dentro il menù alla carta
+   ========================================================= */
+
+.cerca { margin: 0 0 clamp(20px, 3vw, 30px); }
+
+/* L'etichetta esiste per chi usa un lettore di schermo: il segnaposto
+   da solo non è un'etichetta, sparisce appena si inizia a scrivere. */
+.cerca__etichetta {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.cerca__campo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid rgba(210,168,58,.28);
+  background: rgba(16,14,12,.5);
+  padding: 0 12px;
+  transition: border-color .25s ease, background .25s ease;
+}
+.cerca__campo:focus-within { border-color: var(--oro); background: rgba(16,14,12,.75); }
+.cerca__lente { color: var(--oro); flex-shrink: 0; }
+
+.cerca__input {
+  flex: 1;
+  min-width: 0;
+  min-height: 48px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--crema);
+  /* 16px pieni: sotto questa misura iOS ingrandisce la pagina da solo
+     appena si tocca il campo, e l'impaginazione salta */
+  font-size: 16px;
+  font-family: var(--sans);
+  font-weight: 300;
+}
+.cerca__input::placeholder { color: var(--grigio-scuro); opacity: 1; }
+.cerca__input:focus { outline: none; }
+/* la crocetta nativa di Chrome duplicherebbe la nostra */
+.cerca__input::-webkit-search-cancel-button { display: none; }
+
+.cerca__pulisci {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* il segno grafico resta piccolo, l'area da toccare no */
+  width: 44px;
+  height: 44px;
+  margin-right: -6px;
+  flex-shrink: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--grigio-scuro);
+  cursor: pointer;
+  transition: color .2s ease;
+}
+.cerca__pulisci:hover { color: var(--crema); }
+.cerca__pulisci[hidden] { display: none; }
+
+.cerca__esito {
+  margin: 9px 0 0;
+  min-height: 1.2em;
+  font-size: 13px;
+  color: var(--grigio-scuro);
+  font-variant-numeric: tabular-nums;
+}
+.cerca__esito--vuoto { color: #E2A79A; }
+
+/* Nessun risultato: non un vicolo cieco, ma una via d'uscita */
+.cerca-nulla {
+  margin: 0;
+  padding: 34px 4px;
+  text-align: center;
+  color: var(--grigio-scuro);
+  font-weight: 300;
+  line-height: 1.7;
+}
+.cerca-nulla button {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 12px 22px;
+  min-height: 44px;
+  font-family: var(--sans);
+  font-size: 13px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--crema);
+  background: transparent;
+  border: 1px solid rgba(210,168,58,.5);
+  cursor: pointer;
+  transition: background .25s ease, border-color .25s ease;
+}
+.cerca-nulla button:hover { background: rgba(210,168,58,.12); border-color: var(--oro); }
+
+/* Il termine cercato, evidenziato dentro i risultati */
+.cerca-evid {
+  background: rgba(210,168,58,.22);
+  color: var(--crema);
+  border-radius: 2px;
+  padding: 0 1px;
+}
+
+@media print { .cerca { display: none !important; } }
+
+/* La barra fissa del telefono diventa "stato + azioni".
+   La riga di stato compare SOLO a locale chiuso: quando siamo aperti
+   il pulsante funziona e basta, e la barra resta pulita. Quando siamo
+   chiusi invece e' l'informazione che cambia la decisione — meglio
+   saperlo prima di telefonare che dopo aver squillato a vuoto. */
+.barra-mobile { flex-direction: column; gap: 0; padding-top: 0; }
+.barra-mobile__azioni { display: flex; gap: 10px; width: 100%; padding-top: 12px; }
+.barra-mobile__stato {
+  margin: 0;
+  width: 100%;
+  padding: 7px 2px 0;
+  text-align: center;
+  font-size: 11.5px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #E2A79A;
+  font-variant-numeric: tabular-nums;
+}
+.barra-mobile__stato[hidden] { display: none; }
+
+/* L'attributo hidden di HTML vale "display: none", ma qualsiasi regola
+   di foglio di stile che imposti un display lo sovrascrive: .piatto è
+   una griglia, quindi restava visibile anche quando la ricerca lo
+   escludeva. Questa riga rimette le cose a posto. */
+.piatto[hidden],
+.gruppo[hidden],
+.gruppo__corpo[hidden],
+.carta[hidden],
+.vino[hidden] { display: none; }
+.cerca-nulla__dritta { display: inline-block; margin-top: 10px; font-size: 13.5px; color: var(--grigio-scuro); }
+
+
+/* Il cedro dell'apertura pulsa in continuazione, anche quando è a
+   undicimila pixel fuori dallo schermo: anima scala e opacità su un
+   elemento che porta una drop-shadow, quindi il filtro va ricalcolato
+   ad ogni fotogramma per nulla. Questa classe la mette in pausa; il
+   JavaScript la toglie appena il logo rientra nello schermo, così
+   l'effetto resta identico quando lo si vede. */
+
+
+
+/* Schermi molto stretti: il nome per esteso non ci sta accanto ai comandi.
+   Resta il simbolo, che e gia riconoscibile. */
+@media (max-width: 420px) {
+  /* Il nome non deve essere compresso dal flex: gli lascio la sua larghezza
+     naturale, che a questa misura ci sta comodamente. */
+  .marchio__nome { font-size: 12.5px; letter-spacing: .05em; }
+  .header__barra { gap: 12px; padding-left: 16px; padding-right: 16px; }
+}

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 160" role="img" aria-label="Cedro del Libano">
+  <title>Cedro del Libano</title>
+  <defs>
+    <linearGradient id="cdlOro" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F6E4B4"></stop>
+      <stop offset="0.42" stop-color="#E0BC5B"></stop>
+      <stop offset="1" stop-color="#B98F26"></stop>
+    </linearGradient>
+  </defs>
+  <g fill="url(#cdlOro)">
+    <polygon points="100,10 108,31 100,27 92,31"></polygon>
+    <polygon points="100,25 114,33 124,31 134,40 118,46 108,44 100,47 92,44 82,46 66,40 76,31 86,33"></polygon>
+    <polygon points="100,43 122,52 136,50 152,61 130,67 116,65 100,69 84,65 70,67 48,61 64,50 78,52"></polygon>
+    <polygon points="100,63 128,73 146,71 170,83 142,90 124,88 100,92 76,88 58,90 30,83 54,71 72,73"></polygon>
+    <polygon points="100,85 132,96 152,94 186,107 152,114 130,112 100,117 70,112 50,114 14,107 48,94 68,96"></polygon>
+  </g>
+  <g fill="#8C7434">
+    <polygon points="95,111 105,111 107,143 93,143"></polygon>
+    <polygon points="74,143 126,143 137,153 118,147 108,150 100,147 92,150 82,147 63,153"></polygon>
+  </g>
+</svg>
