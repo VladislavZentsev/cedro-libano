@@ -1,0 +1,74 @@
+# Cedro del Libano — regole per il server (Apache, la quasi totalità degli hosting FTP)
+# Se il tuo hosting usa NGINX questo file viene ignorato: chiedi all'assistenza
+# di attivare gzip/brotli e la cache delle immagini.
+
+# ---- Archivio foto sorgente: non deve essere raggiungibile dal web ----
+# La cartella _archivio-foto contiene i file originali (centinaia di MB).
+# Non va caricata sul server: questa regola e una rete di sicurezza
+# nel caso venisse caricata per sbaglio.
+RedirectMatch 404 ^/_archivio-foto/
+
+# ---- Compressione: CSS, JS e HTML viaggiano ~4 volte più leggeri ----
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml
+  AddOutputFilterByType DEFLATE application/javascript application/json
+  AddOutputFilterByType DEFLATE image/svg+xml application/xml
+  # i woff2, gli avif e i webp sono gia compressi: ricomprimerli e fatica sprecata
+</IfModule>
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/css application/javascript image/svg+xml
+</IfModule>
+
+# ---- Cache: chi torna sul sito non riscarica foto e stili ----
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpeg     "access plus 1 year"
+  ExpiresByType image/png      "access plus 1 year"
+  ExpiresByType image/webp     "access plus 1 year"
+  ExpiresByType image/svg+xml  "access plus 1 year"
+  ExpiresByType image/avif     "access plus 1 year"
+  ExpiresByType font/woff2     "access plus 1 year"
+  ExpiresByType application/pdf "access plus 1 month"
+  # CSS e JS: una settimana. Se li modifichi, rinomina il file
+  # (es. style.css -> style-2.css) oppure abbassa questo valore.
+  ExpiresByType text/css        "access plus 7 days"
+  ExpiresByType application/javascript "access plus 7 days"
+  ExpiresByType text/html       "access plus 0 seconds"
+</IfModule>
+
+# ---- Tipi MIME e codifica ----
+AddDefaultCharset UTF-8
+<IfModule mod_mime.c>
+  AddType image/svg+xml .svg
+  AddType image/webp .webp
+  AddType image/avif .avif
+  AddType font/woff2 .woff2
+</IfModule>
+
+# ---- Sicurezza di base ----
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+
+# ---- Un solo indirizzo per il sito: https + senza www ----
+# ATTENZIONE: attiva queste righe solo dopo che il certificato HTTPS
+# è installato e il dominio definitivo è quello giusto.
+# <IfModule mod_rewrite.c>
+#   RewriteEngine On
+#   RewriteCond %{HTTPS} off
+#   RewriteRule ^(.*)$ https://cedrodellibano-savona.com/$1 [R=301,L]
+#   RewriteCond %{HTTP_HOST} ^www\. [NC]
+#   RewriteRule ^(.*)$ https://cedrodellibano-savona.com/$1 [R=301,L]
+# </IfModule>
+
+# ---- Indirizzo comodo per la versione inglese ----
+# /en  e  /en/  mostrano index-en.html senza cambiare la barra degli indirizzi.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^en/?$ /index-en.html [L]
+</IfModule>
+
+# ---- Pagina di errore ----
+ErrorDocument 404 /index.html
