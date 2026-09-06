@@ -333,7 +333,7 @@
   function tags(list) {
     if (!list || !list.length) return '';
     return '<div class="tags">' + list.map(function (x) {
-      return '<span class="' + x.cls + '">' + esc(T(x.label)) + '</span>';
+      return '<span class="' + esc(x.cls) + '">' + esc(T(x.label)) + '</span>';
     }).join('') + '</div>';
   }
   function pastiglie(prices) {
@@ -389,9 +389,9 @@
     host.innerHTML = '<div class="griglia-vini">' + VINI.map(function (w) {
       return '<article class="vino">'
         + '<div class="vino__foto"><picture>'
-        + '<source type="image/avif" sizes="' + SIZES + '" srcset="' + w.img + '-420.avif 420w, ' + w.img + '-700.avif 700w" />'
-        + '<source type="image/webp" sizes="' + SIZES + '" srcset="' + w.img + '-420.webp 420w, ' + w.img + '-700.webp 700w" />'
-        + '<img src="' + w.img + '-420.jpg" srcset="' + w.img + '-420.jpg 420w, ' + w.img + '-700.jpg 700w" sizes="' + SIZES + '" width="700" height="525" alt="' + esc(w.alt) + '" loading="lazy" decoding="async" />'
+        + '<source type="image/avif" sizes="' + SIZES + '" srcset="' + esc(w.img) + '-420.avif 420w, ' + esc(w.img) + '-700.avif 700w" />'
+        + '<source type="image/webp" sizes="' + SIZES + '" srcset="' + esc(w.img) + '-420.webp 420w, ' + esc(w.img) + '-700.webp 700w" />'
+        + '<img src="' + esc(w.img) + '-420.jpg" srcset="' + esc(w.img) + '-420.jpg 420w, ' + esc(w.img) + '-700.jpg 700w" sizes="' + SIZES + '" width="700" height="525" alt="' + esc(w.alt) + '" loading="lazy" decoding="async" />'
         + '</picture></div>'
         + '<div class="vino__corpo">'
         + '<span class="vino__cantina">' + esc(w.cantina) + ' / ' + esc(T(w.type)) + '</span>'

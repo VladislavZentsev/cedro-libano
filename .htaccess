@@ -50,6 +50,23 @@ AddDefaultCharset UTF-8
   Header set X-Content-Type-Options "nosniff"
   Header set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set X-Frame-Options "SAMEORIGIN"
+
+  # Da dove il browser puo caricare le cose. Il sito non carica NIENTE da
+  # fuori: niente CDN, niente Google Fonts, niente widget, nessuno script
+  # esterno, e nemmeno un attributo style= scritto a mano nell'HTML.
+  # Percio si puo permettere solo "se stesso" e basta, senza le scappatoie
+  # 'unsafe-inline' / 'unsafe-eval' che di solito svuotano di senso questa
+  # regola. Se un domani aggiungi un widget esterno (mappa incorporata,
+  # prenotazioni, statistiche) va aggiunto qui il suo indirizzo, altrimenti
+  # il browser lo blocca.
+  # Nota: i colori e le misure che il JavaScript cambia da codice non sono
+  # toccati da style-src — quella riga vale per lo style= scritto nella
+  # pagina, non per le modifiche fatte a runtime.
+  Header set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; media-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'self'"
+
+  # Funzioni del dispositivo che il sito non usa: si spengono, cosi non
+  # possono essere richieste nemmeno per sbaglio.
+  Header set Permissions-Policy "geolocation=(), camera=(), microphone=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()"
 </IfModule>
 
 # ---- Un solo indirizzo per il sito: https + senza www ----
