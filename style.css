@@ -2061,17 +2061,23 @@ img { max-width: 100%; height: auto; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 40px;
+  min-width: 34px;
   min-height: 38px;
-  padding: 0 10px;
-  font-size: 12px;
-  letter-spacing: .16em;
+  padding: 0 8px;
   text-decoration: none;
-  color: var(--grigio-scuro);
-  transition: color .28s ease;
+  opacity: .6;
+  transition: opacity .28s ease;
 }
-.lingue__voce--attiva { color: var(--oro-chiaro); }
-.lingue__voce:hover { color: var(--crema); }
+.lingue__voce--attiva { opacity: 1; }
+.lingue__voce:hover { opacity: 1; }
+/* La bandierina vera e propria: angoli smussati (gia' nell'SVG) e
+   un'ombra leggera, cosi' anche piccolissima si stacca dallo sfondo
+   scuro invece di sembrare un francobollo appiccicato. */
+.bandiera {
+  display: block;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.4), inset 0 0 0 1px rgba(0,0,0,.25);
+}
 /* Col dito serve un bersaglio da 44px, come per gli altri link del sito;
    col mouse basta meno e la pillola resta compatta. Il bordo interno si
    stringe a 2px, cosi la pillola resta alta quanto l'hamburger accanto. */

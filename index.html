@@ -63,8 +63,30 @@
     </nav>
     <div class="lingue" role="group" aria-label="Lingua del sito">
       <span class="lingue__cursore" aria-hidden="true"></span>
-      <span class="lingue__voce lingue__voce--attiva" aria-current="true">IT</span>
-      <a class="lingue__voce" href="index-en.html" hreflang="en" lang="en" aria-label="Switch to English">EN</a>
+      <span class="lingue__voce lingue__voce--attiva" aria-current="true" aria-label="Italiano">
+        <svg class="bandiera" viewBox="0 0 20 14" width="20" height="14" aria-hidden="true" focusable="false">
+          <clipPath id="lingua-it-tondo"><rect width="20" height="14" rx="2" /></clipPath>
+          <g clip-path="url(#lingua-it-tondo)">
+            <rect width="20" height="14" fill="#F1F2F1" />
+            <rect width="6.667" height="14" fill="#009246" />
+            <rect x="13.333" width="6.667" height="14" fill="#CE2B37" />
+          </g>
+        </svg>
+      </span>
+      <a class="lingue__voce" href="index-en.html" hreflang="en" lang="en" aria-label="Switch to English">
+        <svg class="bandiera" viewBox="0 0 20 14" width="20" height="14" aria-hidden="true" focusable="false">
+          <clipPath id="lingua-en-tondo"><rect width="20" height="14" rx="2" /></clipPath>
+          <g clip-path="url(#lingua-en-tondo)">
+            <rect width="20" height="14" fill="#00247D" />
+            <path d="M0 0L20 14M20 0L0 14" stroke="#FFFFFF" stroke-width="3" />
+            <path d="M0 0L20 14M20 0L0 14" stroke="#CF142B" stroke-width="1.2" />
+            <rect x="8" width="4" height="14" fill="#FFFFFF" />
+            <rect y="5" width="20" height="4" fill="#FFFFFF" />
+            <rect x="8.8" width="2.4" height="14" fill="#CF142B" />
+            <rect y="5.8" width="20" height="2.4" fill="#CF142B" />
+          </g>
+        </svg>
+      </a>
     </div>
     <button type="button" class="hamburger" aria-label="Apri il menù di navigazione" aria-expanded="false" aria-controls="nav-mobile">
       <span></span><span></span><span></span>

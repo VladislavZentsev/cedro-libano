@@ -946,7 +946,10 @@
   var domande = document.querySelectorAll('[data-faq]');
   if (domande.length && typeof document.createElement('details').animate === 'function') {
     var pigroFaq = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var MOLLA = 'cubic-bezier(.22, 1, .36, 1)';
+    /* Curva morbida: parte piano e si posa piano. Quella usata altrove
+       sul sito (.22, 1, .36, 1) scatta subito, e su un pannello che si
+       apre sotto le dita sembra uno strappo invece di un'apertura. */
+    var MOLLA = 'cubic-bezier(.32, .08, .24, 1)';
 
     /* Le parole vengono separate una volta sola, alla prima apertura:
        nell'HTML resta una frase normale, che si puo' leggere e
@@ -981,14 +984,14 @@
       var mosse = [];
       Array.prototype.forEach.call(parole, function (p, i) {
         mosse.push(p.animate(
-          [{ opacity: 0, filter: 'blur(6px)' }, { opacity: 1, filter: 'blur(0)' }],
-          { duration: 260, delay: 40 + i * 18, easing: 'ease-out', fill: 'backwards' }
+          [{ opacity: 0, filter: 'blur(10px)' }, { opacity: 1, filter: 'blur(0)' }],
+          { duration: 420, delay: 60 + i * 30, easing: 'ease-out', fill: 'backwards' }
         ));
       });
       clearTimeout(corpo.reteParole);
       corpo.reteParole = setTimeout(function () {
         mosse.forEach(function (m) { if (m.playState !== 'finished') m.cancel(); });
-      }, 40 + parole.length * 18 + 260 + 600);
+      }, 60 + parole.length * 30 + 420 + 700);
     }
 
     function apri(d) {
@@ -1000,7 +1003,7 @@
       var alto = risposta.scrollHeight;
       risposta.animate(
         [{ height: '0px', opacity: 0 }, { height: alto + 'px', opacity: 1 }],
-        { duration: 340, easing: MOLLA }
+        { duration: 520, easing: MOLLA }
       );
       mostraParole(risposta);
     }
@@ -1014,7 +1017,7 @@
       var alto = risposta.scrollHeight;
       var mossa = risposta.animate(
         [{ height: alto + 'px', opacity: 1 }, { height: '0px', opacity: 0 }],
-        { duration: 260, easing: MOLLA }
+        { duration: 400, easing: MOLLA }
       );
 
       /* L'attributo si toglie a movimento finito, altrimenti il
@@ -1029,7 +1032,7 @@
       }
       mossa.onfinish = conclusa;
       clearTimeout(d.reteChiusura);
-      d.reteChiusura = setTimeout(conclusa, 900);
+      d.reteChiusura = setTimeout(conclusa, 1300);
     }
 
     Array.prototype.forEach.call(domande, function (d) {
