@@ -979,6 +979,53 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; }
   max-width: 62ch;
 }
 
+/* ---------- serate ed eventi ----------
+
+   La sezione nasce nascosta (hidden nell'HTML) e si accende quando c'e'
+   il primo evento vero. Stessa idea del pulsante del menu' in PDF: meglio
+   niente che una sezione vuota o con date vecchie.
+
+   Niente cornice attorno a ogni evento: si separano con una riga sottile
+   e con lo spazio, come i gruppi del menu' e le domande frequenti. */
+
+.eventi {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 780px;
+  display: flex;
+  flex-direction: column;
+}
+.evento {
+  padding: 26px 0;
+  border-top: 1px solid var(--filo-tenue);
+}
+.evento:last-child { border-bottom: 1px solid var(--filo-tenue); }
+.evento__quando {
+  margin: 0 0 8px;
+  font-size: 12px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--oro);
+}
+.evento__titolo {
+  margin: 0 0 10px;
+  font-family: var(--serif);
+  font-size: clamp(21px, 2.6vw, 29px);
+  letter-spacing: -.015em;
+  line-height: 1.2;
+  color: var(--crema);
+}
+.evento__testo {
+  margin: 0;
+  max-width: 60ch;
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--grigio);
+  text-wrap: pretty;
+}
+
 /* ---------- domande frequenti ----------
 
    Sono <details> veri, non finti pannelli: si aprono e si chiudono da

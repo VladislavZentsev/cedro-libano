@@ -302,6 +302,13 @@
         <h2 class="titolo-oro" id="titolo-storia">Un albero che non si sposta</h2>
         <p class="testo">Il cedro è l'albero sulla bandiera del Libano: cresce lento, resiste al vento e resta dov'è. Ci è sembrato il nome giusto per un ristorante nato lontano da casa.</p>
         <p class="testo">Ahmad Fayad cucina qui dal 2022, in sala c'è suo figlio Jamil. Le ricette non vengono da un manuale: sono quelle di famiglia. L'hommos lavorato ogni giorno, la carne sullo spiedo alla brace, il pane pita caldo che arriva a tavola prima di tutto il resto — e alla fine, quasi sempre, un tè alla menta offerto.</p>
+                <!-- ATTENZIONE: i due paragrafi qui sotto sono una BOZZA. Le parti fra
+             doppie parentesi sono da riempire con i fatti veri. Finche ci sono,
+             NON caricare il sito sul server: si vedrebbero. Se preferisci
+             rimandare, cancella i due paragrafi: il resto della storia sta in
+             piedi da solo. -->
+        <p class="testo">Ahmad è cresciuto a [[ CITTÀ O PAESE DEL LIBANO ]], dove a cucinare gli ha insegnato [[ CHI: la madre, la nonna, uno zio... ]]. In Italia è arrivato nel [[ ANNO ]], e prima di aprire qui [[ COSA FACEVA: in quale cucina ha lavorato, in quale città ]].</p>
+        <p class="testo">Il piatto a cui tiene di più è [[ QUALE PIATTO E PERCHÉ — una riga basta ]]. E se gli chiedete cosa gli manca del Libano, risponde [[ COSA RISPONDE ]].</p>
         <p class="testo">Abbiamo scelto la Darsena perché somiglia a un porto libanese: barche, sale, gente che passa. La sala è piccola e va bene così — si sente chi parla al tavolo accanto e chi cucina di là. Per questo conviene prenotare.</p>
         <p class="firma">
           <svg class="firma__traccia" viewBox="-13 -56 290 88" role="img" aria-label="Firma di Ahmad Fayad">
@@ -459,6 +466,29 @@
     <button type="button" class="lente__chiudi" aria-label="Chiudi la foto ingrandita"><svg aria-hidden="true" focusable="false" viewBox="0 0 16 16" width="16" height="16"><path d="M3 3l10 10M13 3L3 13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" /></svg></button>
     <picture class="lente__foto"><img class="lente__img" alt="" /></picture>
   </dialog>
+
+  <!-- SEZIONE EVENTI — oggi NASCOSTA.
+       Quando avrete il primo evento da annunciare: sostituite i testi fra
+       doppie parentesi qui sotto e togliete la parola  hidden  dalla riga
+       della sezione. Finche resta nascosta non compare sul sito, esattamente
+       come il pulsante del menu in PDF. -->
+  <section class="sezione sezione--velata" id="eventi" aria-labelledby="titolo-eventi" hidden>
+    <div class="contenitore">
+      <div class="intestazione">
+        <p class="occhiello">Che succede in darsena</p>
+        <h2 class="titolo-oro" id="titolo-eventi">Serate e cene a tema</h2>
+        <p class="intestazione__testo">Ogni tanto la sala cambia programma: una cena su un piatto solo, una serata con un vino, una festa libanese. Chi vuole esserci fa bene a prenotare presto: i tavoli sono pochi.</p>
+      </div>
+
+      <ul class="eventi">
+        <li class="evento">
+          <p class="evento__quando">[[ DATA — es. Venerdì 14 marzo, dalle 20 ]]</p>
+          <h3 class="evento__titolo">[[ TITOLO DELLA SERATA ]]</h3>
+          <p class="evento__testo">[[ DUE RIGHE: cosa si mangia, quanto costa, se serve prenotare ]]</p>
+        </li>
+      </ul>
+    </div>
+  </section>
 
   <section class="sezione sezione--recensioni" id="recensioni" aria-labelledby="titolo-recensioni">
     <div class="contenitore">
