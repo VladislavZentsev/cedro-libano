@@ -147,7 +147,6 @@ body::before {
     /* un fondo caldo in basso, cosi la pagina non finisce nel nero piatto */
     radial-gradient(800px 560px at 50% 108%, rgba(90,58,24,.22), transparent 64%);
   animation: cdlDeriva 38s ease-in-out infinite alternate;
-  will-change: transform;
 }
 @keyframes cdlDeriva {
   from { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
@@ -181,7 +180,6 @@ body::after {
     radial-gradient(2px 2px    at 52% 6%,   rgba(232,201,121,.32), transparent 60%),
     radial-gradient(1.5px 1.5px at 71% 96%, rgba(210,168,58,.26),  transparent 60%);
   animation: cdlBraci 64s linear infinite;
-  will-change: transform;
 }
 @keyframes cdlBraci {
   from { transform: translate3d(0, 0, 0); }

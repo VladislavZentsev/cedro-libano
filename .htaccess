@@ -27,6 +27,8 @@ RedirectMatch 404 ^/_archivio-foto/
   ExpiresByType image/webp     "access plus 1 year"
   ExpiresByType image/svg+xml  "access plus 1 year"
   ExpiresByType image/avif     "access plus 1 year"
+  ExpiresByType video/mp4      "access plus 1 year"
+  ExpiresByType video/webm     "access plus 1 year"
   ExpiresByType font/woff2     "access plus 1 year"
   ExpiresByType application/pdf "access plus 1 month"
   # CSS e JS: una settimana. Se li modifichi, rinomina il file

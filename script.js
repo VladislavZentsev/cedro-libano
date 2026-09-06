@@ -196,6 +196,14 @@
 
   if (fasceVideo.length && !menoMovimentoFasce) {
 
+    /* Da dove comincia l'aggancio e quanto e' alto: due misure che
+       cambiano solo se cambia la finestra, non mentre si scorre. */
+    function misuraFascia(voce) {
+      var agg = voce.aggancio;
+      voce.cima = agg ? (parseFloat(getComputedStyle(agg).top) || 0) : 0;
+      voce.altezzaAggancio = agg ? agg.getBoundingClientRect().height : window.innerHeight;
+    }
+
     var daSeguire = [];
     var tutte = [];
 
@@ -205,10 +213,13 @@
         elemento: f,
         film: f.querySelector('video'),
         aggancio: f.querySelector('.fascia-video__aggancio'),
+        cima: 0,
+        altezzaAggancio: 0,
         massimo: 0,
         cresciuta: false,
         dentro: false
       };
+      misuraFascia(voce);
       tutte.push(voce);
       daSeguire.push(voce);
     });
@@ -260,16 +271,15 @@
            cosi' resta un tratto in cui il filmato si vede grande e fermo
            prima che la pagina prosegua: e' li' che parte, gia' a misura
            piena, come deve. */
-        /* Si misura l'aggancio vero invece di dare per scontato che sia
-           alto quanto la finestra: da quando il filmato si centra sotto
-           l'intestazione, l'aggancio e' piu' basso della finestra e
-           parte un po' piu' in alto. Prendendo le sue misure reali il
-           conto resta giusto comunque, e resta giusto anche se domani
-           la barra cambia altezza. */
-        var agg = f.aggancio;
-        var cima = agg ? (parseFloat(getComputedStyle(agg).top) || 0) : 0;
-        var corsa = r.height - (agg ? agg.getBoundingClientRect().height : schermo);
-        var quanto = corsa > 0 ? (cima - r.top) / (corsa * FINE_CRESCITA) : 1;
+        /* Le misure dell'aggancio (da dove comincia e quanto e' alto)
+           sono gia' pronte: si calcolano una volta sola e si rifanno
+           solo quando la finestra cambia misura. Prima venivano rilette
+           a ogni fotogramma di scorrimento, e una di quelle letture era
+           getComputedStyle, che costringe il browser a ricalcolare da
+           capo lo stile di tutta la pagina: la lettura piu' cara di
+           tutto il ciclo, ripetuta 60 volte al secondo. */
+        var corsa = r.height - f.altezzaAggancio;
+        var quanto = corsa > 0 ? (f.cima - r.top) / (corsa * FINE_CRESCITA) : 1;
         if (quanto < 0) quanto = 0;
         if (quanto > 1) quanto = 1;
 
@@ -297,7 +307,7 @@
 
       if (!daSeguire.length) {
         window.removeEventListener('scroll', inCoda);
-        window.removeEventListener('resize', inCoda);
+        window.removeEventListener('resize', alRidimensiona);
       }
     }
 
@@ -308,7 +318,12 @@
     }
 
     window.addEventListener('scroll', inCoda, { passive: true });
-    window.addEventListener('resize', inCoda, { passive: true });
+    /* le misure fisse si rifanno qui, non dentro il ciclo di scorrimento */
+    function alRidimensiona() {
+      tutte.forEach(misuraFascia);
+      inCoda();
+    }
+    window.addEventListener('resize', alRidimensiona, { passive: true });
     calcola();
   }
 
@@ -942,13 +957,35 @@
     });
     misura();
 
+    /* Il nastro si muove SOLO mentre e' sullo schermo.
+       Prima il ciclo girava a 60 fotogrammi al secondo dal caricamento
+       della pagina fino alla chiusura della scheda, per tutti e due i
+       caroselli, anche mentre si leggeva il menu in cima: lavoro
+       continuo per qualcosa che non si vedeva. Ora esce dal ciclo
+       appena il carosello lascia lo schermo, e l'osservatore qui sotto
+       lo fa ripartire quando rientra. Chi guarda non vede differenza:
+       il movimento c'e' esattamente quando c'e' qualcuno a guardarlo. */
+    var inMoto = false;
+    function avvia() {
+      if (inMoto) return;
+      inMoto = true;
+      /* si riparte senza salto: il tempo passato fuori schermo non
+         deve tradursi in uno scatto in avanti al rientro */
+      ultimoIstante = 0;
+      requestAnimationFrame(passo);
+    }
+
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (voci) {
-        voci.forEach(function (v) { dentro = v.isIntersecting; });
+        voci.forEach(function (v) {
+          dentro = v.isIntersecting;
+          if (dentro) avvia();
+        });
       }, { rootMargin: '120px 0px' }).observe(giostra);
     }
 
     function passo(istante) {
+      if (!dentro) { inMoto = false; return; }
       requestAnimationFrame(passo);
       var salto = ultimoIstante ? istante - ultimoIstante : 0;
       ultimoIstante = istante;
@@ -958,16 +995,22 @@
          (swipe, rotella, tastiera) si riparte da dove l'ha lasciato */
       if (Math.abs(pista.scrollLeft - impostato) > 1) posizione = pista.scrollLeft;
 
-      if (!fermo && dentro && salto > 0 && salto < 200) {
+      if (!fermo && salto > 0 && salto < 200) {
         posizione += VELOCITA * salto / 1000;
       }
       if (posizione >= larghezzaGruppo) posizione -= larghezzaGruppo;
       else if (posizione < 0) posizione += larghezzaGruppo;
 
       pista.scrollLeft = posizione;
-      impostato = pista.scrollLeft;
+      /* Non si rilegge scrollLeft dopo averlo scritto: quella rilettura
+         costringeva il browser a ricalcolare l'impaginazione due volte
+         nello stesso fotogramma, per ogni carosello. Il valore appena
+         assegnato lo conosciamo gia; il browser puo arrotondarlo di una
+         frazione di pixel, ben sotto la soglia di 1px del controllo qui
+         sopra. */
+      impostato = posizione;
     }
-    requestAnimationFrame(passo);
+    avvia();
   });
 
 
