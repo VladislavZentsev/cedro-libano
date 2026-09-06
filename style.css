@@ -533,6 +533,20 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; }
 .gruppo__freccia { font-size: 15px; color: var(--oro); transition: transform .3s ease; }
 .gruppo__testa--chiusa .gruppo__freccia { transform: rotate(-90deg); }
 
+/* Su schermi larghi un gruppo aperto dispone i suoi piatti su due
+   colonne invece che in un'unica lista verticale: e' quello che
+   dimezza l'altezza di "Specialita' — mezze", il gruppo piu' lungo
+   (13 piatti). Sotto i 1150px (la stessa soglia usata altrove nel
+   sito per il layout desktop) resta una sola colonna: lo spazio in
+   larghezza non basterebbe per due colonne leggibili. */
+@media (min-width: 1150px) {
+  .gruppo__corpo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: clamp(24px, 3vw, 48px);
+  }
+}
+
 .piatto {
   display: grid;
   grid-template-columns: 1fr auto;

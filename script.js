@@ -67,13 +67,29 @@
     });
   });
 
+  /* Fisarmonica dei gruppi del menù à la carte: parte aperto solo il
+     primo (su qualunque schermo, non solo su mobile come prima —
+     41 piatti tutti insieme rendevano il menù troppo lungo da
+     scorrere), e aprendone un altro quello aperto prima si richiude
+     da solo. Mai più di un gruppo aperto insieme.
+
+     La ricerca (piu' sotto in questo file) non passa da qui: apre i
+     gruppi con risultati per conto suo, anche piu' di uno insieme, e
+     questo resta corretto — durante una ricerca servono i risultati
+     di piu' categorie alla volta. */
   function collegaAccordion() {
     var teste = document.querySelectorAll('.gruppo__testa');
     Array.prototype.forEach.call(teste, function (testa, i) {
       var corpo = document.getElementById(testa.getAttribute('aria-controls'));
-      if (window.matchMedia('(max-width: 1149px)').matches && i > 0) chiudi(testa, corpo, true);
+      if (i > 0) chiudi(testa, corpo, true);
       testa.addEventListener('click', function () {
         var aperto = testa.getAttribute('aria-expanded') === 'true';
+        if (!aperto) {
+          Array.prototype.forEach.call(teste, function (altra) {
+            if (altra === testa) return;
+            chiudi(altra, document.getElementById(altra.getAttribute('aria-controls')), true);
+          });
+        }
         chiudi(testa, corpo, aperto);
       });
     });
