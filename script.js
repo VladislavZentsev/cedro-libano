@@ -885,6 +885,10 @@
     var posizione = 0;
     var impostato = -1;
     var fermo = false;
+    /* Col mouse basta passare sopra per fermare il nastro. Col dito no:
+       la pausa durava quanto il dito restava premuto. Questo flag invece
+       resta: un tocco secco ferma, un altro fa ripartire. */
+    var fermatoAMano = false;
     var dentro = !('IntersectionObserver' in window);
     var ultimoIstante = 0;
     var trascina = null;
@@ -915,6 +919,12 @@
       pista.scrollLeft = trascina.da - (e.clientX - trascina.x);
     });
     function lasciaAndare(e) {
+      /* Un tocco secco (non un trascinamento, non col mouse, e non su un
+         pulsante come le foto ingrandibili) vale come comando di pausa. */
+      if (e && e.pointerType && e.pointerType !== 'mouse' && !mosso &&
+          !(e.target && e.target.closest && e.target.closest('button, a'))) {
+        fermatoAMano = !fermatoAMano;
+      }
       partenzaX = null;
       if (trascina) {
         trascina = null;
@@ -1000,7 +1010,7 @@
          (swipe, rotella, tastiera) si riparte da dove l'ha lasciato */
       if (Math.abs(pista.scrollLeft - impostato) > 1) posizione = pista.scrollLeft;
 
-      if (!fermo && salto > 0 && salto < 200) {
+      if (!fermo && !fermatoAMano && salto > 0 && salto < 200) {
         posizione += VELOCITA * salto / 1000;
       }
       if (posizione >= larghezzaGruppo) posizione -= larghezzaGruppo;
