@@ -11,3 +11,8 @@ _prova-*.html
 _analisi-*.html
 _test-*.html
 .claude/
+
+# Archivio dei file sorgente (oltre 500 MB di foto, video e GIF di lavoro).
+# Non va sul sito e non ha senso versionarlo: e la copia grezza da cui sono
+# state ricavate le immagini in img/, che invece sono versionate.
+_archivio-foto/

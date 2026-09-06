@@ -633,8 +633,6 @@
      l'ingrandimento sfrutta AVIF e WebP invece di scaricare il JPEG. */
   var lente = document.getElementById('lente');
   if (lente && typeof lente.showModal === 'function') {
-    var contenitoreLente = lente;
-
     function mostraFoto(base, testoAlt) {
       var vecchia = lente.querySelector('.lente__foto, .lente__img');
       var pic = document.createElement('picture');
@@ -650,7 +648,7 @@
       im.src = base + '.jpg';
       im.alt = testoAlt || '';
       pic.appendChild(im);
-      if (vecchia) vecchia.replaceWith(pic); else contenitoreLente.appendChild(pic);
+      if (vecchia) vecchia.replaceWith(pic); else lente.appendChild(pic);
     }
 
     Array.prototype.forEach.call(document.querySelectorAll('.galleria__apri'), function (b) {
@@ -929,11 +927,13 @@
     pista.addEventListener('focusin', function () { fermo = true; });
     pista.addEventListener('focusout', function () { fermo = false; });
 
-    window.addEventListener('resize', misura, { passive: true });
-
     /* Chi ha chiesto meno animazioni si tiene il nastro fermo e lo
-       scorre a mano: nessuna copia, nessun movimento automatico. */
+       scorre a mano: nessuna copia, nessun movimento automatico.
+       Si esce prima di registrare l'ascolto del ridimensionamento:
+       senza nastro in movimento non c'e' niente da rimisurare. */
     if (pigro) return;
+
+    window.addEventListener('resize', misura, { passive: true });
 
     schede.forEach(function (s) {
       var copia = s.cloneNode(true);
@@ -1036,7 +1036,7 @@
       }, 60 + parole.length * 30 + 420 + 700);
     }
 
-    function apri(d) {
+    function apriFaq(d) {
       var risposta = d.querySelector('.faq__risposta');
       clearTimeout(d.reteChiusura);
       d.inChiusura = false;
@@ -1050,7 +1050,7 @@
       mostraParole(risposta);
     }
 
-    function chiudi(d) {
+    function chiudiFaq(d) {
       var risposta = d.querySelector('.faq__risposta');
       if (pigroFaq || !risposta) { d.open = false; return; }
       if (d.inChiusura) return;
@@ -1082,11 +1082,11 @@
       if (!testa) return;
       testa.addEventListener('click', function (e) {
         e.preventDefault();
-        if (d.open) { chiudi(d); return; }
+        if (d.open) { chiudiFaq(d); return; }
         Array.prototype.forEach.call(domande, function (altra) {
-          if (altra !== d && altra.open) chiudi(altra);
+          if (altra !== d && altra.open) chiudiFaq(altra);
         });
-        apri(d);
+        apriFaq(d);
       });
     });
   }

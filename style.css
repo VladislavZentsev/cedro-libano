@@ -1603,9 +1603,6 @@ img { max-width: 100%; height: auto; }
 @media (max-width: 1023px) { .fascia { aspect-ratio: 16 / 9; } }
 @media (max-width: 600px)  { .fascia { aspect-ratio: 3 / 2; } }
 
-/* --- Il browser salta il calcolo di impaginazione delle sezioni ancora
-   fuori schermo: lo scorrimento resta fluido anche su telefoni lenti.
-   L'altezza dichiarata evita che la barra di scorrimento salti. --- */
 /* NOTA su content-visibility (rimosso di proposito)
    Qui c'era content-visibility: auto su tre sezioni, per non farle
    impaginare finche' erano fuori schermo. Va tolto, e la ragione e'
@@ -1632,7 +1629,6 @@ img { max-width: 100%; height: auto; }
   .hamburger { display: flex; }
   .barra-mobile { display: flex; }
   body { padding-bottom: 78px; }
-  .lingua { margin-left: 0; margin-right: 8px; }
 }
 
 /* =========================================================

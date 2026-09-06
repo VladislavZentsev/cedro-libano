@@ -7,8 +7,9 @@ Compresi il file .htaccess e la cartella font/ : il file .htaccess comincia
 con un punto e alcuni programmi FTP lo nascondono — attiva "mostra file
 nascosti" se non lo vedi.
 
-Le uniche cose da NON caricare sono TASK.json, la cartella build/ e
-questo LEGGIMI: servono solo a chi mette mano al sito, non al server.
+Le uniche cose da NON caricare sono TASK.json, README.md, .gitignore,
+la cartella build/, la cartella .claude/ e questo LEGGIMI: servono solo
+a chi mette mano al sito, non al server.
 
 
 COSA C'È DENTRO
@@ -18,7 +19,7 @@ index-en.html         la stessa pagina in inglese
 style.css             tutto l'aspetto grafico
 script.js             linguette del menù, navigazione, orario di oggi, galleria
 menu.js               i dati del menù (piatti, prezzi, vini) E la traduzione
-font/                 i caratteri Marcellus, Work Sans e Mrs Saint Delafield
+font/                 i caratteri Marcellus e Work Sans (6 file woff2)
 img/                  tutte le foto, in più misure e più formati
 .htaccess             compressione, cache e indirizzo /en per la pagina inglese
 build/                strumento per rigenerare i dati per Google (NON va sul server)
@@ -95,7 +96,7 @@ prepariamo. Le foto originali, ordinate e con i nomi giusti, stanno nella
 cartella  _archivio-foto/  qui dentro.
 
 ATTENZIONE: la cartella  _archivio-foto/  NON va caricata sul server.
-Sono ~300 MB di file originali che sul sito non servono: sul server ci vanno
+Sono oltre 500 MB di file originali che sul sito non servono: sul server ci vanno
 solo le versioni ottimizzate, che sono gia in  img/ . Quando carichi via FTP,
 salta quella cartella. C'e anche una regola nel .htaccess come rete di
 sicurezza, ma la cosa piu semplice e non caricarla proprio.
@@ -177,7 +178,6 @@ DA CONTROLLARE PRIMA DI PUBBLICARE
 
 - PREZZI DA FAR CONFERMARE AL PROPRIETARIO. Queste voci sono state prese
   dalle locandine del ristorante e non erano sul sito prima d'ora:
-    · Birra Almaza — la locandina dice 6 €, il sito dice 4,00 €: quale vale?
     · Dolci libanesi 6 € al pezzo · degustazione dolci 10 € a persona
     · Dolci vegani 6 € al pezzo
     · Menù bimbi 12 € a persona
