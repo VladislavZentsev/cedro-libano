@@ -152,6 +152,23 @@
         ferma quando esce dallo schermo e riparte rientrando — niente
         fuoco che consuma processore e batteria mentre si legge il
         menu piu' sotto. */
+  /* Quanto e' alta l'intestazione, misurata e non scritta a mano: sul
+     telefono e' piu' bassa che sul computer, e se cambiasse in futuro
+     questo si aggiusta da solo. Serve alla fascia video per centrare il
+     filmato nello spazio che si vede davvero — quello sotto la barra —
+     invece che nella finestra intera, dove i primi centimetri stanno
+     nascosti sotto la barra stessa.
+     Senza JavaScript la misura resta 0 e tutto si comporta come prima. */
+  var testata = document.querySelector('.header');
+  function misuraTestata() {
+    var h = testata ? Math.round(testata.getBoundingClientRect().height) : 0;
+    document.documentElement.style.setProperty('--alt-testata', h + 'px');
+  }
+  if (testata) {
+    misuraTestata();
+    window.addEventListener('resize', misuraTestata, { passive: true });
+  }
+
   var menoMovimentoFasce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var fasceVideo = document.querySelectorAll('[data-fascia-video]');
 
@@ -159,7 +176,7 @@
      raggiunge la misura piena al 70% della corsa, e il restante 30% e'
      tempo in cui si vede grande, ferma e in movimento prima che la
      pagina riparta. */
-  var FINE_CRESCITA = 0.7;
+  var FINE_CRESCITA = 0.85;
 
   if (fasceVideo.length && !menoMovimentoFasce) {
 
@@ -171,6 +188,7 @@
       var voce = {
         elemento: f,
         film: f.querySelector('video'),
+        aggancio: f.querySelector('.fascia-video__aggancio'),
         massimo: 0,
         cresciuta: false,
         dentro: false
@@ -226,8 +244,16 @@
            cosi' resta un tratto in cui il filmato si vede grande e fermo
            prima che la pagina prosegua: e' li' che parte, gia' a misura
            piena, come deve. */
-        var corsa = r.height - schermo;
-        var quanto = corsa > 0 ? (-r.top) / (corsa * FINE_CRESCITA) : 1;
+        /* Si misura l'aggancio vero invece di dare per scontato che sia
+           alto quanto la finestra: da quando il filmato si centra sotto
+           l'intestazione, l'aggancio e' piu' basso della finestra e
+           parte un po' piu' in alto. Prendendo le sue misure reali il
+           conto resta giusto comunque, e resta giusto anche se domani
+           la barra cambia altezza. */
+        var agg = f.aggancio;
+        var cima = agg ? (parseFloat(getComputedStyle(agg).top) || 0) : 0;
+        var corsa = r.height - (agg ? agg.getBoundingClientRect().height : schermo);
+        var quanto = corsa > 0 ? (cima - r.top) / (corsa * FINE_CRESCITA) : 1;
         if (quanto < 0) quanto = 0;
         if (quanto > 1) quanto = 1;
 

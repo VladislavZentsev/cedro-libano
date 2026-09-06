@@ -1246,17 +1246,29 @@ img { max-width: 100%; height: auto; }
    grande e fermo prima di proseguire. */
 .fascia-video {
   --apertura: 1;              /* 0 = piccolo, 1 = misura piena. Lo muove lo script. */
-  --corsa: 90svh;
-  height: calc(100svh + var(--corsa));
+  /* Quanto dura la pausa. Era 90svh: scendendo andava bene, ma tornando
+     su si risaliva quasi un intero schermo in piu' con il filmato gia'
+     grande e fermo — tanto scorrere per non veder succedere niente,
+     visto che indietro non si rimpicciolisce. Ora e' quasi la meta'. */
+  --corsa: 50svh;
+  /* --alt-testata la misura lo script sulla barra in alto. Senza
+     JavaScript vale 0 e la fascia si comporta come prima. */
+  height: calc(100svh - var(--alt-testata, 0px) + var(--corsa));
   /* Esce dal bordo laterale della sezione (22px per parte): sul telefono
      e' la larghezza a fare da limite, e quei 44px erano proprio quelli
      che mancavano per riempire lo schermo. */
   margin-inline: -22px;
 }
+/* Si aggancia sotto la barra in alto, non sotto il bordo della finestra:
+   la barra e' sempre li' sopra e copre i primi centimetri: centrando il
+   filmato nella finestra intera la sua cima ci finiva sotto, e per chi
+   guarda sembrava piu' in alto del centro. Centrandolo nello spazio che
+   si vede davvero sta in mezzo per davvero — e siccome il filmato salendo
+   passa prima per quel punto, la pausa comincia anche un po' prima. */
 .fascia-video__aggancio {
   position: sticky;
-  top: 0;
-  height: 100svh;
+  top: var(--alt-testata, 0px);
+  height: calc(100svh - var(--alt-testata, 0px));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1273,7 +1285,11 @@ img { max-width: 100%; height: auto; }
      e va benissimo cosi'. */
   width: 100%;
   aspect-ratio: 16 / 9;
-  max-height: 100svh;
+  /* Il limite e' lo spazio dell'aggancio, non la finestra intera:
+     l'aggancio ora e' piu' basso (comincia sotto la barra), e con il
+     vecchio limite su schermi bassi il riquadro sbordava sopra — proprio
+     sotto la barra — e sotto il bordo dello schermo. */
+  max-height: calc(100svh - var(--alt-testata, 0px));
   overflow: hidden;
   background: #1B1613;
   transform: scale(calc(.62 + .38 * var(--apertura)));
