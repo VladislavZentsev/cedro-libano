@@ -928,4 +928,122 @@
     requestAnimationFrame(passo);
   });
 
+
+
+  /* ---------- domande frequenti ----------
+
+     I <details> funzionano gia' da soli: si aprono, si chiudono, si
+     raggiungono con Tab. Qui si aggiungono due cose sole:
+
+     1) l'apertura e la chiusura si muovono invece di scattare;
+     2) aprendone una si chiude quella rimasta aperta, cosi' l'elenco
+        resta corto e non serve scorrere per tornare alle domande.
+
+     L'animazione usa element.animate() e non una transizione CSS:
+     piu' in basso in questo foglio c'e' una regola che spegne tutte
+     le transizioni per chi chiede meno movimento, e se l'apertura
+     dipendesse da quella resterebbe a meta' strada. */
+  var domande = document.querySelectorAll('[data-faq]');
+  if (domande.length && typeof document.createElement('details').animate === 'function') {
+    var pigroFaq = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var MOLLA = 'cubic-bezier(.22, 1, .36, 1)';
+
+    /* Le parole vengono separate una volta sola, alla prima apertura:
+       nell'HTML resta una frase normale, che si puo' leggere e
+       copiare anche se il JavaScript non parte mai. Lo spazio resta
+       fuori dai riquadri, altrimenti le righe andrebbero a capo in
+       mezzo alle parole. */
+    function separaParole(corpo) {
+      if (corpo.getAttribute('data-separato')) return;
+      var parole = corpo.textContent.split(' ');
+      corpo.textContent = '';
+      parole.forEach(function (p, i) {
+        var s = document.createElement('span');
+        s.className = 'faq__parola';
+        s.textContent = p;
+        corpo.appendChild(s);
+        if (i < parole.length - 1) corpo.appendChild(document.createTextNode(' '));
+      });
+      corpo.setAttribute('data-separato', '1');
+    }
+
+    /* Le parole partono invisibili solo finche' la loro animazione le
+       sta per far entrare (fill: backwards). Se quell'animazione non
+       arrivasse mai in fondo — scheda in secondo piano, movimento
+       interrotto — resterebbero invisibili per sempre: per questo
+       poco dopo si passa a cancellarle, e cancellare un'animazione
+       riporta la parola al suo stato naturale, cioe' visibile. */
+    function mostraParole(risposta) {
+      var corpo = risposta.querySelector('.faq__corpo');
+      if (!corpo) return;
+      separaParole(corpo);
+      var parole = corpo.querySelectorAll('.faq__parola');
+      var mosse = [];
+      Array.prototype.forEach.call(parole, function (p, i) {
+        mosse.push(p.animate(
+          [{ opacity: 0, filter: 'blur(6px)' }, { opacity: 1, filter: 'blur(0)' }],
+          { duration: 260, delay: 40 + i * 18, easing: 'ease-out', fill: 'backwards' }
+        ));
+      });
+      clearTimeout(corpo.reteParole);
+      corpo.reteParole = setTimeout(function () {
+        mosse.forEach(function (m) { if (m.playState !== 'finished') m.cancel(); });
+      }, 40 + parole.length * 18 + 260 + 600);
+    }
+
+    function apri(d) {
+      var risposta = d.querySelector('.faq__risposta');
+      clearTimeout(d.reteChiusura);
+      d.inChiusura = false;
+      d.open = true;
+      if (pigroFaq || !risposta) return;
+      var alto = risposta.scrollHeight;
+      risposta.animate(
+        [{ height: '0px', opacity: 0 }, { height: alto + 'px', opacity: 1 }],
+        { duration: 340, easing: MOLLA }
+      );
+      mostraParole(risposta);
+    }
+
+    function chiudi(d) {
+      var risposta = d.querySelector('.faq__risposta');
+      if (pigroFaq || !risposta) { d.open = false; return; }
+      if (d.inChiusura) return;
+      d.inChiusura = true;
+
+      var alto = risposta.scrollHeight;
+      var mossa = risposta.animate(
+        [{ height: alto + 'px', opacity: 1 }, { height: '0px', opacity: 0 }],
+        { duration: 260, easing: MOLLA }
+      );
+
+      /* L'attributo si toglie a movimento finito, altrimenti il
+         contenuto sparirebbe prima di essersi richiuso. Ma non ci si
+         affida solo a quello: se il movimento non finisce, dopo poco
+         si chiude lo stesso, altrimenti la domanda resterebbe aperta
+         e non si riuscirebbe piu' a chiuderla. */
+      function conclusa() {
+        if (!d.inChiusura) return;
+        d.inChiusura = false;
+        d.open = false;
+      }
+      mossa.onfinish = conclusa;
+      clearTimeout(d.reteChiusura);
+      d.reteChiusura = setTimeout(conclusa, 900);
+    }
+
+    Array.prototype.forEach.call(domande, function (d) {
+      var testa = d.querySelector('.faq__domanda');
+      if (!testa) return;
+      testa.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (d.open) { chiudi(d); return; }
+        Array.prototype.forEach.call(domande, function (altra) {
+          if (altra !== d && altra.open) chiudi(altra);
+        });
+        apri(d);
+      });
+    });
+  }
+
 })();

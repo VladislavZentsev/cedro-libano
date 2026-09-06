@@ -958,6 +958,70 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; }
   max-width: 62ch;
 }
 
+/* ---------- domande frequenti ----------
+
+   Sono <details> veri, non finti pannelli: si aprono e si chiudono da
+   soli anche senza JavaScript, si raggiungono con Tab e i lettori di
+   schermo sanno gia' dire se una domanda e' aperta o chiusa. Il
+   JavaScript aggiunge solo l'animazione e il fatto che aprendone una
+   si chiuda l'altra. */
+
+.faq-elenco { display: flex; flex-direction: column; }
+
+.faq {
+  border-bottom: 1px solid var(--filo-tenue);
+}
+.faq:first-child { border-top: 1px solid var(--filo-tenue); }
+
+.faq__domanda {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 19px 2px;
+  cursor: pointer;
+  list-style: none;              /* via il triangolino di serie */
+  font-family: var(--serif);
+  font-size: clamp(16px, 2vw, 18px);
+  line-height: 1.35;
+  color: var(--crema);
+  transition: color .28s ease;
+}
+.faq__domanda::-webkit-details-marker { display: none; }
+.faq__domanda:hover { color: var(--oro-chiaro); }
+.faq__domanda:focus-visible { outline: 1px solid var(--oro); outline-offset: 3px; }
+.faq[open] > .faq__domanda { color: var(--oro-chiaro); }
+
+.faq__freccia {
+  flex-shrink: 0;
+  color: var(--oro);
+  transition: transform .32s cubic-bezier(.22, 1, .36, 1);
+}
+.faq[open] > .faq__domanda .faq__freccia { transform: rotate(180deg); }
+
+/* L'altezza viene animata dal JavaScript, quindi qui serve solo che
+   il contenuto resti dentro i suoi confini mentre si muove. */
+.faq__risposta { overflow: hidden; }
+.faq__corpo {
+  margin: 0;
+  padding: 0 2px 22px;
+  max-width: 60ch;
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--grigio);
+  text-wrap: pretty;
+}
+
+/* Le parole entrano una dopo l'altra, sfocate. Non lettera per
+   lettera come nell'originale: le lettere staccate spezzerebbero le
+   parole a fine riga.
+
+   Qui c'e' solo inline-block, che serve per sfocare la singola
+   parola. Il partire da invisibile lo fa l'animazione e non il CSS:
+   se il JavaScript non arriva o si ferma, il testo resta leggibile. */
+.faq__parola { display: inline-block; }
+
 /* ---------- contatti ---------- */
 
 .contatti { display: flex; flex-direction: column; }
