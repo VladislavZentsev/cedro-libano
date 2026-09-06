@@ -817,7 +817,10 @@
     if (!schede.length) return;
 
     var pigro = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var VELOCITA = 26;          /* pixel al secondo: lento, si legge mentre scorre */
+    /* pixel al secondo: piano, per lasciar leggere le recensioni.
+       Con data-velocita si cambia passo (le foto vanno un po' piu'
+       spedite: non c'e' niente da leggere). */
+    var VELOCITA = parseFloat(giostra.getAttribute('data-velocita')) || 26;
     var larghezzaGruppo = 0;
     var posizione = 0;
     var impostato = -1;
@@ -825,6 +828,7 @@
     var dentro = !('IntersectionObserver' in window);
     var ultimoIstante = 0;
     var trascina = null;
+    var partenzaX = null;
 
     function misura() {
       var primaCopia = pista.children[schede.length];
@@ -832,19 +836,26 @@
     }
 
     /* --- trascinamento col mouse (sul touch scorre gia' da solo) --- */
+    var SOGLIA = 6;   /* px oltre i quali e' un trascinamento, non un clic */
+    var mosso = false;
+
     pista.addEventListener('pointerdown', function (e) {
       fermo = true;
+      mosso = false;
+      partenzaX = e.clientX;
       if (e.pointerType !== 'mouse') return;
       trascina = { x: e.clientX, da: pista.scrollLeft };
       pista.classList.add('carosello__pista--presa');
       pista.setPointerCapture(e.pointerId);
     });
     pista.addEventListener('pointermove', function (e) {
+      if (partenzaX != null && Math.abs(e.clientX - partenzaX) > SOGLIA) mosso = true;
       if (!trascina) return;
       e.preventDefault();
       pista.scrollLeft = trascina.da - (e.clientX - trascina.x);
     });
     function lasciaAndare(e) {
+      partenzaX = null;
       if (trascina) {
         trascina = null;
         pista.classList.remove('carosello__pista--presa');
@@ -855,7 +866,21 @@
       fermo = false;
     }
     pista.addEventListener('pointerup', lasciaAndare);
-    pista.addEventListener('pointercancel', lasciaAndare);
+    pista.addEventListener('pointercancel', function (e) {
+      /* il sistema si e' preso il gesto per scorrere: era uno swipe */
+      mosso = true;
+      lasciaAndare(e);
+    });
+
+    /* Chi trascina per scorrere non voleva aprire la foto. Il controllo
+       sta in fase di cattura, quindi arriva prima del gestore attaccato
+       al pulsante e lo ferma sul nascere. */
+    pista.addEventListener('click', function (e) {
+      if (!mosso) return;
+      e.preventDefault();
+      e.stopPropagation();
+      mosso = false;
+    }, true);
 
     pista.addEventListener('mouseenter', function () { fermo = true; });
     pista.addEventListener('mouseleave', function () { if (!trascina) fermo = false; });

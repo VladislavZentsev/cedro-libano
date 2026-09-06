@@ -314,94 +314,118 @@
         <p class="intestazione__testo">Photographs taken inside, with nothing staged: this is the place, and this is how the food arrives.</p>
       </div>
 
-      <ul class="galleria">
-        <li class="galleria__voce">
-          <figure>
-            <button type="button" class="galleria__apri" data-piena="img/g-tavolo-800" aria-label="Enlarge: mezze to share">
+      <div class="carosello carosello--foto" data-carosello data-velocita="34">
+        <div class="carosello__pista" data-pista tabindex="0" role="group" aria-label="Photographs of the restaurant">
+          <figure class="foto-scorre">
+            <button type="button" class="galleria__apri foto-scorre__apri" data-piena="img/g-tavolo-800" aria-label="Enlarge: mezze to share">
               <picture>
-                <source type="image/avif" sizes="(min-width: 960px) 33vw, (min-width: 560px) 50vw, 100vw" srcset="img/g-tavolo-400.avif 400w, img/g-tavolo-800.avif 800w" />
-                <source type="image/webp" sizes="(min-width: 960px) 33vw, (min-width: 560px) 50vw, 100vw" srcset="img/g-tavolo-400.webp 400w, img/g-tavolo-800.webp 800w" />
-                <img src="img/g-tavolo-400.jpg" srcset="img/g-tavolo-400.jpg 400w, img/g-tavolo-800.jpg 800w" sizes="(min-width: 960px) 33vw, (min-width: 560px) 50vw, 100vw"
-                     width="800" height="600" loading="lazy" decoding="async"
+                <source type="image/avif" sizes="(min-width: 700px) 340px, 72vw" srcset="img/g-tavolo-400.avif 400w, img/g-tavolo-800.avif 800w" />
+                <source type="image/webp" sizes="(min-width: 700px) 340px, 72vw" srcset="img/g-tavolo-400.webp 400w, img/g-tavolo-800.webp 800w" />
+                <img src="img/g-tavolo-400.jpg" srcset="img/g-tavolo-400.jpg 400w, img/g-tavolo-800.jpg 800w" sizes="(min-width: 700px) 340px, 72vw"
+                     width="400" height="300" loading="lazy" decoding="async"
                      alt="A laid table seen from above: bowls of mezze, coriander potatoes and bread" />
               </picture>
             </button>
-            <figcaption>Mezze to share</figcaption>
+            <figcaption class="foto-scorre__dida">Mezze to share</figcaption>
           </figure>
-        </li>
-        <li class="galleria__voce">
-          <figure>
-            <button type="button" class="galleria__apri" data-piena="img/g-sala-800" aria-label="Enlarge: from the harbour door">
+          <figure class="foto-scorre">
+            <button type="button" class="galleria__apri foto-scorre__apri" data-piena="img/g-sala-800" aria-label="Enlarge: from the harbour door">
               <picture>
-                <source type="image/avif" sizes="(min-width: 960px) 33vw, (min-width: 560px) 50vw, 100vw" srcset="img/g-sala-400.avif 400w, img/g-sala-800.avif 800w" />
-                <source type="image/webp" sizes="(min-width: 960px) 33vw, (min-width: 560px) 50vw, 100vw" srcset="img/g-sala-400.webp 400w, img/g-sala-800.webp 800w" />
-                <img src="img/g-sala-400.jpg" srcset="img/g-sala-400.jpg 400w, img/g-sala-800.jpg 800w" sizes="(min-width: 960px) 33vw, (min-width: 560px) 50vw, 100vw"
-                     width="800" height="600" loading="lazy" decoding="async"
+                <source type="image/avif" sizes="(min-width: 700px) 340px, 72vw" srcset="img/g-sala-400.avif 400w, img/g-sala-800.avif 800w" />
+                <source type="image/webp" sizes="(min-width: 700px) 340px, 72vw" srcset="img/g-sala-400.webp 400w, img/g-sala-800.webp 800w" />
+                <img src="img/g-sala-400.jpg" srcset="img/g-sala-400.jpg 400w, img/g-sala-800.jpg 800w" sizes="(min-width: 700px) 340px, 72vw"
+                     width="400" height="300" loading="lazy" decoding="async"
                      alt="The dining room with the door open onto the harbour and meat on the spit in the foreground" />
               </picture>
             </button>
-            <figcaption>From the harbour door</figcaption>
+            <figcaption class="foto-scorre__dida">From the harbour door</figcaption>
           </figure>
-        </li>
-        <li class="galleria__voce">
-          <figure>
-            <button type="button" class="galleria__apri" data-piena="img/g-mezze-800" aria-label="Enlarge: the mezze tray">
+          <figure class="foto-scorre">
+            <button type="button" class="galleria__apri foto-scorre__apri" data-piena="img/g-mezze-800" aria-label="Enlarge: the mezze tray">
               <picture>
-                <source type="image/avif" sizes="(min-width: 960px) 33vw, (min-width: 560px) 50vw, 100vw" srcset="img/g-mezze-400.avif 400w, img/g-mezze-800.avif 800w" />
-                <source type="image/webp" sizes="(min-width: 960px) 33vw, (min-width: 560px) 50vw, 100vw" srcset="img/g-mezze-400.webp 400w, img/g-mezze-800.webp 800w" />
-                <img src="img/g-mezze-400.jpg" srcset="img/g-mezze-400.jpg 400w, img/g-mezze-800.jpg 800w" sizes="(min-width: 960px) 33vw, (min-width: 560px) 50vw, 100vw"
-                     width="800" height="600" loading="lazy" decoding="async"
+                <source type="image/avif" sizes="(min-width: 700px) 340px, 72vw" srcset="img/g-mezze-400.avif 400w, img/g-mezze-800.avif 800w" />
+                <source type="image/webp" sizes="(min-width: 700px) 340px, 72vw" srcset="img/g-mezze-400.webp 400w, img/g-mezze-800.webp 800w" />
+                <img src="img/g-mezze-400.jpg" srcset="img/g-mezze-400.jpg 400w, img/g-mezze-800.jpg 800w" sizes="(min-width: 700px) 340px, 72vw"
+                     width="400" height="300" loading="lazy" decoding="async"
                      alt="A tray of mezze: hummus, mhammara, vine leaves and pickled turnip" />
               </picture>
             </button>
-            <figcaption>The mezze tray</figcaption>
+            <figcaption class="foto-scorre__dida">The mezze tray</figcaption>
           </figure>
-        </li>
-        <li class="galleria__voce">
-          <figure>
-            <button type="button" class="galleria__apri" data-piena="img/g-brace-700" aria-label="Enlarge: on the charcoal">
+          <figure class="foto-scorre">
+            <button type="button" class="galleria__apri foto-scorre__apri" data-piena="img/g-brace-700" aria-label="Enlarge: on the charcoal">
               <picture>
-                <source type="image/avif" sizes="(min-width: 960px) 33vw, (min-width: 560px) 50vw, 100vw" srcset="img/g-brace-400.avif 400w, img/g-brace-700.avif 700w" />
-                <source type="image/webp" sizes="(min-width: 960px) 33vw, (min-width: 560px) 50vw, 100vw" srcset="img/g-brace-400.webp 400w, img/g-brace-700.webp 700w" />
-                <img src="img/g-brace-400.jpg" srcset="img/g-brace-400.jpg 400w, img/g-brace-700.jpg 700w" sizes="(min-width: 960px) 33vw, (min-width: 560px) 50vw, 100vw"
-                     width="700" height="525" loading="lazy" decoding="async"
+                <source type="image/avif" sizes="(min-width: 700px) 340px, 72vw" srcset="img/g-brace-400.avif 400w, img/g-brace-700.avif 700w" />
+                <source type="image/webp" sizes="(min-width: 700px) 340px, 72vw" srcset="img/g-brace-400.webp 400w, img/g-brace-700.webp 700w" />
+                <img src="img/g-brace-400.jpg" srcset="img/g-brace-400.jpg 400w, img/g-brace-700.jpg 700w" sizes="(min-width: 700px) 340px, 72vw"
+                     width="400" height="300" loading="lazy" decoding="async"
                      alt="Meat skewers and cherry tomatoes over glowing charcoal, smoke rising" />
               </picture>
             </button>
-            <figcaption>On the charcoal</figcaption>
+            <figcaption class="foto-scorre__dida">On the charcoal</figcaption>
           </figure>
-        </li>
-        <li class="galleria__voce">
-          <figure>
-            <button type="button" class="galleria__apri" data-piena="img/g-servizio-800" aria-label="Enlarge: during service">
+          <figure class="foto-scorre">
+            <button type="button" class="galleria__apri foto-scorre__apri" data-piena="img/g-servizio-800" aria-label="Enlarge: during service">
               <picture>
-                <source type="image/avif" sizes="(min-width: 960px) 33vw, (min-width: 560px) 50vw, 100vw" srcset="img/g-servizio-400.avif 400w, img/g-servizio-800.avif 800w" />
-                <source type="image/webp" sizes="(min-width: 960px) 33vw, (min-width: 560px) 50vw, 100vw" srcset="img/g-servizio-400.webp 400w, img/g-servizio-800.webp 800w" />
-                <img src="img/g-servizio-400.jpg" srcset="img/g-servizio-400.jpg 400w, img/g-servizio-800.jpg 800w" sizes="(min-width: 960px) 33vw, (min-width: 560px) 50vw, 100vw"
-                     width="800" height="600" loading="lazy" decoding="async"
+                <source type="image/avif" sizes="(min-width: 700px) 340px, 72vw" srcset="img/g-servizio-400.avif 400w, img/g-servizio-800.avif 800w" />
+                <source type="image/webp" sizes="(min-width: 700px) 340px, 72vw" srcset="img/g-servizio-400.webp 400w, img/g-servizio-800.webp 800w" />
+                <img src="img/g-servizio-400.jpg" srcset="img/g-servizio-400.jpg 400w, img/g-servizio-800.jpg 800w" sizes="(min-width: 700px) 340px, 72vw"
+                     width="400" height="300" loading="lazy" decoding="async"
                      alt="The table during service, with fattoush salad and bowls of dips" />
               </picture>
             </button>
-            <figcaption>During service</figcaption>
+            <figcaption class="foto-scorre__dida">During service</figcaption>
           </figure>
-        </li>
-        <li class="galleria__voce galleria__voce--sera">
-          <figure>
-            <button type="button" class="galleria__apri" data-piena="img/g-sera-800" aria-label="Enlarge: in the evening">
+          <figure class="foto-scorre foto-scorre--sera">
+            <button type="button" class="galleria__apri foto-scorre__apri" data-piena="img/g-sera-800" aria-label="Enlarge: in the evening">
               <picture>
-                <source type="image/avif" sizes="(min-width: 960px) 33vw, (min-width: 560px) 50vw, 100vw" srcset="img/g-sera-400.avif 400w, img/g-sera-800.avif 800w" />
-                <source type="image/webp" sizes="(min-width: 960px) 33vw, (min-width: 560px) 50vw, 100vw" srcset="img/g-sera-400.webp 400w, img/g-sera-800.webp 800w" />
-                <img src="img/g-sera-400.jpg" srcset="img/g-sera-400.jpg 400w, img/g-sera-800.jpg 800w" sizes="(min-width: 960px) 33vw, (min-width: 560px) 50vw, 100vw"
-                     width="800" height="600" loading="lazy" decoding="async"
+                <source type="image/avif" sizes="(min-width: 700px) 340px, 72vw" srcset="img/g-sera-400.avif 400w, img/g-sera-800.avif 800w" />
+                <source type="image/webp" sizes="(min-width: 700px) 340px, 72vw" srcset="img/g-sera-400.webp 400w, img/g-sera-800.webp 800w" />
+                <img src="img/g-sera-400.jpg" srcset="img/g-sera-400.jpg 400w, img/g-sera-800.jpg 800w" sizes="(min-width: 700px) 340px, 72vw"
+                     width="400" height="300" loading="lazy" decoding="async"
                      alt="The terrace in the evening, table laid and coloured lights on" />
               </picture>
             </button>
-            <figcaption>In the evening</figcaption>
+            <figcaption class="foto-scorre__dida">In the evening</figcaption>
           </figure>
-        </li>
-      </ul>
-
-      <p class="galleria__nota">More photos, updated often, on the restaurant's <a href="https://www.instagram.com/cedro.del.libano.savona/" target="_blank" rel="noopener">Instagram profile</a>.</p>
+          <figure class="foto-scorre">
+            <button type="button" class="galleria__apri foto-scorre__apri" data-piena="img/hero-1306" aria-label="Enlarge: the full table">
+              <picture>
+                <source type="image/avif" sizes="(min-width: 700px) 340px, 72vw" srcset="img/hero-640.avif 640w, img/hero-1000.avif 1000w" />
+                <source type="image/webp" sizes="(min-width: 700px) 340px, 72vw" srcset="img/hero-640.webp 640w, img/hero-1000.webp 1000w" />
+                <img src="img/hero-640.jpg" srcset="img/hero-640.jpg 640w, img/hero-1000.jpg 1000w" sizes="(min-width: 700px) 340px, 72vw"
+                     width="640" height="377" loading="lazy" decoding="async"
+                     alt="A table of Lebanese mezze: hummus, falafel, tabbouleh, vine leaves and pita bread" />
+              </picture>
+            </button>
+            <figcaption class="foto-scorre__dida">The full table</figcaption>
+          </figure>
+          <figure class="foto-scorre">
+            <button type="button" class="galleria__apri foto-scorre__apri" data-piena="img/piatto-1600" aria-label="Enlarge: kafta and pita">
+              <picture>
+                <source type="image/avif" sizes="(min-width: 700px) 340px, 72vw" srcset="img/piatto-900.avif 900w" />
+                <source type="image/webp" sizes="(min-width: 700px) 340px, 72vw" srcset="img/piatto-900.webp 900w" />
+                <img src="img/piatto-900.jpg" srcset="img/piatto-900.jpg 900w" sizes="(min-width: 700px) 340px, 72vw"
+                     width="900" height="389" loading="lazy" decoding="async"
+                     alt="Kafta kebab from the charcoal grill on pita bread, with parsley and tomato" />
+              </picture>
+            </button>
+            <figcaption class="foto-scorre__dida">Kafta and pita</figcaption>
+          </figure>
+          <figure class="foto-scorre">
+            <button type="button" class="galleria__apri foto-scorre__apri" data-piena="img/storia-900" aria-label="Enlarge: the Bekaa mural">
+              <picture>
+                <source type="image/avif" sizes="(min-width: 700px) 340px, 72vw" srcset="img/storia-600.avif 600w, img/storia-900.avif 900w" />
+                <source type="image/webp" sizes="(min-width: 700px) 340px, 72vw" srcset="img/storia-600.webp 600w, img/storia-900.webp 900w" />
+                <img src="img/storia-600.jpg" srcset="img/storia-600.jpg 600w, img/storia-900.jpg 900w" sizes="(min-width: 700px) 340px, 72vw"
+                     width="600" height="450" loading="lazy" decoding="async"
+                     alt="The dining room at Cedro del Libano: laid tables, the mural of the cedar and the Bekaa Valley, and the doorway onto the harbour" />
+              </picture>
+            </button>
+            <figcaption class="foto-scorre__dida">The Bekaa mural</figcaption>
+          </figure>
+        </div>
+      </div>
     </div>
   </section>
 

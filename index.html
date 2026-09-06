@@ -313,94 +313,118 @@
         <p class="intestazione__testo">Fotografie fatte qui dentro, senza allestimenti: il locale è questo, e i piatti arrivano così.</p>
       </div>
 
-      <ul class="galleria">
-        <li class="galleria__voce">
-          <figure>
-            <button type="button" class="galleria__apri" data-piena="img/g-tavolo-800" aria-label="Ingrandisci: mezze da condividere">
+      <div class="carosello carosello--foto" data-carosello data-velocita="34">
+        <div class="carosello__pista" data-pista tabindex="0" role="group" aria-label="Fotografie del ristorante">
+          <figure class="foto-scorre">
+            <button type="button" class="galleria__apri foto-scorre__apri" data-piena="img/g-tavolo-800" aria-label="Ingrandisci: mezze da condividere">
               <picture>
-                <source type="image/avif" sizes="(min-width: 960px) 33vw, (min-width: 560px) 50vw, 100vw" srcset="img/g-tavolo-400.avif 400w, img/g-tavolo-800.avif 800w" />
-                <source type="image/webp" sizes="(min-width: 960px) 33vw, (min-width: 560px) 50vw, 100vw" srcset="img/g-tavolo-400.webp 400w, img/g-tavolo-800.webp 800w" />
-                <img src="img/g-tavolo-400.jpg" srcset="img/g-tavolo-400.jpg 400w, img/g-tavolo-800.jpg 800w" sizes="(min-width: 960px) 33vw, (min-width: 560px) 50vw, 100vw"
-                     width="800" height="600" loading="lazy" decoding="async"
-                     alt="Tavolo apparecchiato visto dall'alto: ciotole di mezze, patate al coriandolo e pane" />
+                <source type="image/avif" sizes="(min-width: 700px) 340px, 72vw" srcset="img/g-tavolo-400.avif 400w, img/g-tavolo-800.avif 800w" />
+                <source type="image/webp" sizes="(min-width: 700px) 340px, 72vw" srcset="img/g-tavolo-400.webp 400w, img/g-tavolo-800.webp 800w" />
+                <img src="img/g-tavolo-400.jpg" srcset="img/g-tavolo-400.jpg 400w, img/g-tavolo-800.jpg 800w" sizes="(min-width: 700px) 340px, 72vw"
+                     width="400" height="300" loading="lazy" decoding="async"
+                     alt="Tavolo apparecchiato visto dall’alto: ciotole di mezze, patate al coriandolo e pane" />
               </picture>
             </button>
-            <figcaption>Mezze da condividere</figcaption>
+            <figcaption class="foto-scorre__dida">Mezze da condividere</figcaption>
           </figure>
-        </li>
-        <li class="galleria__voce">
-          <figure>
-            <button type="button" class="galleria__apri" data-piena="img/g-sala-800" aria-label="Ingrandisci: dalla porta sulla darsena">
+          <figure class="foto-scorre">
+            <button type="button" class="galleria__apri foto-scorre__apri" data-piena="img/g-sala-800" aria-label="Ingrandisci: dalla porta sulla darsena">
               <picture>
-                <source type="image/avif" sizes="(min-width: 960px) 33vw, (min-width: 560px) 50vw, 100vw" srcset="img/g-sala-400.avif 400w, img/g-sala-800.avif 800w" />
-                <source type="image/webp" sizes="(min-width: 960px) 33vw, (min-width: 560px) 50vw, 100vw" srcset="img/g-sala-400.webp 400w, img/g-sala-800.webp 800w" />
-                <img src="img/g-sala-400.jpg" srcset="img/g-sala-400.jpg 400w, img/g-sala-800.jpg 800w" sizes="(min-width: 960px) 33vw, (min-width: 560px) 50vw, 100vw"
-                     width="800" height="600" loading="lazy" decoding="async"
+                <source type="image/avif" sizes="(min-width: 700px) 340px, 72vw" srcset="img/g-sala-400.avif 400w, img/g-sala-800.avif 800w" />
+                <source type="image/webp" sizes="(min-width: 700px) 340px, 72vw" srcset="img/g-sala-400.webp 400w, img/g-sala-800.webp 800w" />
+                <img src="img/g-sala-400.jpg" srcset="img/g-sala-400.jpg 400w, img/g-sala-800.jpg 800w" sizes="(min-width: 700px) 340px, 72vw"
+                     width="400" height="300" loading="lazy" decoding="async"
                      alt="La sala del ristorante con la porta aperta sulla darsena e la carne allo spiedo in primo piano" />
               </picture>
             </button>
-            <figcaption>Dalla porta sulla darsena</figcaption>
+            <figcaption class="foto-scorre__dida">Dalla porta sulla darsena</figcaption>
           </figure>
-        </li>
-        <li class="galleria__voce">
-          <figure>
-            <button type="button" class="galleria__apri" data-piena="img/g-mezze-800" aria-label="Ingrandisci: il vassoio delle mezze">
+          <figure class="foto-scorre">
+            <button type="button" class="galleria__apri foto-scorre__apri" data-piena="img/g-mezze-800" aria-label="Ingrandisci: il vassoio delle mezze">
               <picture>
-                <source type="image/avif" sizes="(min-width: 960px) 33vw, (min-width: 560px) 50vw, 100vw" srcset="img/g-mezze-400.avif 400w, img/g-mezze-800.avif 800w" />
-                <source type="image/webp" sizes="(min-width: 960px) 33vw, (min-width: 560px) 50vw, 100vw" srcset="img/g-mezze-400.webp 400w, img/g-mezze-800.webp 800w" />
-                <img src="img/g-mezze-400.jpg" srcset="img/g-mezze-400.jpg 400w, img/g-mezze-800.jpg 800w" sizes="(min-width: 960px) 33vw, (min-width: 560px) 50vw, 100vw"
-                     width="800" height="600" loading="lazy" decoding="async"
+                <source type="image/avif" sizes="(min-width: 700px) 340px, 72vw" srcset="img/g-mezze-400.avif 400w, img/g-mezze-800.avif 800w" />
+                <source type="image/webp" sizes="(min-width: 700px) 340px, 72vw" srcset="img/g-mezze-400.webp 400w, img/g-mezze-800.webp 800w" />
+                <img src="img/g-mezze-400.jpg" srcset="img/g-mezze-400.jpg 400w, img/g-mezze-800.jpg 800w" sizes="(min-width: 700px) 340px, 72vw"
+                     width="400" height="300" loading="lazy" decoding="async"
                      alt="Vassoio di mezze: hummus, mhammara, foglie di vite e rape sottaceto" />
               </picture>
             </button>
-            <figcaption>Il vassoio delle mezze</figcaption>
+            <figcaption class="foto-scorre__dida">Il vassoio delle mezze</figcaption>
           </figure>
-        </li>
-        <li class="galleria__voce">
-          <figure>
-            <button type="button" class="galleria__apri" data-piena="img/g-brace-700" aria-label="Ingrandisci: sulla brace">
+          <figure class="foto-scorre">
+            <button type="button" class="galleria__apri foto-scorre__apri" data-piena="img/g-brace-700" aria-label="Ingrandisci: sulla brace">
               <picture>
-                <source type="image/avif" sizes="(min-width: 960px) 33vw, (min-width: 560px) 50vw, 100vw" srcset="img/g-brace-400.avif 400w, img/g-brace-700.avif 700w" />
-                <source type="image/webp" sizes="(min-width: 960px) 33vw, (min-width: 560px) 50vw, 100vw" srcset="img/g-brace-400.webp 400w, img/g-brace-700.webp 700w" />
-                <img src="img/g-brace-400.jpg" srcset="img/g-brace-400.jpg 400w, img/g-brace-700.jpg 700w" sizes="(min-width: 960px) 33vw, (min-width: 560px) 50vw, 100vw"
-                     width="700" height="525" loading="lazy" decoding="async"
+                <source type="image/avif" sizes="(min-width: 700px) 340px, 72vw" srcset="img/g-brace-400.avif 400w, img/g-brace-700.avif 700w" />
+                <source type="image/webp" sizes="(min-width: 700px) 340px, 72vw" srcset="img/g-brace-400.webp 400w, img/g-brace-700.webp 700w" />
+                <img src="img/g-brace-400.jpg" srcset="img/g-brace-400.jpg 400w, img/g-brace-700.jpg 700w" sizes="(min-width: 700px) 340px, 72vw"
+                     width="400" height="300" loading="lazy" decoding="async"
                      alt="Spiedini di carne e pomodorini sulla brace ardente, con il fumo che sale" />
               </picture>
             </button>
-            <figcaption>Sulla brace</figcaption>
+            <figcaption class="foto-scorre__dida">Sulla brace</figcaption>
           </figure>
-        </li>
-        <li class="galleria__voce">
-          <figure>
-            <button type="button" class="galleria__apri" data-piena="img/g-servizio-800" aria-label="Ingrandisci: durante il servizio">
+          <figure class="foto-scorre">
+            <button type="button" class="galleria__apri foto-scorre__apri" data-piena="img/g-servizio-800" aria-label="Ingrandisci: durante il servizio">
               <picture>
-                <source type="image/avif" sizes="(min-width: 960px) 33vw, (min-width: 560px) 50vw, 100vw" srcset="img/g-servizio-400.avif 400w, img/g-servizio-800.avif 800w" />
-                <source type="image/webp" sizes="(min-width: 960px) 33vw, (min-width: 560px) 50vw, 100vw" srcset="img/g-servizio-400.webp 400w, img/g-servizio-800.webp 800w" />
-                <img src="img/g-servizio-400.jpg" srcset="img/g-servizio-400.jpg 400w, img/g-servizio-800.jpg 800w" sizes="(min-width: 960px) 33vw, (min-width: 560px) 50vw, 100vw"
-                     width="800" height="600" loading="lazy" decoding="async"
+                <source type="image/avif" sizes="(min-width: 700px) 340px, 72vw" srcset="img/g-servizio-400.avif 400w, img/g-servizio-800.avif 800w" />
+                <source type="image/webp" sizes="(min-width: 700px) 340px, 72vw" srcset="img/g-servizio-400.webp 400w, img/g-servizio-800.webp 800w" />
+                <img src="img/g-servizio-400.jpg" srcset="img/g-servizio-400.jpg 400w, img/g-servizio-800.jpg 800w" sizes="(min-width: 700px) 340px, 72vw"
+                     width="400" height="300" loading="lazy" decoding="async"
                      alt="Il tavolo durante il servizio, con insalata fattoush e ciotole di salse" />
               </picture>
             </button>
-            <figcaption>Durante il servizio</figcaption>
+            <figcaption class="foto-scorre__dida">Durante il servizio</figcaption>
           </figure>
-        </li>
-        <li class="galleria__voce galleria__voce--sera">
-          <figure>
-            <button type="button" class="galleria__apri" data-piena="img/g-sera-800" aria-label="Ingrandisci: la sera">
+          <figure class="foto-scorre foto-scorre--sera">
+            <button type="button" class="galleria__apri foto-scorre__apri" data-piena="img/g-sera-800" aria-label="Ingrandisci: la sera">
               <picture>
-                <source type="image/avif" sizes="(min-width: 960px) 33vw, (min-width: 560px) 50vw, 100vw" srcset="img/g-sera-400.avif 400w, img/g-sera-800.avif 800w" />
-                <source type="image/webp" sizes="(min-width: 960px) 33vw, (min-width: 560px) 50vw, 100vw" srcset="img/g-sera-400.webp 400w, img/g-sera-800.webp 800w" />
-                <img src="img/g-sera-400.jpg" srcset="img/g-sera-400.jpg 400w, img/g-sera-800.jpg 800w" sizes="(min-width: 960px) 33vw, (min-width: 560px) 50vw, 100vw"
-                     width="800" height="600" loading="lazy" decoding="async"
+                <source type="image/avif" sizes="(min-width: 700px) 340px, 72vw" srcset="img/g-sera-400.avif 400w, img/g-sera-800.avif 800w" />
+                <source type="image/webp" sizes="(min-width: 700px) 340px, 72vw" srcset="img/g-sera-400.webp 400w, img/g-sera-800.webp 800w" />
+                <img src="img/g-sera-400.jpg" srcset="img/g-sera-400.jpg 400w, img/g-sera-800.jpg 800w" sizes="(min-width: 700px) 340px, 72vw"
+                     width="400" height="300" loading="lazy" decoding="async"
                      alt="Il dehors la sera, tavolo apparecchiato e luci colorate accese" />
               </picture>
             </button>
-            <figcaption>La sera</figcaption>
+            <figcaption class="foto-scorre__dida">La sera</figcaption>
           </figure>
-        </li>
-      </ul>
-
-      <p class="galleria__nota">Altre foto, aggiornate spesso, sul profilo <a href="https://www.instagram.com/cedro.del.libano.savona/" target="_blank" rel="noopener">Instagram del ristorante</a>.</p>
+          <figure class="foto-scorre">
+            <button type="button" class="galleria__apri foto-scorre__apri" data-piena="img/hero-1306" aria-label="Ingrandisci: la tavola al completo">
+              <picture>
+                <source type="image/avif" sizes="(min-width: 700px) 340px, 72vw" srcset="img/hero-640.avif 640w, img/hero-1000.avif 1000w" />
+                <source type="image/webp" sizes="(min-width: 700px) 340px, 72vw" srcset="img/hero-640.webp 640w, img/hero-1000.webp 1000w" />
+                <img src="img/hero-640.jpg" srcset="img/hero-640.jpg 640w, img/hero-1000.jpg 1000w" sizes="(min-width: 700px) 340px, 72vw"
+                     width="640" height="377" loading="lazy" decoding="async"
+                     alt="Tavolo di mezze libanesi: hummus, falafel, tabbouleh, foglie di vite e pane pita" />
+              </picture>
+            </button>
+            <figcaption class="foto-scorre__dida">La tavola al completo</figcaption>
+          </figure>
+          <figure class="foto-scorre">
+            <button type="button" class="galleria__apri foto-scorre__apri" data-piena="img/piatto-1600" aria-label="Ingrandisci: kafta e pita">
+              <picture>
+                <source type="image/avif" sizes="(min-width: 700px) 340px, 72vw" srcset="img/piatto-900.avif 900w" />
+                <source type="image/webp" sizes="(min-width: 700px) 340px, 72vw" srcset="img/piatto-900.webp 900w" />
+                <img src="img/piatto-900.jpg" srcset="img/piatto-900.jpg 900w" sizes="(min-width: 700px) 340px, 72vw"
+                     width="900" height="389" loading="lazy" decoding="async"
+                     alt="Kafta kebab alla brace su pane pita, con prezzemolo e pomodoro" />
+              </picture>
+            </button>
+            <figcaption class="foto-scorre__dida">Kafta e pita</figcaption>
+          </figure>
+          <figure class="foto-scorre">
+            <button type="button" class="galleria__apri foto-scorre__apri" data-piena="img/storia-900" aria-label="Ingrandisci: il murale della Bekaa">
+              <picture>
+                <source type="image/avif" sizes="(min-width: 700px) 340px, 72vw" srcset="img/storia-600.avif 600w, img/storia-900.avif 900w" />
+                <source type="image/webp" sizes="(min-width: 700px) 340px, 72vw" srcset="img/storia-600.webp 600w, img/storia-900.webp 900w" />
+                <img src="img/storia-600.jpg" srcset="img/storia-600.jpg 600w, img/storia-900.jpg 900w" sizes="(min-width: 700px) 340px, 72vw"
+                     width="600" height="450" loading="lazy" decoding="async"
+                     alt="La sala del Cedro del Libano: tavoli apparecchiati, il murale con il cedro e la valle della Bekaa, e l’ingresso sulla darsena" />
+              </picture>
+            </button>
+            <figcaption class="foto-scorre__dida">Il murale della Bekaa</figcaption>
+          </figure>
+        </div>
+      </div>
     </div>
   </section>
 

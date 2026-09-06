@@ -1372,17 +1372,35 @@ img { max-width: 100%; height: auto; }
    Galleria "Le nostre foto"
    ========================================================= */
 
-.galleria {
-  list-style: none;
+/* --- il nastro delle fotografie ---
+   Stesso meccanismo del carosello delle recensioni: la sezione foto e'
+   un [data-carosello] come l'altro, quindi il movimento, lo swipe e le
+   pause li gestisce lo stesso codice. Qui c'e' solo l'aspetto. */
+
+.foto-scorre {
   margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
-  gap: 14px;
-  align-items: start;
+  position: relative;
+  flex: 0 0 clamp(240px, 72vw, 340px);
 }
-.galleria__voce { margin: 0; }
-.galleria figure { margin: 0; display: flex; flex-direction: column; gap: 9px; }
+.foto-scorre__apri { cursor: zoom-in; }
+
+/* La didascalia sta sopra la foto e non sotto: in un nastro che
+   scorre una riga di testo esterna ballerebbe, qui invece viaggia
+   attaccata alla sua immagine. */
+.foto-scorre__dida {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 30px 14px 11px;
+  font-size: 11.5px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--oro-chiaro);
+  background: linear-gradient(rgba(12,10,9,0), rgba(12,10,9,.88) 66%);
+  pointer-events: none;
+}
+/* La foto della sera ha luci viola molto sature: la riportiamo
+   nella tavolozza calda del sito, come già fatto per la storia. */
+.foto-scorre--sera .galleria__apri img { filter: saturate(.72) contrast(1.05) sepia(.12); }
 
 /* Il riquadro è un pulsante vero: si raggiunge con Tab e si apre con Invio */
 .galleria__apri {
@@ -1401,19 +1419,6 @@ img { max-width: 100%; height: auto; }
 .galleria__apri:hover { border-color: rgba(210,168,58,.55); transform: translateY(-4px); box-shadow: 0 20px 44px rgba(0,0,0,.5); }
 .galleria__apri:hover img { transform: scale(1.03); }
 .galleria__apri img { transition: transform .5s cubic-bezier(.2,.7,.2,1); }
-
-/* La foto della sera ha luci viola molto sature: la riportiamo
-   nella tavolozza calda del sito, come già fatto per la storia. */
-.galleria__voce--sera .galleria__apri img { filter: saturate(.72) contrast(1.05) sepia(.12); }
-
-.galleria figcaption {
-  font-size: 12px;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--grigio-scuro);
-  padding-left: 2px;
-}
-.galleria__nota { margin: 30px 0 0; font-size: 14px; font-weight: 300; color: var(--grigio-scuro); text-align: center; }
 
 /* ---------- lente d'ingrandimento (elemento <dialog> nativo) ---------- */
 
@@ -1454,7 +1459,7 @@ img { max-width: 100%; height: auto; }
   .lente__chiudi { top: auto; bottom: -54px; right: 50%; transform: translateX(50%); }
 }
 
-@media print { .galleria, .lente { display: none !important; } }
+@media print { .carosello--foto, .lente { display: none !important; } }
 
 /* Il selettore di lingua ora e la pillola IT | EN: sta in fondo al file,
    nella sezione "Fase 1 — i dettagli animati". */
@@ -1494,15 +1499,6 @@ img { max-width: 100%; height: auto; }
   object-fit: cover;
   object-position: center center;
 }
-
-/* --- Galleria: tutti i riquadri con la stessa proporzione.
-   Prima il riquadro verticale allungava la sua riga e lasciava buchi neri
-   accanto agli altri. Numero di colonne deciso a mano, non da auto-fit,
-   cosi' le sei foto formano sempre righe piene: 1 sul telefono,
-   2 sul tablet, 3 sul computer. --- */
-.galleria { grid-template-columns: 1fr; gap: 16px; }
-@media (min-width: 560px) { .galleria { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 960px)  { .galleria { grid-template-columns: repeat(3, 1fr); } }
 
 .galleria__apri { aspect-ratio: 4 / 3; }
 
