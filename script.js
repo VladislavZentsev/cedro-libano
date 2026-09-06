@@ -333,7 +333,12 @@
 
   function segnaAttiva(riferimento) {
     Array.prototype.forEach.call(document.querySelectorAll('.nav a'), function (a) {
-      a.classList.toggle('nav__attiva', a.getAttribute('href') === riferimento);
+      var qui = a.getAttribute('href') === riferimento;
+      a.classList.toggle('nav__attiva', qui);
+      /* Non basta il colore: chi usa un lettore di schermo non lo vede.
+         aria-current dice a voce quale sezione si sta guardando. */
+      if (qui) a.setAttribute('aria-current', 'location');
+      else a.removeAttribute('aria-current');
     });
     muoviRiflettore();
   }
