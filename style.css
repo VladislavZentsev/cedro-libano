@@ -2027,45 +2027,31 @@ img { max-width: 100%; height: auto; }
    tolta perche' quel tipo di animazione torna indietro quando si
    risale, mentre la fascia deve restare grande una volta aperta. */
 
-/* --- 5. Il cambio lingua: pillola IT | EN ---------------
+/* --- 5. Il cambio lingua: due bandiere separate ---------
    Prima c'era solo "EN": chi arrivava sulla pagina inglese non capiva
    di poter tornare all'italiano, e molti non si accorgevano nemmeno
-   che il sito fosse in due lingue. Adesso si vedono tutte e due, con
-   un cursore che scivola verso quella su cui passi il mouse. */
+   che il sito fosse in due lingue. Poi le sigle sono diventate due
+   bandierine dentro un anello dorato — ma l'anello le stringeva
+   troppo vicine e il cerchio non e' un segno che il sito usa altrove.
+   Adesso stanno staccate, e quella attiva si riconosce da una riga
+   dorata sotto, come l'indicatore che gia' segna la voce del menu'
+   attiva: stesso linguaggio, non un cerchio preso da un altro sito. */
 .lingue {
-  position: relative;
   display: inline-flex;
   align-items: center;
-  padding: 3px;
-  margin-left: 10px;
-  border: 1px solid rgba(210,168,58,.28);
-  border-radius: 999px;
-  background: rgba(210,168,58,.05);
+  gap: 16px;
+  margin-left: 14px;
 }
-.lingue__cursore {
-  position: absolute;
-  top: 3px;
-  bottom: 3px;
-  left: 3px;
-  width: calc(50% - 3px);
-  border-radius: 999px;
-  background: rgba(210,168,58,.16);
-  box-shadow: inset 0 0 0 1px rgba(210,168,58,.45);
-  pointer-events: none;
-  transition: transform .38s cubic-bezier(.22, 1, .36, 1);
-}
-.lingue--en .lingue__cursore { transform: translateX(100%); }
 .lingue__voce {
   position: relative;
-  z-index: 1;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 34px;
+  width: 34px;
   min-height: 38px;
-  padding: 0 8px;
+  padding: 0;
   text-decoration: none;
-  opacity: .6;
+  opacity: .55;
   transition: opacity .28s ease;
 }
 .lingue__voce--attiva { opacity: 1; }
@@ -2078,23 +2064,34 @@ img { max-width: 100%; height: auto; }
   border-radius: 2px;
   box-shadow: 0 1px 3px rgba(0,0,0,.4), inset 0 0 0 1px rgba(0,0,0,.25);
 }
-/* Col dito serve un bersaglio da 44px, come per gli altri link del sito;
-   col mouse basta meno e la pillola resta compatta. Il bordo interno si
-   stringe a 2px, cosi la pillola resta alta quanto l'hamburger accanto. */
+/* La riga sotto: ferma e piena sulla lingua attiva, si affaccia solo
+   a meta' su quella su cui passa il mouse, cosi' si capisce che ci si
+   sta per andare senza sembrare gia' scelta. */
+.lingue__voce::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -7px;
+  width: 18px;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--oro-chiaro);
+  box-shadow: 0 0 8px 1px rgba(210,168,58,.5);
+  transform: translateX(-50%) scaleX(0);
+  opacity: 0;
+  transition: transform .32s cubic-bezier(.22, 1, .36, 1), opacity .28s ease;
+}
+.lingue__voce--attiva::after { transform: translateX(-50%) scaleX(1); opacity: 1; }
+.lingue__voce:hover::after { transform: translateX(-50%) scaleX(1); opacity: .55; }
+.lingue__voce--attiva:hover::after { opacity: 1; }
+/* Col dito serve un bersaglio da 44px, come per gli altri link del sito. */
 @media (pointer: coarse) {
-  .lingue { padding: 0; }
-  .lingue__voce { min-height: 44px; }
-  .lingue__cursore { top: 2px; bottom: 2px; left: 2px; width: calc(50% - 2px); }
+  .lingue__voce { width: 44px; min-height: 44px; }
 }
-/* Il cursore accompagna il mouse verso l'altra lingua: si capisce che
-   ci si sta per andare. Se il browser non conosce :has() sta fermo,
-   e la pillola funziona lo stesso. */
-.lingue:has(.lingue__voce:not(.lingue__voce--attiva):hover) .lingue__cursore { transform: translateX(100%); }
-.lingue--en:has(.lingue__voce:not(.lingue__voce--attiva):hover) .lingue__cursore { transform: translateX(0); }
 @media (prefers-reduced-motion: reduce) {
-  .lingue__cursore { transition: none; }
+  .lingue__voce::after { transition: opacity .28s ease; }
 }
-@media (max-width: 1023px) { .lingue { margin-left: 0; margin-right: 8px; } }
+@media (max-width: 1023px) { .lingue { margin-left: 0; margin-right: 12px; } }
 @media print { .lingue { display: none; } }
 
 /* --- 6. Il footer che si rivela -------------------------
