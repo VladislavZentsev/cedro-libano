@@ -135,14 +135,40 @@
   if (firma && 'IntersectionObserver' in window &&
       !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     firma.classList.add('firma__traccia--pronta');
-    var oss = new IntersectionObserver(function (voci) {
+
+    var oss = null;
+    var reteFirma = null;
+    function scriviFirma() {
+      clearInterval(reteFirma);
+      if (oss) oss.disconnect();
+      firma.classList.remove('firma__traccia--pronta');
+      firma.classList.add('firma__traccia--scrivi');
+    }
+
+    /* Rete di sicurezza. Da qui in poi la firma e' nascosta, e torna
+       visibile SOLO se l'osservatore reagisce. Se non reagisse — per la
+       soglia non raggiunta, per la scheda finita in secondo piano nel
+       momento sbagliato, per una differenza fra browser — resterebbe un
+       vuoto per sempre, senza che niente la rimetta a posto. E' quello
+       che e' successo. Quindi la si controlla anche per conto proprio,
+       una volta al secondo: se e' sullo schermo la si scrive comunque.
+       Il controllo si spegne appena una delle due strade funziona. */
+    reteFirma = setInterval(function () {
+      var r = firma.getBoundingClientRect();
+      var alto = window.innerHeight || document.documentElement.clientHeight;
+      if (r.bottom <= 0 || r.top >= alto) return;
+      scriviFirma();
+    }, 1000);
+
+    /* Soglia bassa: la firma e' larga e bassa e sta in fondo a una
+       colonna di testo. Chiedere che se ne veda il 60% voleva dire, su
+       schermi non altissimi, non farla partire quasi mai. */
+    oss = new IntersectionObserver(function (voci) {
       voci.forEach(function (v) {
         if (!v.isIntersecting) return;
-        firma.classList.remove('firma__traccia--pronta');
-        firma.classList.add('firma__traccia--scrivi');
-        oss.disconnect();
+        scriviFirma();
       });
-    }, { threshold: .6 });
+    }, { threshold: .25 });
     oss.observe(firma);
   }
 
