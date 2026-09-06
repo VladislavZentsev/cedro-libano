@@ -812,21 +812,143 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; }
 
 /* ---------- recensioni ---------- */
 
-.griglia-recensioni {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
-  gap: 20px;
+/* Testo che esiste solo per chi usa un lettore di schermo: resta nel
+   documento (quindi viene letto) ma non occupa spazio sullo schermo. */
+.solo-lettori {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
-.recensione {
-  border: 1px solid var(--filo);
-  background: linear-gradient(160deg, rgba(35,28,23,.86), rgba(19,16,14,.92));
-  padding: 30px 26px;
+
+/* --- valutazione complessiva --- */
+
+.voto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: clamp(34px, 5vw, 54px);
+}
+.voto__etichetta {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: .34em;
+  text-transform: uppercase;
+  color: var(--grigio-scuro);
+}
+.voto__riga {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.voto__numero {
+  font-family: var(--serif);
+  font-size: clamp(40px, 6vw, 58px);
+  line-height: 1;
+  color: var(--oro-chiaro);
+}
+.voto__quante { font-size: 14px; color: var(--grigio-scuro); }
+.stelle { display: block; overflow: visible; }
+
+/* --- il carosello --- */
+
+/* Il nastro arriva fino ai bordi dello schermo (la sezione ha 22px di
+   respiro laterale, qui li annullo) e sfuma ai lati, cosi' le schede
+   entrano ed escono invece di apparire tagliate di netto. */
+.carosello {
+  margin-inline: -22px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+/* La pista e' un normale contenitore che scorre: sul telefono lo swipe
+   funziona da solo, con l'inerzia del sistema, senza codice nostro. */
+.carosello__pista {
+  display: flex;
+  align-items: stretch;
+  gap: 18px;
+  padding: 6px 22px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  cursor: grab;
+}
+.carosello__pista::-webkit-scrollbar { display: none; }
+.carosello__pista:focus-visible { outline: 1px solid var(--oro); outline-offset: 4px; }
+.carosello__pista--presa { cursor: grabbing; user-select: none; }
+
+.scheda {
+  flex: 0 0 clamp(266px, 74vw, 336px);
   display: flex;
   flex-direction: column;
   gap: 14px;
+  padding: 24px 22px;
+  border: 1px solid var(--filo);
+  background: linear-gradient(160deg, rgba(35,28,23,.86), rgba(19,16,14,.92));
 }
-.recensione h3 { font-size: 21px; color: var(--oro-chiaro); line-height: 1.25; }
-.recensione p { margin: 0; font-weight: 300; font-size: 15px; line-height: 1.75; color: var(--grigio); text-wrap: pretty; }
+.scheda__testa { display: flex; align-items: center; gap: 12px; }
+.scheda__chi { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.scheda__nome {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.2;
+  color: var(--crema);
+}
+.scheda__quando { margin: 0; font-size: 12px; color: var(--grigio-scuro); }
+
+/* L'iniziale al posto della foto: le foto dei profili non sono nostre
+   e non abbiamo il diritto di ripubblicarle. Quattro tinte a rotazione
+   perche' le schede non sembrino tutte lo stesso blocco. */
+.scheda__cerchio {
+  flex-shrink: 0;
+  width: 44px; height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid rgba(210,168,58,.45);
+  font-family: var(--serif);
+  font-size: 19px;
+  line-height: 1;
+  color: var(--oro-pallido);
+  background: rgba(123,30,38,.42);
+}
+.scheda:nth-child(4n + 2) .scheda__cerchio { background: rgba(138,106,34,.42); }
+.scheda:nth-child(4n + 3) .scheda__cerchio { background: rgba(232,151,58,.26); }
+.scheda:nth-child(4n + 4) .scheda__cerchio { background: rgba(90,62,40,.55); }
+
+.scheda__dove {
+  margin-left: auto;
+  flex-shrink: 0;
+  width: 24px; height: 24px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid rgba(210,168,58,.32);
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--oro);
+  background: rgba(210,168,58,.08);
+}
+.scheda__dove--facebook { font-size: 15px; }
+
+.scheda__testo {
+  margin: 0;
+  font-weight: 300;
+  font-size: 14.5px;
+  line-height: 1.72;
+  color: var(--grigio);
+  text-wrap: pretty;
+}
+
 .disclaimer {
   margin: 34px auto 0;
   font-size: 12.5px;
@@ -956,8 +1078,16 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; }
   .header, .barra-mobile, .tabs, .bottoni, .bottone { display: none !important; }
   body { background: #fff; color: #000; }
   .titolo-oro, .titolo-chiaro { color: #000 !important; -webkit-text-fill-color: #000; }
-  .pannello, .carta, .vino, .recensione { border-color: #999; background: #fff; }
+  .pannello, .carta, .vino, .scheda { border-color: #999; background: #fff; }
   .piatto__nome, .contatto__v, .testo, .piatto__desc { color: #000; }
+  /* Su carta non si scorre: il nastro delle recensioni diventa un
+     elenco normale, altrimenti si stamperebbero solo le prime due
+     schede e le altre resterebbero fuori dal foglio. */
+  .carosello { margin-inline: 0; overflow: visible; -webkit-mask-image: none; mask-image: none; }
+  .carosello__pista { display: block; overflow: visible; padding: 0; }
+  .scheda { margin-bottom: 12px; }
+  .scheda[aria-hidden="true"] { display: none; }
+  .scheda__testo, .scheda__nome, .scheda__quando { color: #000; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1203,7 +1333,7 @@ img { max-width: 100%; height: auto; }
   .sezione { padding: 12px 0; border: 0; }
   .pannello { border: 0; padding: 0; }
   .piatto { break-inside: avoid; }
-  .carta, .vino, .recensione { break-inside: avoid; }
+  .carta, .vino, .scheda { break-inside: avoid; }
 }
 
 /* La nuova foto di apertura è più chiara della precedente: il velo va

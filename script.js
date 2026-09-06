@@ -792,4 +792,115 @@
     /* se si torna sulla pagina con del testo già scritto (ricarica) */
     if (campo.value) filtra();
   }
+
+
+  /* ---------- il carosello delle recensioni ----------
+
+     Non e' un'animazione CSS ma un contenitore che scorre davvero:
+     cosi' sul telefono lo swipe funziona da solo, con l'inerzia del
+     sistema operativo, e chi naviga da tastiera puo' scorrerlo con le
+     frecce. Il movimento automatico si limita a spingere piano la
+     posizione, e si ferma appena qualcuno tocca, passa il mouse o
+     mette a fuoco qualcosa dentro.
+
+     Per far girare il nastro senza salti le schede vengono duplicate
+     una volta: quando lo scorrimento supera la lunghezza del primo
+     gruppo si torna indietro esattamente di quella misura, e il
+     fotogramma dopo e' identico a quello prima. Le copie sono
+     nascoste ai lettori di schermo, che altrimenti leggerebbero due
+     volte le stesse recensioni. */
+  Array.prototype.forEach.call(document.querySelectorAll('[data-carosello]'), function (giostra) {
+    var pista = giostra.querySelector('[data-pista]');
+    if (!pista) return;
+
+    var schede = Array.prototype.slice.call(pista.children);
+    if (!schede.length) return;
+
+    var pigro = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var VELOCITA = 26;          /* pixel al secondo: lento, si legge mentre scorre */
+    var larghezzaGruppo = 0;
+    var posizione = 0;
+    var impostato = -1;
+    var fermo = false;
+    var dentro = !('IntersectionObserver' in window);
+    var ultimoIstante = 0;
+    var trascina = null;
+
+    function misura() {
+      var primaCopia = pista.children[schede.length];
+      larghezzaGruppo = primaCopia ? primaCopia.offsetLeft - schede[0].offsetLeft : 0;
+    }
+
+    /* --- trascinamento col mouse (sul touch scorre gia' da solo) --- */
+    pista.addEventListener('pointerdown', function (e) {
+      fermo = true;
+      if (e.pointerType !== 'mouse') return;
+      trascina = { x: e.clientX, da: pista.scrollLeft };
+      pista.classList.add('carosello__pista--presa');
+      pista.setPointerCapture(e.pointerId);
+    });
+    pista.addEventListener('pointermove', function (e) {
+      if (!trascina) return;
+      e.preventDefault();
+      pista.scrollLeft = trascina.da - (e.clientX - trascina.x);
+    });
+    function lasciaAndare(e) {
+      if (trascina) {
+        trascina = null;
+        pista.classList.remove('carosello__pista--presa');
+        if (e && e.pointerId != null && pista.hasPointerCapture(e.pointerId)) {
+          pista.releasePointerCapture(e.pointerId);
+        }
+      }
+      fermo = false;
+    }
+    pista.addEventListener('pointerup', lasciaAndare);
+    pista.addEventListener('pointercancel', lasciaAndare);
+
+    pista.addEventListener('mouseenter', function () { fermo = true; });
+    pista.addEventListener('mouseleave', function () { if (!trascina) fermo = false; });
+    pista.addEventListener('focusin', function () { fermo = true; });
+    pista.addEventListener('focusout', function () { fermo = false; });
+
+    window.addEventListener('resize', misura, { passive: true });
+
+    /* Chi ha chiesto meno animazioni si tiene il nastro fermo e lo
+       scorre a mano: nessuna copia, nessun movimento automatico. */
+    if (pigro) return;
+
+    schede.forEach(function (s) {
+      var copia = s.cloneNode(true);
+      copia.setAttribute('aria-hidden', 'true');
+      pista.appendChild(copia);
+    });
+    misura();
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (voci) {
+        voci.forEach(function (v) { dentro = v.isIntersecting; });
+      }, { rootMargin: '120px 0px' }).observe(giostra);
+    }
+
+    function passo(istante) {
+      requestAnimationFrame(passo);
+      var salto = ultimoIstante ? istante - ultimoIstante : 0;
+      ultimoIstante = istante;
+      if (!larghezzaGruppo) { misura(); return; }
+
+      /* se lo scorrimento e' cambiato per mano di qualcun altro
+         (swipe, rotella, tastiera) si riparte da dove l'ha lasciato */
+      if (Math.abs(pista.scrollLeft - impostato) > 1) posizione = pista.scrollLeft;
+
+      if (!fermo && dentro && salto > 0 && salto < 200) {
+        posizione += VELOCITA * salto / 1000;
+      }
+      if (posizione >= larghezzaGruppo) posizione -= larghezzaGruppo;
+      else if (posizione < 0) posizione += larghezzaGruppo;
+
+      pista.scrollLeft = posizione;
+      impostato = pista.scrollLeft;
+    }
+    requestAnimationFrame(passo);
+  });
+
 })();

@@ -410,18 +410,181 @@
     <picture class="lente__foto"><img class="lente__img" alt="" /></picture>
   </dialog>
 
-  <section class="sezione sezione--recensioni" aria-labelledby="titolo-recensioni">
+  <section class="sezione sezione--recensioni" id="recensioni" aria-labelledby="titolo-recensioni">
     <div class="contenitore">
       <div class="intestazione">
-        <p class="occhiello">What guests tell us</p>
-        <h2 class="titolo-chiaro" id="titolo-recensioni">Three things we hear often</h2>
+        <p class="occhiello">From our guests</p>
+        <h2 class="titolo-chiaro" id="titolo-recensioni">Reviews</h2>
       </div>
-      <div class="griglia-recensioni">
-        <article class="recensione"><svg viewBox="0 0 40 40" width="26" height="26" aria-hidden="true"><polygon points="20,3 24,16 37,20 24,24 20,37 16,24 3,20 16,16" fill="none" stroke="#D2A83A" stroke-width="1.2"></polygon></svg><h3>Real Lebanese cooking</h3><p>People who know Lebanon recognise the dishes: nothing softened for the Italian palate. The mezze arrive the way they are served in Beirut.</p></article>
-        <article class="recensione"><svg viewBox="0 0 40 40" width="26" height="26" aria-hidden="true"><polygon points="20,3 24,16 37,20 24,24 20,37 16,24 3,20 16,16" fill="none" stroke="#D2A83A" stroke-width="1.2"></polygon></svg><h3>Good if you do not eat meat</h3><p>Falafel, mtabbal, wara&rsquo; enab, fattoush: the vegetarian and vegan side is not an afterthought, it is half the menu.</p></article>
-        <article class="recensione"><svg viewBox="0 0 40 40" width="26" height="26" aria-hidden="true"><polygon points="20,3 24,16 37,20 24,24 20,37 16,24 3,20 16,16" fill="none" stroke="#D2A83A" stroke-width="1.2"></polygon></svg><h3>Quiet, in the harbour</h3><p>Off the tourist route. Music in the background, tables that are not crammed together, the pace of dinner rather than fast service.</p></article>
+
+      <div class="voto">
+        <p class="voto__etichetta">Overall rating</p>
+        <p class="voto__riga">
+          <span class="voto__numero">4.2</span>
+          <svg class="stelle stelle--voto" viewBox="0 0 108 19" width="122" height="21" role="img" aria-label="4.2 out of 5 stars"><defs><clipPath id="voto-taglio"><rect x="0" y="0" width="92.00" height="19" /></clipPath></defs><path transform="translate(0 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="transparent" stroke="rgba(210,168,58,.34)" stroke-width="1.1" /><path transform="translate(22 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="transparent" stroke="rgba(210,168,58,.34)" stroke-width="1.1" /><path transform="translate(44 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="transparent" stroke="rgba(210,168,58,.34)" stroke-width="1.1" /><path transform="translate(66 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="transparent" stroke="rgba(210,168,58,.34)" stroke-width="1.1" /><path transform="translate(88 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="transparent" stroke="rgba(210,168,58,.34)" stroke-width="1.1" /><g clip-path="url(#voto-taglio)"><path transform="translate(0 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(22 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(44 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(66 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(88 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /></g></svg>
+          <span class="voto__quante">(304)</span>
+        </p>
+        <!-- Porta alla scheda Google, dove il pulsante per scrivere la recensione
+             c'e' gia'. Sostituire con il link diretto quando disponibile. -->
+        <a class="bottone bottone--filo" href="https://www.google.com/maps/place/Cedro+del+Libano/@44.3085703,8.4846434,17z/data=!4m6!3m5!1s0x12d31dc04558b733:0x93070c4f7895fc67!8m2!3d44.3085665!4d8.4872237" target="_blank" rel="noopener">Write a review</a>
       </div>
-      <p class="disclaimer">A summary of themes that recur in public reviews. No quotations, no names.</p>
+
+      <div class="carosello" data-carosello>
+        <div class="carosello__pista" data-pista tabindex="0" role="group" aria-label="Guest reviews">
+        <article class="scheda">
+          <div class="scheda__testa">
+            <span class="scheda__cerchio" aria-hidden="true">M</span>
+            <div class="scheda__chi">
+              <p class="scheda__nome">Marinella Colombo</p>
+              <p class="scheda__quando">5 years ago</p>
+            </div>
+            <span class="scheda__dove scheda__dove--google">
+              <span aria-hidden="true">G</span>
+              <span class="solo-lettori">Review from Google</span>
+            </span>
+          </div>
+          <svg class="stelle" viewBox="0 0 108 19" width="90" height="16" role="img" aria-label="5 out of 5 stars"><path transform="translate(0 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(22 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(44 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(66 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(88 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /></svg>
+          <p class="scheda__testo">We went today, FABULOUS. Don’t miss it, it is a real gem. Great food and the staff are lovely. If I lived in Savona I would go every day. Thank you so much for your kindness, see you Tuesday.</p>
+        </article>
+        <article class="scheda">
+          <div class="scheda__testa">
+            <span class="scheda__cerchio" aria-hidden="true">A</span>
+            <div class="scheda__chi">
+              <p class="scheda__nome">Annalisa G</p>
+              <p class="scheda__quando">4 years ago</p>
+            </div>
+            <span class="scheda__dove scheda__dove--google">
+              <span aria-hidden="true">G</span>
+              <span class="solo-lettori">Review from Google</span>
+            </span>
+          </div>
+          <svg class="stelle" viewBox="0 0 108 19" width="90" height="16" role="img" aria-label="4 out of 5 stars"><path transform="translate(0 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(22 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(44 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(66 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(88 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="transparent" stroke="rgba(210,168,58,.34)" stroke-width="1.1" /></svg>
+          <p class="scheda__testo">Finally a Middle Eastern restaurant! Extremely courteous staff, even if some of them do not speak Italian very well. We let ourselves be talked into the tasting menu, which is excellent and generous; the spiced chicken is a real delicacy, and the various salads and mezze were all very good. We will definitely be back.</p>
+        </article>
+        <article class="scheda">
+          <div class="scheda__testa">
+            <span class="scheda__cerchio" aria-hidden="true">D</span>
+            <div class="scheda__chi">
+              <p class="scheda__nome">Davide Bi</p>
+              <p class="scheda__quando">5 months ago</p>
+            </div>
+            <span class="scheda__dove scheda__dove--google">
+              <span aria-hidden="true">G</span>
+              <span class="solo-lettori">Review from Google</span>
+            </span>
+          </div>
+          <svg class="stelle" viewBox="0 0 108 19" width="90" height="16" role="img" aria-label="4 out of 5 stars"><path transform="translate(0 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(22 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(44 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(66 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(88 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="transparent" stroke="rgba(210,168,58,.34)" stroke-width="1.1" /></svg>
+          <p class="scheda__testo">Excellent food, kind staff, and a great all-you-can-eat menu that covers almost the whole card</p>
+        </article>
+        <article class="scheda">
+          <div class="scheda__testa">
+            <span class="scheda__cerchio" aria-hidden="true">L</span>
+            <div class="scheda__chi">
+              <p class="scheda__nome">Ludovica Costigliolo</p>
+              <p class="scheda__quando">3 years ago</p>
+            </div>
+            <span class="scheda__dove scheda__dove--google">
+              <span aria-hidden="true">G</span>
+              <span class="solo-lettori">Review from Google</span>
+            </span>
+          </div>
+          <svg class="stelle" viewBox="0 0 108 19" width="90" height="16" role="img" aria-label="4 out of 5 stars"><path transform="translate(0 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(22 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(44 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(66 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(88 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="transparent" stroke="rgba(210,168,58,.34)" stroke-width="1.1" /></svg>
+          <p class="scheda__testo">The restaurant serves dishes from the Lebanese tradition with a good range to choose from. The food was tasty and the staff really kind. It is a place I recommend to anyone who wants to try a different kind of cooking!</p>
+        </article>
+        <article class="scheda">
+          <div class="scheda__testa">
+            <span class="scheda__cerchio" aria-hidden="true">L</span>
+            <div class="scheda__chi">
+              <p class="scheda__nome">Luca Olivieri</p>
+              <p class="scheda__quando">2 years ago</p>
+            </div>
+            <span class="scheda__dove scheda__dove--google">
+              <span aria-hidden="true">G</span>
+              <span class="solo-lettori">Review from Google</span>
+            </span>
+          </div>
+          <svg class="stelle" viewBox="0 0 108 19" width="90" height="16" role="img" aria-label="4 out of 5 stars"><path transform="translate(0 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(22 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(44 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(66 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(88 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="transparent" stroke="rgba(210,168,58,.34)" stroke-width="1.1" /></svg>
+          <p class="scheda__testo">A small restaurant in the harbour area of Savona. The owners are extremely kind and found us a table even without a booking. If you want to try new flavours and spend a different sort of evening, I recommend it.</p>
+        </article>
+        <article class="scheda">
+          <div class="scheda__testa">
+            <span class="scheda__cerchio" aria-hidden="true">T</span>
+            <div class="scheda__chi">
+              <p class="scheda__nome">Tiziana</p>
+              <p class="scheda__quando">2 years ago</p>
+            </div>
+            <span class="scheda__dove scheda__dove--google">
+              <span aria-hidden="true">G</span>
+              <span class="solo-lettori">Review from Google</span>
+            </span>
+          </div>
+          <svg class="stelle" viewBox="0 0 108 19" width="90" height="16" role="img" aria-label="4 out of 5 stars"><path transform="translate(0 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(22 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(44 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(66 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(88 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="transparent" stroke="rgba(210,168,58,.34)" stroke-width="1.1" /></svg>
+          <p class="scheda__testo">The place is in the harbour, but the inner courtyard sits among the buildings. The owner only speaks English and is kind and attentive. We had the starters with very good dips and the mixed grill, which was flavourful and well cooked.</p>
+        </article>
+        <article class="scheda">
+          <div class="scheda__testa">
+            <span class="scheda__cerchio" aria-hidden="true">G</span>
+            <div class="scheda__chi">
+              <p class="scheda__nome">giusy moretti</p>
+              <p class="scheda__quando">2 years ago</p>
+            </div>
+            <span class="scheda__dove scheda__dove--google">
+              <span aria-hidden="true">G</span>
+              <span class="solo-lettori">Review from Google</span>
+            </span>
+          </div>
+          <svg class="stelle" viewBox="0 0 108 19" width="90" height="16" role="img" aria-label="5 out of 5 stars"><path transform="translate(0 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(22 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(44 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(66 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(88 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /></svg>
+          <p class="scheda__testo">A lovely surprise in the Savona harbour. Very kind owner, and excellent food. We will definitely be back.</p>
+        </article>
+        <article class="scheda">
+          <div class="scheda__testa">
+            <span class="scheda__cerchio" aria-hidden="true">C</span>
+            <div class="scheda__chi">
+              <p class="scheda__nome">Chiara Repetto</p>
+              <p class="scheda__quando">June 2022</p>
+            </div>
+            <span class="scheda__dove scheda__dove--facebook">
+              <span aria-hidden="true">f</span>
+              <span class="solo-lettori">Review from Facebook</span>
+            </span>
+          </div>
+          <svg class="stelle" viewBox="0 0 108 19" width="90" height="16" role="img" aria-label="5 out of 5 stars"><path transform="translate(0 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(22 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(44 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(66 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(88 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /></svg>
+          <p class="scheda__testo">Distinctive food where the spices do not cover the taste of what they go with; the owner is kind and welcoming</p>
+        </article>
+        <article class="scheda">
+          <div class="scheda__testa">
+            <span class="scheda__cerchio" aria-hidden="true">P</span>
+            <div class="scheda__chi">
+              <p class="scheda__nome">pierre rabbath</p>
+              <p class="scheda__quando">28 days ago</p>
+            </div>
+            <span class="scheda__dove scheda__dove--google">
+              <span aria-hidden="true">G</span>
+              <span class="solo-lettori">Review from Google</span>
+            </span>
+          </div>
+          <svg class="stelle" viewBox="0 0 108 19" width="90" height="16" role="img" aria-label="5 out of 5 stars"><path transform="translate(0 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(22 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(44 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(66 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(88 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /></svg>
+          <p class="scheda__testo" lang="fr">Mets typiques libanais délicieux et copieux, très bien servi sur une belle terrasse à des prix très raisonnables. Nous y retournerons au retour de notre petite croisière.</p>
+        </article>
+        <article class="scheda">
+          <div class="scheda__testa">
+            <span class="scheda__cerchio" aria-hidden="true">E</span>
+            <div class="scheda__chi">
+              <p class="scheda__nome">Estelle Krh</p>
+              <p class="scheda__quando">18 days ago</p>
+            </div>
+            <span class="scheda__dove scheda__dove--google">
+              <span aria-hidden="true">G</span>
+              <span class="solo-lettori">Review from Google</span>
+            </span>
+          </div>
+          <svg class="stelle" viewBox="0 0 108 19" width="90" height="16" role="img" aria-label="5 out of 5 stars"><path transform="translate(0 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(22 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(44 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(66 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /><path transform="translate(88 0)" d="M10 1.7l2.5 5.2 5.7.8-4.1 4 1 5.6L10 14.7 4.9 17.3l1-5.6-4.1-4 5.7-.8z" fill="var(--oro)" stroke="var(--oro)" stroke-width="1.1" /></svg>
+          <p class="scheda__testo" lang="en">Absolutely delicious! Everything was full of flavour, fresh, and perfectly prepared. One of the best Lebanese restaurants I’ve tried. I highly recommend it — definitely 5/5!</p>
+        </article>
+        </div>
+      </div>
+
+      <p class="disclaimer">Public reviews from Google and Facebook, quoted word for word. Dates are the ones shown by the platforms.</p>
     </div>
   </section>
 
