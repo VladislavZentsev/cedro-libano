@@ -1778,7 +1778,7 @@ img { max-width: 100%; height: auto; }
 .nav { position: relative; }
 .nav__riflettore {
   position: absolute;
-  top: 1px;
+  top: -5px;
   left: 0;
   width: 0;
   height: 2px;
@@ -1798,7 +1798,7 @@ img { max-width: 100%; height: auto; }
 .nav__fascio {
   position: absolute;
   left: -32%;
-  top: 8px;
+  top: 2px;
   width: 164%;
   height: 44px;
   clip-path: polygon(7% 100%, 27% 0, 73% 0, 93% 100%);
