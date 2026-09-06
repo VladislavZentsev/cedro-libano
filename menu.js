@@ -359,7 +359,8 @@
         + '<span class="gruppo__titolo">' + esc(T(g.title)) + '</span>'
         + '<span class="gruppo__filo"></span>'
         + '<span class="gruppo__conta">' + g.items.length + ' ' + T('piatti') + '</span>'
-        + '<span class="gruppo__freccia" aria-hidden="true">▾</span>'
+        + '<svg class="gruppo__freccia" aria-hidden="true" focusable="false" viewBox="0 0 14 9" width="14" height="9">'
+        + '<path d="M1 1l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>'
         + '</button>'
         + '<div class="gruppo__corpo" id="' + id + '">' + items + '</div>'
         + '</div>';

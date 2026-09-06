@@ -210,7 +210,9 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; }
 .occhiello {
   margin: 0;
   font-size: 12px;
-  letter-spacing: .4em;
+  /* .22em e il massimo consigliato per una maiuscoletta piccola: a .4em
+     le lettere si staccavano al punto da leggersi come segni separati. */
+  letter-spacing: .22em;
   text-transform: uppercase;
   color: var(--oro);
 }
@@ -218,7 +220,9 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; }
 .titolo-oro {
   font-size: clamp(30px, 4.8vw, 54px);
   line-height: 1.06;
-  letter-spacing: .02em;
+  /* spaziatura negativa: sopra i 16px allargare le lettere fa sembrare il
+     titolo composto male. Piu il corpo e grande, piu va stretto. */
+  letter-spacing: -.025em;
   background: linear-gradient(178deg, var(--oro-pallido), var(--oro) 60%, #9A7620);
   -webkit-background-clip: text;
   background-clip: text;
@@ -258,7 +262,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; }
   box-shadow: 0 8px 24px rgba(210,168,58,.18);
 }
 .bottone--oro:hover { color: #141210; transform: translateY(-2px); box-shadow: 0 16px 40px rgba(210,168,58,.32); }
-.bottone--filo { color: var(--crema); border: 1px solid rgba(210,168,58,.5); }
+.bottone--filo { color: var(--crema); border: 1px solid rgba(210,168,58,.55); }
 .bottone--filo:hover { color: var(--crema); background: rgba(210,168,58,.12); border-color: var(--oro); }
 .bottone--bordeaux {
   align-self: flex-start;
@@ -301,7 +305,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; }
 }
 .marchio__sotto {
   font-size: 8.5px;
-  letter-spacing: .28em;
+  letter-spacing: .22em;
   text-transform: uppercase;
   line-height: 1;
   white-space: nowrap;
@@ -332,7 +336,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; }
   min-height: 46px;
   padding: 12px;
   background: transparent;
-  border: 1px solid rgba(210,168,58,.3);
+  border: 1px solid rgba(210,168,58,.55);
   cursor: pointer;
 }
 .hamburger span { display: block; width: 20px; height: 1.5px; background: var(--oro-chiaro); }
@@ -396,7 +400,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; }
 .hero h1 {
   font-size: clamp(40px, 8.4vw, 104px);
   line-height: .9;
-  letter-spacing: .04em;
+  letter-spacing: -.01em;
   text-transform: uppercase;
   text-wrap: balance;
 }
@@ -464,7 +468,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; }
   padding: 15px 28px;
   min-height: 46px;
   background: transparent;
-  border: 1px solid rgba(210,168,58,.28);
+  border: 1px solid rgba(210,168,58,.55);
   color: var(--grigio-scuro);
   white-space: nowrap;
   transition: all .3s ease;
@@ -525,10 +529,15 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; }
   text-align: left;
   color: var(--oro-chiaro);
 }
-.gruppo__titolo { font-family: var(--serif); font-size: clamp(21px, 2.6vw, 29px); letter-spacing: .03em; }
+.gruppo__titolo { font-family: var(--serif); font-size: clamp(21px, 2.6vw, 29px); letter-spacing: -.015em; }
 .gruppo__filo { flex: 1; height: 1px; background: linear-gradient(90deg, rgba(210,168,58,.4), transparent); }
 .gruppo__conta { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--grigio-scuro); }
-.gruppo__freccia { font-size: 15px; color: var(--oro); transition: transform .3s ease; }
+.gruppo__freccia {
+  flex-shrink: 0;
+  align-self: center;
+  color: var(--oro);
+  transition: transform .3s ease;
+}
 .gruppo__testa--chiusa .gruppo__freccia { transform: rotate(-90deg); }
 
 /* Su schermi larghi un gruppo aperto dispone i suoi piatti su due
@@ -636,7 +645,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; }
   border-color: rgba(210,168,58,.45);
 }
 .carta__testa { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
-.carta__testa h3 { font-size: 23px; color: var(--crema); letter-spacing: .02em; }
+.carta__testa h3 { font-size: 23px; color: var(--crema); letter-spacing: -.015em; }
 .carta__kicker {
   margin: 6px 0 0;
   font-size: 11px;
@@ -847,7 +856,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; }
 .voto__etichetta {
   margin: 0;
   font-size: 12px;
-  letter-spacing: .34em;
+  letter-spacing: .22em;
   text-transform: uppercase;
   color: var(--grigio-scuro);
 }
@@ -1099,7 +1108,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; }
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(210,168,58,.5);
+  border: 1px solid rgba(210,168,58,.55);
 }
 
 /* ---------- animazione ---------- */
@@ -1539,8 +1548,9 @@ img { max-width: 100%; height: auto; }
   right: 0;
   width: 44px;
   height: 44px;
-  font-size: 26px;
-  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   color: var(--crema);
   background: transparent;
   border: 1px solid rgba(210,168,58,.4);
@@ -1650,7 +1660,7 @@ img { max-width: 100%; height: auto; }
   display: flex;
   align-items: center;
   gap: 10px;
-  border: 1px solid rgba(210,168,58,.28);
+  border: 1px solid rgba(210,168,58,.55);
   background: rgba(16,14,12,.5);
   padding: 0 12px;
   transition: border-color .25s ease, background .25s ease;
@@ -1725,7 +1735,7 @@ img { max-width: 100%; height: auto; }
   text-transform: uppercase;
   color: var(--crema);
   background: transparent;
-  border: 1px solid rgba(210,168,58,.5);
+  border: 1px solid rgba(210,168,58,.55);
   cursor: pointer;
   transition: background .25s ease, border-color .25s ease;
 }
@@ -2075,7 +2085,7 @@ img { max-width: 100%; height: auto; }
   height: 46px;
   padding: 0;
   border-radius: 50%;
-  border: 1px solid rgba(210,168,58,.28);
+  border: 1px solid rgba(210,168,58,.55);
   background: rgba(210,168,58,.05);
   text-decoration: none;
   opacity: .6;
@@ -2084,8 +2094,8 @@ img { max-width: 100%; height: auto; }
 .lingue__voce--attiva {
   opacity: 1;
   background: rgba(210,168,58,.16);
-  border-color: rgba(210,168,58,.45);
-  box-shadow: inset 0 0 0 1px rgba(210,168,58,.45);
+  border-color: rgba(210,168,58,.7);
+  box-shadow: inset 0 0 0 1px rgba(210,168,58,.7);
 }
 .lingue__voce:hover {
   opacity: 1;
