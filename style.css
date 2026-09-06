@@ -2027,19 +2027,19 @@ img { max-width: 100%; height: auto; }
    tolta perche' quel tipo di animazione torna indietro quando si
    risale, mentre la fascia deve restare grande una volta aperta. */
 
-/* --- 5. Il cambio lingua: due bandiere separate ---------
+/* --- 5. Il cambio lingua: due bandiere in un cerchio ----
    Prima c'era solo "EN": chi arrivava sulla pagina inglese non capiva
    di poter tornare all'italiano, e molti non si accorgevano nemmeno
-   che il sito fosse in due lingue. Poi le sigle sono diventate due
-   bandierine dentro un anello dorato — ma l'anello le stringeva
-   troppo vicine e il cerchio non e' un segno che il sito usa altrove.
-   Poi una riga sotto, come l'indicatore della voce di menu' attiva —
-   ma qui, sotto due bandiere gia' rettangolari, un'altra forma
-   rettangolare si perdeva. Un pallino si stacca meglio. */
+   che il sito fosse in due lingue. La bandierina dentro un anello
+   dorato era gia' la forma giusta — il problema era solo che le due
+   stavano troppo attaccate. Ora c'e' piu' spazio fra le due, le
+   bandiere sono piu' grandi, e l'anello torna a essere lui il segno
+   di quale lingua e' scelta: pieno e acceso sull'attiva, appena
+   accennato su quella sotto il mouse. */
 .lingue {
   display: inline-flex;
   align-items: center;
-  gap: 20px;
+  gap: 14px;
   margin-left: 14px;
 }
 .lingue__voce {
@@ -2047,47 +2047,36 @@ img { max-width: 100%; height: auto; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  min-height: 46px;
+  width: 46px;
+  height: 46px;
   padding: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(210,168,58,.28);
+  background: rgba(210,168,58,.05);
   text-decoration: none;
-  opacity: .55;
-  transition: opacity .28s ease;
+  opacity: .6;
+  transition: opacity .28s ease, background .28s ease, box-shadow .28s ease, border-color .28s ease;
 }
-.lingue__voce--attiva { opacity: 1; }
-.lingue__voce:hover { opacity: 1; }
+.lingue__voce--attiva {
+  opacity: 1;
+  background: rgba(210,168,58,.16);
+  border-color: rgba(210,168,58,.45);
+  box-shadow: inset 0 0 0 1px rgba(210,168,58,.45);
+}
+.lingue__voce:hover {
+  opacity: 1;
+  background: rgba(210,168,58,.1);
+  border-color: rgba(210,168,58,.4);
+}
 /* La bandierina vera e propria: angoli smussati (gia' nell'SVG) e
-   un'ombra leggera, cosi' anche piccola si stacca dallo sfondo scuro
-   invece di sembrare un francobollo appiccicato. */
+   un'ombra leggera, cosi' si stacca dal cerchio invece di sembrare
+   un francobollo appiccicato dentro. */
 .bandiera {
   display: block;
-  width: 28px;
-  height: 20px;
+  width: 26px;
+  height: 18px;
   border-radius: 3px;
   box-shadow: 0 1px 4px rgba(0,0,0,.4), inset 0 0 0 1px rgba(0,0,0,.25);
-}
-/* Il pallino sotto: pieno sulla lingua attiva, si affaccia solo a
-   meta' su quella su cui passa il mouse, cosi' si capisce che ci si
-   sta per andare senza sembrare gia' scelta. */
-.lingue__voce::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  bottom: 4px;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--oro-chiaro);
-  box-shadow: 0 0 8px 1px rgba(210,168,58,.5);
-  transform: translateX(-50%) scale(0);
-  opacity: 0;
-  transition: transform .32s cubic-bezier(.22, 1, .36, 1), opacity .28s ease;
-}
-.lingue__voce--attiva::after { transform: translateX(-50%) scale(1); opacity: 1; }
-.lingue__voce:hover::after { transform: translateX(-50%) scale(1); opacity: .55; }
-.lingue__voce--attiva:hover::after { opacity: 1; }
-@media (prefers-reduced-motion: reduce) {
-  .lingue__voce::after { transition: opacity .28s ease; }
 }
 @media (max-width: 1023px) { .lingue { margin-left: 0; margin-right: 12px; } }
 @media print { .lingue { display: none; } }
