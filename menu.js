@@ -399,7 +399,7 @@
         + '<h3>' + esc(w.name) + '</h3>'
         + '<span class="vino__blend">' + esc(T(w.blend)) + '</span>'
         + '<div class="vino__prezzi">' + w.prices.map(function (x) {
-            return '<div class="vino__prezzo"><span class="pastiglia__lab">' + esc(x.label) + '</span><span class="pastiglia__val">' + esc(x.value) + '</span></div>';
+            return '<div class="vino__prezzo"><span class="pastiglia__lab">' + esc(T(x.label)) + '</span><span class="pastiglia__val">' + esc(x.value) + '</span></div>';
           }).join('') + '</div>'
         + '<p class="vino__note">' + esc(T(w.notes)) + '</p>'
         + (w.pairing ? '<p class="vino__abb"><span>' + esc(T('Abbinamenti')) + '</span><br />' + esc(T(w.pairing)) + '</p>' : '')

@@ -77,6 +77,12 @@
      gruppi con risultati per conto suo, anche piu' di uno insieme, e
      questo resta corretto — durante una ricerca servono i risultati
      di piu' categorie alla volta. */
+  /* Alzata mentre una ricerca e in corso: la fisarmonica la legge per
+     sospendere l'esclusivita. Senza, riaprendo un gruppo durante una
+     ricerca si richiudevano i risultati di tutte le altre categorie —
+     esattamente il contrario di quanto dice il commento qui sopra. */
+  var ricercaInCorso = false;
+
   function collegaAccordion() {
     var teste = document.querySelectorAll('.gruppo__testa');
     Array.prototype.forEach.call(teste, function (testa, i) {
@@ -84,7 +90,7 @@
       if (i > 0) chiudi(testa, corpo, true);
       testa.addEventListener('click', function () {
         var aperto = testa.getAttribute('aria-expanded') === 'true';
-        if (!aperto) {
+        if (!aperto && !ricercaInCorso) {
           Array.prototype.forEach.call(teste, function (altra) {
             if (altra === testa) return;
             chiudi(altra, document.getElementById(altra.getAttribute('aria-controls')), true);
@@ -611,8 +617,36 @@
   /* Orario: giorno di oggi + stato "aperto ora / chiuso" nell'apertura
      Gli orari stanno una volta sola nell'HTML: qui vengono letti da lì,
      così se cambi l'orario in index.html non devi toccare il JavaScript. */
-  var adesso = new Date();
-  var oggi = adesso.getDay();
+  /* L'ora di Roma, non quella del dispositivo di chi guarda.
+     Prima si usava l'orologio locale: un turista che apriva la pagina
+     inglese da Londra vedeva lo stato sfasato di un'ora, e a cavallo di
+     mezzanotte sbagliava perfino il GIORNO — veniva evidenziata la riga
+     di un altro giorno nella tabella degli orari, e usata la sua fascia.
+     Per un sito con una versione inglese fatta per i crocieristi non era
+     un dettaglio.
+     Se il browser non conoscesse i fusi orari si ripiega sull'ora
+     locale: approssimata, ma meglio che niente. */
+  function oraDiRoma() {
+    try {
+      var parti = {};
+      new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Europe/Rome',
+        weekday: 'short', hour: '2-digit', minute: '2-digit', hour12: false
+      }).formatToParts(new Date()).forEach(function (p) { parti[p.type] = p.value; });
+      var giorni = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+      var g = giorni[parti.weekday];
+      var h = parseInt(parti.hour, 10);
+      var m = parseInt(parti.minute, 10);
+      if (g === undefined || isNaN(h) || isNaN(m)) throw new Error('formato inatteso');
+      /* alcuni browser scrivono "24" invece di "00" a mezzanotte */
+      return { giorno: g, minuti: (h % 24) * 60 + m };
+    } catch (e) {
+      var d = new Date();
+      return { giorno: d.getDay(), minuti: d.getHours() * 60 + d.getMinutes() };
+    }
+  }
+  var adesso = oraDiRoma();
+  var oggi = adesso.giorno;
   var righe = document.querySelectorAll('.orario__riga');
   var rigaOggi = document.querySelector('.orario [data-giorno="' + oggi + '"]');
   if (rigaOggi) rigaOggi.classList.add('orario__oggi');
@@ -636,7 +670,7 @@
 
   var stato = document.getElementById('stato-apertura');
   if (stato && righe.length) {
-    var ora = adesso.getHours() * 60 + adesso.getMinutes();
+    var ora = adesso.minuti;
     var oggiF = fasciaDelGiorno(oggi);
     var ieriF = fasciaDelGiorno((oggi + 6) % 7);
     var aperto = false, chiudeA = null, apreA = null;
@@ -697,12 +731,22 @@
       if (vecchia) vecchia.replaceWith(pic); else lente.appendChild(pic);
     }
 
-    Array.prototype.forEach.call(document.querySelectorAll('.galleria__apri'), function (b) {
-      b.addEventListener('click', function () {
-        var interna = b.querySelector('img');
-        mostraFoto(b.getAttribute('data-piena'), interna ? interna.alt : '');
-        lente.showModal();
-      });
+    /* Un solo gestore agganciato al documento, non uno per pulsante.
+       Serve perche' il carosello duplica le schede piu' tardi con
+       cloneNode, che NON copia i gestori: con l'aggancio diretto le nove
+       copie restavano inerti, e siccome il nastro gira l'utente vedeva
+       alternarsi foto che si aprono e foto che non rispondono. Cosi'
+       funziona anche sulle copie, e continuera' a funzionare se un
+       domani se ne aggiungono altre.
+
+       Il trascinamento resta escluso: il carosello ferma il clic in fase
+       di cattura, quindi non arriva mai fin qui. */
+    document.addEventListener('click', function (e) {
+      var b = e.target && e.target.closest ? e.target.closest('.galleria__apri') : null;
+      if (!b) return;
+      var interna = b.querySelector('img');
+      mostraFoto(b.getAttribute('data-piena'), interna ? interna.alt : '');
+      lente.showModal();
     });
     lente.querySelector('.lente__chiudi').addEventListener('click', function () { lente.close(); });
     /* clic sullo sfondo scuro = chiudi */
@@ -768,8 +812,16 @@
 
     function filtra() {
       var grezzo = campo.value.trim();
+      /* La normalizzazione trasforma apostrofi e accenti in spazi: chi
+         digita un solo apostrofo si ritrovava con una query fatta di
+         soli spazi, che non e vuota ma non filtra niente. Risultato:
+         "41 piatti trovati" e tutti i gruppi forzati aperti per una
+         ricerca che in realta non c'era. Se dopo la normalizzazione non
+         resta nessuna parola, e una ricerca vuota. */
       var q = piatto(grezzo);
       var re = q ? espressione(q) : null;
+      if (!re) q = '';
+      ricercaInCorso = q !== '';
       var piatti = pannelloCarte.querySelectorAll('.piatto');
       var gruppi = pannelloCarte.querySelectorAll('.gruppo');
       var trovati = 0;
@@ -919,6 +971,7 @@
     var ultimoIstante = 0;
     var trascina = null;
     var partenzaX = null;
+    var partenzaY = null;
 
     function misura() {
       var primaCopia = pista.children[schede.length];
@@ -933,13 +986,25 @@
       fermo = true;
       mosso = false;
       partenzaX = e.clientX;
+      partenzaY = e.clientY;
       if (e.pointerType !== 'mouse') return;
       trascina = { x: e.clientX, da: pista.scrollLeft };
       pista.classList.add('carosello__pista--presa');
-      pista.setPointerCapture(e.pointerId);
+      /* Se il puntatore non fosse piu attivo, catturarlo solleva
+         un'eccezione che interromperebbe questo gestore e lascerebbe
+         il trascinamento a meta. Il nastro si trascina lo stesso anche
+         senza cattura: vale la pena tirare dritto. */
+      try { pista.setPointerCapture(e.pointerId); } catch (err) {}
     });
     pista.addEventListener('pointermove', function (e) {
-      if (partenzaX != null && Math.abs(e.clientX - partenzaX) > SOGLIA) mosso = true;
+      /* Conta anche lo spostamento verticale: chi scorre la pagina
+         partendo dalla striscia stava muovendo il dito, non toccandola.
+         Guardando solo l'orizzontale quel gesto veniva scambiato per un
+         tocco secco e metteva il nastro in pausa, senza che niente lo
+         facesse ripartire. */
+      if (partenzaX != null &&
+          (Math.abs(e.clientX - partenzaX) > SOGLIA ||
+           Math.abs(e.clientY - partenzaY) > SOGLIA)) mosso = true;
       if (!trascina) return;
       e.preventDefault();
       pista.scrollLeft = trascina.da - (e.clientX - trascina.x);
@@ -952,6 +1017,7 @@
         fermatoAMano = !fermatoAMano;
       }
       partenzaX = null;
+      partenzaY = null;
       if (trascina) {
         trascina = null;
         pista.classList.remove('carosello__pista--presa');
@@ -978,7 +1044,13 @@
       mosso = false;
     }, true);
 
-    pista.addEventListener('mouseenter', function () { fermo = true; });
+    /* Solo col mouse vero: sul telefono arriva un mouseenter finto dopo
+       il tocco, ma il mouseleave corrispondente puo non arrivare mai — e
+       il nastro restava fermo a tempo indeterminato. */
+    pista.addEventListener('mouseenter', function (e) {
+      if (e.sourceCapabilities && e.sourceCapabilities.firesTouchEvents) return;
+      fermo = true;
+    });
     pista.addEventListener('mouseleave', function () { if (!trascina) fermo = false; });
     pista.addEventListener('focusin', function () { fermo = true; });
     pista.addEventListener('focusout', function () { fermo = false; });
@@ -994,6 +1066,14 @@
     schede.forEach(function (s) {
       var copia = s.cloneNode(true);
       copia.setAttribute('aria-hidden', 'true');
+      /* Le copie servono solo a far sembrare il nastro infinito: sono
+         dichiarate inesistenti per i lettori di schermo, quindi non
+         devono nemmeno essere raggiungibili con Tab. Senza questo, chi
+         naviga da tastiera finiva dentro nove pulsanti annunciati come
+         non esistenti. */
+      Array.prototype.forEach.call(copia.querySelectorAll('a, button, [tabindex]'), function (f) {
+        f.setAttribute('tabindex', '-1');
+      });
       pista.appendChild(copia);
     });
     misura();
@@ -1036,12 +1116,17 @@
          (swipe, rotella, tastiera) si riparte da dove l'ha lasciato */
       if (Math.abs(pista.scrollLeft - impostato) > 1) posizione = pista.scrollLeft;
 
-      if (!fermo && !fermatoAMano && salto > 0 && salto < 200) {
-        posizione += VELOCITA * salto / 1000;
-      }
+      var avanza = !fermo && !fermatoAMano && salto > 0 && salto < 200;
+      if (avanza) posizione += VELOCITA * salto / 1000;
       if (posizione >= larghezzaGruppo) posizione -= larghezzaGruppo;
       else if (posizione < 0) posizione += larghezzaGruppo;
 
+      /* Si scrive solo quando il nastro si muove davvero. Prima si
+         riscriveva a ogni fotogramma anche da fermo, e questo rimetteva
+         indietro i trascinamenti lenti (sotto 1px per fotogramma non
+         scattava il controllo qui sopra) e disturbava lo scorrimento per
+         inerzia dopo uno swipe e quello con le frecce da tastiera. */
+      if (!avanza) return;
       pista.scrollLeft = posizione;
       /* Non si rilegge scrollLeft dopo averlo scritto: quella rilettura
          costringeva il browser a ricalcolare l'impaginazione due volte
@@ -1166,6 +1251,11 @@
       if (!testa) return;
       testa.addEventListener('click', function (e) {
         e.preventDefault();
+        /* Se si sta gia chiudendo, un nuovo clic vuol dire "no, riaprila":
+           prima quel clic finiva nel vuoto perche chiudiFaq usciva subito
+           vedendo la chiusura in corso, e per circa mezzo secondo la
+           domanda non rispondeva piu. */
+        if (d.inChiusura) { apriFaq(d); return; }
         if (d.open) { chiudiFaq(d); return; }
         Array.prototype.forEach.call(domande, function (altra) {
           if (altra !== d && altra.open) chiudiFaq(altra);
