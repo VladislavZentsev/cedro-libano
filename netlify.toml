@@ -1,0 +1,164 @@
+# Cedro del Libano — configurazione per Netlify
+#
+# ATTENZIONE: Netlify NON legge il file .htaccess. Quel file vale solo per
+# i server Apache (gli hosting FTP tradizionali). Su Netlify tutto quello
+# che era scritto li dentro — sicurezza, cache, indirizzo /en, pagina di
+# errore — va ridichiarato QUI, ed e quello che fa questo file.
+# I due file possono convivere: ognuno viene letto solo dal server a cui
+# serve, quindi non c'e da scegliere.
+
+[build]
+  # Il sito e gia pronto: nessuna compilazione, si pubblica la cartella
+  # cosi com'e.
+  publish = "."
+  command = ""
+
+# ---- File di lavoro non raggiungibili dal web ----
+# Su Netlify, se un file esiste viene servito e la regola viene ignorata:
+# per bloccarlo davvero serve  force = true.  Questi indirizzi rispondono
+# quindi 404 anche se il file e stato caricato per sbaglio.
+# Resta comunque piu pulito non caricarli affatto (vedi l'elenco nel
+# LEGGIMI): queste righe sono una rete di sicurezza, non un permesso.
+
+[[redirects]]
+  from = "/_archivio-foto/*"
+  to = "/index.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/build/*"
+  to = "/index.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.claude/*"
+  to = "/index.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/TASK.json"
+  to = "/index.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/LEGGIMI.txt"
+  to = "/index.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/AI-RULES.md"
+  to = "/index.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/CLAUDE.md"
+  to = "/index.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/README.md"
+  to = "/index.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.htaccess"
+  to = "/index.html"
+  status = 404
+  force = true
+
+# ---- Indirizzo comodo per la versione inglese ----
+# /en mostra la pagina inglese senza cambiare quello che si legge nella
+# barra degli indirizzi. status 200 = riscrittura, non un rimbalzo.
+# Niente force: non esiste nessun file chiamato "en", quindi la regola
+# scatta da sola.
+
+[[redirects]]
+  from = "/en"
+  to = "/index-en.html"
+  status = 200
+
+[[redirects]]
+  from = "/en/"
+  to = "/index-en.html"
+  status = 200
+
+# ---- Pagina di errore ----
+# Qualunque indirizzo inesistente mostra la home, come faceva
+# ErrorDocument nel .htaccess.
+# QUI NON VA  force = true : con il force questa regola prenderebbe anche
+# gli indirizzi validi e il sito intero risponderebbe 404, home compresa.
+# Senza force, i file che esistono vengono serviti normalmente e questa
+# regola raccoglie solo quello che non esiste.
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 404
+
+# ---- Sicurezza ----
+# Le stesse intestazioni del .htaccess. La regola sulle fonti e stretta
+# apposta: il sito non carica NIENTE da fuori — niente CDN, niente Google
+# Fonts, niente widget — e non ha un solo attributo style scritto a mano
+# nell'HTML. Percio si puo permettere solo "se stesso", senza le
+# scappatoie 'unsafe-inline' e 'unsafe-eval' che di solito svuotano di
+# senso questa regola.
+# Se un domani aggiungi un servizio esterno (mappa incorporata,
+# prenotazioni, statistiche, newsletter) il suo indirizzo va aggiunto
+# qui, altrimenti il browser lo blocca senza dire niente.
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; media-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'self'"
+    Permissions-Policy = "geolocation=(), camera=(), microphone=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()"
+
+# ---- Cache ----
+# Netlify comprime da solo (gzip e brotli): non serve dichiararlo.
+# Qui si dice solo per quanto il browser puo tenersi le cose.
+
+# Le pagine no: devono essere sempre fresche, altrimenti una correzione
+# ai prezzi resterebbe invisibile a chi e gia stato sul sito.
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Foto, video e caratteri: un anno. Non cambiano mai senza cambiare nome.
+[[headers]]
+  for = "/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/font/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Stili e script: una settimana. Se li modifichi e vuoi che il
+# cambiamento arrivi subito a tutti, rinomina il file
+# (style.css -> style-2.css) e aggiorna il richiamo nelle due pagine.
+[[headers]]
+  for = "/style.css"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/script.js"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/menu.js"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"

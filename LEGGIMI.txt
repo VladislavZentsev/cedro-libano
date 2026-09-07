@@ -194,3 +194,37 @@ DA CONTROLLARE PRIMA DI PUBBLICARE
 - Nel file .htaccess c'è un blocco per forzare https e togliere il www:
   attivalo (togli i cancelletti # a inizio riga) SOLO dopo che il
   certificato HTTPS è attivo, altrimenti il sito diventa irraggiungibile.
+
+====================================================================
+SE IL SITO STA SU NETLIFY (invece che su un hosting FTP)
+====================================================================
+
+Netlify NON legge il file .htaccess: lo ignora del tutto. Tutto quello
+che quel file faceva (sicurezza, cache, indirizzo /en, pagina di
+errore) e stato riscritto in  netlify.toml , che Netlify legge da solo.
+Non devi fare niente: basta che netlify.toml sia caricato insieme al
+resto. I due file convivono senza darsi fastidio.
+
+COSA NON CARICARE (vale sia per Netlify sia per FTP):
+
+  _archivio-foto/    oltre 500 MB di foto e video originali
+  build/             strumento per rigenerare i dati per Google
+  .claude/           server di prova locale
+  TASK.json          appunti di lavoro
+  LEGGIMI.txt        questo file
+  README.md          descrizione per chi sviluppa
+  AI-RULES.md        regole di design
+  CLAUDE.md          istruzioni per chi mette mano al codice
+  .gitignore         serve solo a git
+  .git/              lo storico delle modifiche
+  .htaccess          solo se sei su Netlify (li e inutile)
+
+Se pubblichi trascinando la cartella su Netlify, togli prima queste
+cose. Se pubblichi collegando GitHub, .git e .gitignore non vengono
+caricati da soli; per gli altri c'e gia una rete di sicurezza dentro
+netlify.toml che li rende irraggiungibili anche se finissero online.
+
+COSA CARICARE, invece: index.html, index-en.html, style.css, script.js,
+menu.js, netlify.toml, robots.txt, sitemap.xml, favicon.svg,
+apple-touch-icon.png, logo-cedro-marchio.svg, og-cedro-del-libano.jpg,
+mappa-darsena.png, e le cartelle  img/  e  font/  complete.
