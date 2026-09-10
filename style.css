@@ -2161,6 +2161,13 @@ img { max-width: 100%; height: auto; }
 }
 @media (max-width: 1023px) { .lingue { margin-left: 0; margin-right: 12px; } }
 @media print { .lingue { display: none; } }
+/* Su schermi molto larghi la barra restava a 1200px e lasciava una
+   fascia vuota fra le bandiere e il bordo della finestra. Qui si allarga
+   solo per i desktop grandi: sotto i 1300px lo spazio non c'e' e la
+   barra resta com'era. */
+@media (min-width: 1300px) {
+  .header__barra { max-width: 1360px; }
+}
 
 /* --- 6. Il footer che si rivela -------------------------
    Sale di pochi pixel quando lo raggiungi: chiude la pagina invece di
